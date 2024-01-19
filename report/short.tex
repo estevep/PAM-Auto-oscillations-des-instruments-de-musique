@@ -40,17 +40,7 @@ L'objectif de ce projet est de construire et contrôler des instrument auto-osci
 
 \section{Modèles physiques pour les instruments auto-oscillants}\label{sec:models physiques}
 Dans cette section nous allons présenter les principaux formalismes utilisés pour modéliser les instruments auto-oscillants tels que les clarinettes, cuivres, violons, etc. 
-On sépare la modélisation de ces instruments en deux parties : la modélisation du résonateur et la modélisation de l'excitateur qui forment un système couplé \ref{fig:nl}. Dans le cas des instruments à cordes frottées, le lien se fait via l'admittance mécanique $Y(t)=\frac{\xi(t)}{F(t)}$, où $\xi(t)$ est la vitesse transverse de la corde et $F(t)$ la force de frottement de l'archet sur la corde. Dans le cas des instruments à vents, le lien se fait via la fonction d'impédance, qui relie la pression au débit acoustique. 
-
-Finalement, on s'intéresse en général à modéliser l'impédance d'entrée ou l'admittance du résonateur afin de faire le lien avec l'excitateur (dans le cas général : flux et potentiel) en entrée. L'impédance/admittance peut-être modélisée par deux approches : une approche modale et une approche par guide d'onde. 
-
-\begin{figure}[b]
-    \centering
-    \includegraphics[scale=1.2]{report/Images/BouclageInstrumensNL.png}
-    \caption{Schéma du couplage entre excitateur non linéaire et résonateur passif des instruments auto-oscillants}
-    \label{fig:nl}
-\end{figure}
-
+On sépare la modélisation de ces instruments en deux parties : la modélisation du résonateur et la modélisation de l'excitateur qui forment un système couplé. 
 
 \subsection{Modélisation des résonateurs}
 \subsubsection{Modélisation modale}
@@ -62,137 +52,23 @@ On peut ainsi écrire l'impédance à l'entrée de l'instrument comme :
 \end{equation}
 Avec $F_n$ : l'amplitude , $\omega_n$ la pulsation propre, $Q_n$ le facteur de qualité du mode n et $\omega$ la pulsation. 
 
-Par une approche modale, l'équation s'écrit pour le mode n : 
-\begin{equation}
-    Z_e^{n}(\omega) = \frac{P_e(\omega)}{U_e(\omega)}= j\omega\frac{F_n}{\omega_n-\omega+j\omega\omega_n/Q_n}
-\end{equation}
-Par transformée de Fourier inverse, on a : 
-\begin{equation}
-    \Ddot{p}(t)+ \frac{\omega_n}{Q_n}\Dot{p}(t)+\omega_n^2p(t) = F_n\frac{du(t)}{dt}
-\end{equation}
-Avec $Y_{m,n} = \frac{1}{Z_{max,n}} = \frac{\omega_n}{F_n Q_n}$, on a finalement : 
-\begin{equation}\label{eq:model_modal}
-    \Ddot{p}(t)+ F_n(Y_{m,n}\Dot{p}(t)-\frac{du(t)}{dt})+\omega_n^2p(t) = 0
-\end{equation}
-
-En intégrant à cette équation la relation entre la pression et la vitesse en entrée de l'instrument, on obtient une équation différentielle sur une de ces deux grandeur qui permet de décrire le fonctionnement de l'instrument. Cette équation n'est cependant vraie que pour le mode considéré, dans le cas où on n'utilise que le premier mode, cette approche est une approche uniquement valable pour décrire l'instrument en basses fréquences. 
-
+En isolant chaque mode, nous obtenons une équation différentielle qui permet de décrire la dynamique de l'instrument. Cette équation n'est cependant vraie que pour le mode considéré, dans le cas où on n'utilise que le premier mode, cette approche est une approche uniquement valable pour décrire l'instrument en basses fréquences. 
 
 \subsubsection{Modélisation d'un résonateur par un guide d'ondes}
 
 \paragraph{Modèle général}\label{sec:guide}
 
-Un modèle plus simple utilisé par McIntyre et al. \cite{mcintyre_oscillations_1983} et Maganza et al. \cite{maganza_bifurcations_1986} repose sur la décomposition de la variable potentiel $q(t)$ en deux : (1) une partie progressive $q_o(t)$ ; une partie rétrograde $q_i(t)$. Ces deux variables sont reliées par :
-
-\begin{equation}
-    q_i(t)=r(t)*q_o(t).
-\end{equation}
-
-De plus, $q(t)$ et la variable de flux $f(t)$ sont reliées par la relation linéaire d'impédance :
-
-\begin{equation}
-    q_o(t) - q_i(t) = Z\times f(t).
-    \label{eq:impedance_rel}
-\end{equation}
-
-Nous pouvons reformuler l'équation \ref{eq:impedance_rel} pour expliciter $q(t)$ :
-
-\begin{equation}
-    q(t) = q_h(t) + Zf(t), 
-\end{equation}
-
-avec
-
-\begin{equation}
-    q_h(t)=r(t)*\left\{q(t)+Zf(t)\right\}.
-\end{equation}
+Un modèle plus simple utilisé par McIntyre et al. \cite{mcintyre_oscillations_1983} et Maganza et al. \cite{maganza_bifurcations_1986} repose sur la décomposition de la variable potentiel $q(t)$ et de la variable flux $f(t)$ en deux : (1) une partie progressive $q_o(t)$ ; une partie rétrograde $q_i(t)$, reliées entre elles par une relation de réflexion $q_i(t)=r(t)*q_o(t)$. De plus, $q(t)$ et la variable de flux $f(t)$ sont reliées par la relation linéaire d'impédance.
 
  
 \paragraph{Application à une cavité cylindrique}
 
-\cite{maganza_bifurcations_1986} développe le modèle décrit en \ref{sec:guide} dans le cas précis de la clarinette en raison de sa simplicité : géométrie cylindrique de la cavité, excitation faite par une anche simple. L'étude est limitée aux ondes planes harmoniques. La pression $P$ dans le résonateur est donnée par l'équation de d'Alembert :
-
-\begin{equation}
-    \frac{1}{c_0^2}\frac{\partial ^2 P}{\partial t^2}(x,t) - \frac{\partial^2P}{\partial x^2}(x,t)=0.
-\end{equation}
-
-Cette équation a pour solution dans le domaine fréquentiel :
-
-\begin{equation}
-    P(x,w) = P^+(\omega)e^{-jkx}+P^-(\omega)e^{jkx}.
-\end{equation}
-
-Nous retrouvons bien les quantités entrante et sortante du modèle général. Nous utilisons ensuite l'équation d'Euler linéarisée :
-
-\begin{equation}
-    \rho_0\frac{\partial u}{\partial t}+\nabla P = 0,
-\end{equation}
-
-ce qui nous donne la relation :
-
-\begin{equation}
-    U(x,\omega) = Z_c^{-1}\left[P^+(\omega)e^{-jkx} - P^-(\omega)e^{jkx}\right] \quad\text{avec}\quad Z_c=\frac{\rho_0c_0}{S}.
-\end{equation}
-
-Nous retrouvons bien la relation d'impédance du modèle général. Nous définissons le coefficient de réflexion $R(x,\omega)$ :
-
-\begin{equation}
-    R(x,\omega)=\frac{P^-(\omega)}{P^+(\omega)}e^{2jkx}.
-\end{equation}
-
-La fonction $r(t)$ du formalisme général est obtenue par :
-
-\begin{equation}
-    r(t)=\mathcal{F}^{-1}\left\{R(0,\omega)\right\}.
-\end{equation}
-
-La relation de linéarité entre $P(x,\omega)$ et $U(x,\omega)$ s'obtient par la relation d'impédance :
-
-\begin{equation}
-    Z(x,\omega)=\frac{P(x,\omega)}{U(x,\omega)}=Z_c\frac{1+R(x,\omega)}{1-R(x,\omega)}.
-\end{equation}
-
-L'impédance d'entrée $Z_e$ peut donc s'exprimer en fonction de l'impédance de sortie $Z_s$ par :
-
-\begin{equation}
-    \frac{Z_e(\omega)}{Z_c}=\frac{j\tan(kL)+\frac{Z_s(\omega)}{Z_c}}{1+j\tan(kL)\frac{Z_s(\omega)}{Z_c}}.
-\label{eq:ze_zs}
-\end{equation}
-
-Dans le cas de la clarinette, l'impédance de sortie peut être approximée par l'impédance de rayonnement d'un piston non-bafflé \cite{chaigne2008acoustique} :
-
-\begin{equation}
-    Z_s(\omega) = \frac{\rho_0c_0}{S}\left[\frac{1}{4}(ka)^2 + j0.6 ka\right].
-\end{equation}
-
-Pour la synthèse sonore, il est préférable de connaître la pression en sortie (qui est plus proche du son perçu par un auditoire. La réponse acoustique de la salle et la directivité de l'instrument sont bien sûr des facteurs importants qui sont négligés pour le moment). Pour ce faire, nous utilisons un formalisme similaire à celui des lignes de transmission en électricité. Nous définissons la matrice de transfert, qui lie la pression et la vitesse acoustique en deux points $x_1$ et $x_2$ :
-
-\begin{equation}
-    \begin{pmatrix}
-        P(x_1,\omega)\\
-        U(x_1,\omega) 
-    \end{pmatrix}
-    = \begin{pmatrix}
-        \cos(k(x_1-x_2))&jZ_c\sin(k(x_2-x_1))\\
-        jZ_c^{-1}\sin(k(x_2-x_1))&\cos(k(x_2-x_1))
-    \end{pmatrix}
-    \begin{pmatrix}
-        P(x_2,\omega)\\
-        U(x_2,\omega)
-    \end{pmatrix}.
-\label{eq:matrice_transfert}
-\end{equation}
-
-L'équation \ref{eq:matrice_transfert} est une généralisation de l'équation \ref{eq:ze_zs}. Elle permet notamment de connaître la pression de sortie en fonction des valeurs de pression et de vitesse d'entrée.
+\cite{maganza_bifurcations_1986} développe le modèle décrit en \ref{sec:guide} dans le cas précis de la clarinette en raison de sa simplicité : géométrie cylindrique de la cavité, excitation faite par une anche simple. L'étude est limitée aux ondes planes harmoniques.% Nous définissons le coefficient de réflexion $R(x,\omega)$, puis la relation de linéarité entre $P(x,\omega)$ et $U(x,\omega)$ s'obtient par la relation d'impédance. Le lien entre pressions et vitesses en tout point du guide doit être exprimé. Pour ce faire, nous utilisons un formalisme similaire à celui des lignes de transmission en électricité : définir une matrice de transfert liant la pression et la vitesse acoustique en deux points du guide d'ondes.
 
 
 \subsubsection{Analogie avec le résonateur du violon}
 
-Dans \cite{ollivier_idealized_2004} l'analogie entre le résonateur des instruments à vents et le résonateur des instruments à cordes frottées comme le violon est faite. 
-
-Pour un instrument à cordes frottées, le résonateur est constitué de l'ensemble $\left\{ corde + chevalet + caisse\right\}$.
-
-Il existe plusieurs modèles de propagation des ondes dans les cordes des instruments à cordes frottées. Les ondes propagatives sont supposées réfléchies aux limites de la corde selon différentes hypothèses.
+Dans \cite{ollivier_idealized_2004} l'analogie entre le résonateur des instruments à vents et le résonateur des instruments à cordes frottées comme le violon est faite. Pour un instrument à cordes frottées, le résonateur est constitué de l'ensemble $\left\{ corde + chevalet + caisse\right\}$. Les ondes propagatives sont supposées réfléchies aux limites de la corde selon différentes hypothèses.
 
 \begin{itemize}
   \item Un premier modèle non dissipatif est tel que la réflexion $r(t)$ aux limites (doigt ou chevalet) est simplement une fonction du retard $\tau$ qui correspond au temps de trajet des ondes sur une distance de corde comprise entre le doigt et le chevalet $r(t)=-\delta(t-\tau)$
@@ -211,16 +87,10 @@ Où $L_a$ et $L_b$ représentent les deux longueurs de corde séparées par la p
 
 \subsubsection{Cas général d'un excitateur non-linéaire}\label{subsubsection:excitateur_cas_général}
 
-\cite{mcintyre_oscillations_1983} et \cite{maganza_bifurcations_1986} proposent un modèle général d'excitateur, reliant les variables de flux $f$ et de potentiel $q$ :
-
-\begin{equation}
-    f=F(q),
-\end{equation}
-
-où $F$ est une fonction non-linéaire.
+\cite{mcintyre_oscillations_1983} et \cite{maganza_bifurcations_1986} proposent un modèle général d'excitateur, reliant les variables de flux $f$ et de potentiel $q$ : $f=F(q)$, où $F$ est une fonction non-linéaire.
 
 \subsubsection{Exemple pour la clarinette}
-Un modèle de clarinette est proposé dans \cite{missoum_explicit_2014} et dans \cite{chaigne2008acoustique} chap9section2.6. Il repose sur la modélisation de l'excitation de l'instrument par le débit acoustique en entrée du bec en fonction de la pression. Cette modélisation est un cas particulier du cas général \ref{subsubsection:excitateur_cas_général}. 
+Un modèle de clarinette est proposé dans \cite{missoum_explicit_2014} et dans \cite{chaigne2008acoustique} (chap. 9 section 2.6). Il repose sur la modélisation de l'excitation de l'instrument par le débit acoustique en entrée du bec en fonction de la pression. Cette modélisation est un cas particulier du cas général \ref{subsubsection:excitateur_cas_général}. 
 Dans ce formalisme, le débit d'entrée dans le bec de la clarinette adimensionnée est défini comme : \\
 
 \begin{equation}
@@ -230,9 +100,7 @@ Dans ce formalisme, le débit d'entrée dans le bec de la clarinette adimensionn
 \end{cases}
 \end{equation}
 
-Avec $\zeta$, une paramètre adimensionné régi par l'ouverture de l'anche, $\gamma$ un paramètre de la pression dans la bouche adimensionnée. 
-
-On a donc $u(t) = F(p)$, avec $F(p)$ une fonction non-linéaire. En l'intégrant dans l'équation \ref{eq:model_modal}, on obtient une équation différentielle sur la pression. En faisant un développement limité de $u(t)$, on obtient une équation différentielle de type Van der Pol \cite{chaigne2008acoustique}.  Nous détaillerons les méthodes de résolution de ce type d'équation dans la section \ref{sec : méthode de résolution des equations non linéaires}. 
+Avec $\zeta$, une paramètre adimensionné régi par l'ouverture de l'anche, $\gamma$ un paramètre de la pression dans la bouche adimensionnée. En faisant un développement limité de $u(t)$, on obtient une équation différentielle de type Van der Pol \cite{chaigne2008acoustique}.
 
 \subsubsection{Analogie avec l'archet du violon}
 
@@ -269,20 +137,22 @@ Le système final présenté par \cite{mcintyre_oscillations_1983} et \cite{maga
 \label{eq:sys_guide}
 \end{equation}
 
-La solution à ce système peut être obtenue de manière graphique (voir figure \ref{fig:po_pi}) : 
+Décomposer les variables de débit et de pression en une partie progressive et une partie rétrograde permet une méthode de résolution graphique, sans avoir à tenir compte de délais multiples.
+On note, avec les notations de Maganzana et al. \cite{maganza_bifurcations_1986}, $-q_i(t) = \mathcal{F}[-q_i(t-T)]$, où $T=2L/c$ est le temps d'un aller-retour de l'onde dans le résonateur.
 
-\begin{figure}
-    \centering
-    \includegraphics[angle=90,scale=0.3]{report/Images/po_pi.png}
-    \caption{Méthode de résolution graphique du système d'équations \ref{eq:sys_guide} associé au modèle du guide d'ondes. Les solutions sont trouvées dans le plan $-q_i$,$q_o$ (ici $-x^-$,$x^+$). La courbe en gras correspond à $f = F(q_o+q_i)$, pour un $f$ donné. La courbe croissante correspond à l'équation $q_i=Rq_o$. Le(s) point(s) d'intersection entre ces deux courbes donne la solution stationnaire du système. La courbe décroissante $q_o=q_i$ correspond à un flux nul et donc à l'absence de son (crédit : \cite{maganza_bifurcations_1986}).}
-    \label{fig:po_pi}
-\end{figure}
 
-Les solutions sont trouvées dans le plan $-q_i$,$q_o$ (ici $-x^-$,$x^+$). La courbe en gras correspond à $f = F(q_o+q_i)$, pour un $f$ donné. La courbe croissante correspond à l'équation $q_i=Rq_o$. Le(s) point(s) d'intersection entre ces deux courbes donne la solution stationnaire du système. La courbe décroissante $q_o=q_i$ correspond à un flux nul et donc à l'absence de son. 
+% \begin{figure}
+%     \centering
+%     \includegraphics[angle=90,scale=0.3]{report/Images/po_pi.png}
+%     \caption{Méthode de résolution graphique du système d'équations \ref{eq:sys_guide} associé au modèle du guide d'ondes. Les solutions sont trouvées dans le plan $-q_i$,$q_o$ (ici $-x^-$,$x^+$). La courbe en gras correspond à $f = F(q_o+q_i)$, pour un $f$ donné. La courbe croissante correspond à l'équation $q_i=Rq_o$. Le(s) point(s) d'intersection entre ces deux courbes donne la solution stationnaire du système. La courbe décroissante $q_o=q_i$ correspond à un flux nul et donc à l'absence de son (crédit : \cite{maganza_bifurcations_1986}).}
+%     \label{fig:po_pi}
+% \end{figure}
 
-Supposons une situation de départ $(f,q_i,q_e) = 0$. Si $f(t)$ est la fonction échelon, alors à $t\geq 0$, $q_o$ augmente. L'onde acoustique n'ayant pas encore été réfléchie par l'extrémité du guide, $q_i=0$ et $q_o=F^{-1}(f)$ : nous sommes au point (1). Une fois que l'onde réfléchie arrive à l'entrée du guide, sa valeur est $q_i=Rq_o$ (image du point (1) par rapport à la courbe croissante). $f$ étant constante, $q_o$ varie de sorte à être sur la courbe non linéaire : nous sommes au point (2). De même, on trouve $q_i$ par l'image du point (2) par la courbe $q_i=Rq_o$ et on trouve $q_o$ de sorte à être sur la courbe non linéaire (point (3)). Cette méthode itérative permet de connaître la position du point $q_o,q_i$ à chaque pas de temps. On note, avec les notations de Maganzana et al. \cite{maganza_bifurcations_1986}, $-q_i(t) = \mathcal{F}[-q_i(t-T)]$, où $T=2L/c$ est le temps d'un aller-retour de l'onde dans le résonateur.
+% Les solutions sont trouvées dans le plan $-q_i$,$q_o$ (ici $-x^-$,$x^+$). La courbe en gras correspond à $f = F(q_o+q_i)$, pour un $f$ donné. La courbe croissante correspond à l'équation $q_i=Rq_o$. Le(s) point(s) d'intersection entre ces deux courbes donne la solution stationnaire du système. La courbe décroissante $q_o=q_i$ correspond à un flux nul et donc à l'absence de son. 
 
-Remarquons que le point d'équilibre (intersection entre la courbe non-linéaire et la courbe croissante) n'est pas nécessairement stable ou attractif. Il est donc possible, en fonction de l'allure de la courbe non-linéaire, d'obtenir des comportements oscillants (et donc la production de son) ou chaotiques.
+% Supposons une situation de départ $(f,q_i,q_e) = 0$. Si $f(t)$ est la fonction échelon, alors à $t\geq 0$, $q_o$ augmente. L'onde acoustique n'ayant pas encore été réfléchie par l'extrémité du guide, $q_i=0$ et $q_o=F^{-1}(f)$ : nous sommes au point (1). Une fois que l'onde réfléchie arrive à l'entrée du guide, sa valeur est $q_i=Rq_o$ (image du point (1) par rapport à la courbe croissante). $f$ étant constante, $q_o$ varie de sorte à être sur la courbe non linéaire : nous sommes au point (2). De même, on trouve $q_i$ par l'image du point (2) par la courbe $q_i=Rq_o$ et on trouve $q_o$ de sorte à être sur la courbe non linéaire (point (3)). Cette méthode itérative permet de connaître la position du point $q_o,q_i$ à chaque pas de temps. On note, avec les notations de Maganzana et al. \cite{maganza_bifurcations_1986}, $-q_i(t) = \mathcal{F}[-q_i(t-T)]$, où $T=2L/c$ est le temps d'un aller-retour de l'onde dans le résonateur.
+
+Remarquons que le point d'équilibre n'est pas nécessairement stable ou attractif. Il est donc possible, en fonction de l'allure de la courbe non-linéaire, d'obtenir des comportements oscillants (et donc la production de son, ondes carrées pour le fondamental) ou chaotiques. %(intersection entre la courbe non-linéaire et la courbe croissante)
 
 L'étude de $\mathcal{F} \circ \mathcal{F}$ peut permettre d'étudier l'apparition de sous-harmoniques. Ceux-ci sont peu fréquemment observés pour des clarinettes, car ils correspondent à une très faible région de paramètres de pression et position de l'anche au repos pour les anches utilisées couramment. Ces notes, appelées sous-harmoniques, sont cependant un phénomène mieux connu chez les instruments à cordes frottées, en particulier dans le régime transitoire \cite{kergomard_instruments_1997}, \cite{mcintyre_oscillations_1983}.
 
@@ -292,7 +162,7 @@ Kergomard résume ainsi que pour un instrument à vent, \og la succession montan
 
 \subsection{Solveurs explicites} \label{sec:solveurs}
 
-Une première méthode que l'on trouve dans la littérature pour étudier les équations non linéaires telles que \ref{eq:model_modal} de type van der Pol est la linéarisation de ces équation. Cette approche permet d'étudier les équilibres du système et la stabilité de ses solutions. Cependant, cette approche est insuffisante pour étudier de façon plus complète les instruments de musique. 
+Une première méthode que l'on trouve dans la littérature pour étudier les équations non linéaires de type van der Pol est la linéarisation de ces équation. Cette approche permet d'étudier les équilibres du système et la stabilité de ses solutions. Cependant, cette approche est insuffisante pour étudier de façon plus complète les instruments de musique. 
 
 Une autre approche consiste à résoudre ces équations à l'aide de solveurs explicites. L'équation qui régis le fonctionnement du modèle de clarinette présenté par Missoum et al. \cite{missoum_explicit_2014} (section3.2 numercial implemention) utilise un solveur explicite de type ODE15s de la suite Matlab. 
 
@@ -321,14 +191,13 @@ Ces solutions temps réel pourront être implémentées en utilisant des outils 
 Les instruments auto-oscillants, en raison de l'importance des non-linéarités dans leur fonctionnement, possèdent une très grande diversité de modes de jeu. Ainsi dans une optique de compréhension du fonctionnement de ces instruments mais également de simulation, étudier les relations entre paramètres de jeu/ contrôle, paramètres de facture et modes de jeux est primordiale et fait l'objet de nombreuses recherches. 
 
 Une méthode de cartographie présentée par Missoum et al. \cite{missoum_explicit_2014}, repose sur des SVM (pour \textit{Support Vector Machines}). 
-Un SVM définit une frontière explicite entre des éléments appartenant à deux classes définies comme $+1$ ou $-1$. 
-La frontière entre ces deux groupe est définie comme \cite{missoum_explicit_2014} : 
-\begin{equation}
-    s(\textbf{x}) = b + \sum_{i=1}^{N}\lambda_iy_iK(\textbf{x}_i,\textbf{x}) = 0 ,
-\end{equation}
-où N est le nombre d'échantillons à classifier $\textbf{x}_i$, b est le biais, $\lambda_i$ est le multiplicateur de Lagrange et K est la fonction noyau. 
-
-Les SVM sont des méthodes utilisées et adaptées pour des systèmes hautement non linaires, et permettent d'utiliser plusieurs critères de classification en n'utilisant qu'un classifieur. Il est non sensible aux discontinuités(important pour pouvoir étudier les changement de régimes/registres) et est computationnellement très efficace. Cet article présente ensuite l'intérêt d'associer à un classifieur SVM une méthode d'échantillonnage  adaptatif, issue de \cite{basudhar2010improved}. 
+% Un SVM définit une frontière explicite entre des éléments appartenant à deux classes définies comme $+1$ ou $-1$. 
+% La frontière entre ces deux groupe est définie comme \cite{missoum_explicit_2014} : 
+% \begin{equation}
+%     s(\textbf{x}) = b + \sum_{i=1}^{N}\lambda_iy_iK(\textbf{x}_i,\textbf{x}) = 0 ,
+% \end{equation}
+% où N est le nombre d'échantillons à classifier $\textbf{x}_i$, $b$ est le biais, $\lambda_i$ est le multiplicateur de Lagrange et $K$ est la fonction noyau. 
+Les SVM sont des méthodes utilisées et adaptées pour des systèmes hautement non linaires, et permettent d'utiliser plusieurs critères de classification en n'utilisant qu'un classifieur. Il est non sensible aux discontinuités(important pour pouvoir étudier les changement de régimes/registres) et est computationnellement très efficace. Cet article présente également l'intérêt d'associer à un classifieur SVM une méthode d'échantillonnage  adaptatif, issue de \cite{basudhar2010improved}. 
 
 La combinaison de ces deux éléments permet d'améliorer l'efficacité computationnelle et pour un même nombre de calcul d'aboutir à des résultats plus précis. La méthode présentée dans \cite{missoum_explicit_2014} est validée sur un modèle de clarinette simplifié, correspondant au modèle physique de clarinette présenté dans \ref{sec:models physiques}.
 
@@ -348,7 +217,7 @@ Ces méthodes peuvent se révéler pertinentes dans le cas d'instruments présen
 
 \begin{figure}
     \centering
-    \includegraphics[trim=0 10.6cm 0 1.8cm, clip, width=\textwidth]{report/Images/Gibiat_PhaseSpaceMusicalSignals_JSV_1988-p3.pdf}
+    \includegraphics[trim=0 10.6cm 0 1.8cm, clip, width=0.75\textwidth]{report/Images/Gibiat_PhaseSpaceMusicalSignals_JSV_1988-p3.pdf}
     \caption{Démonstration du doublement de période due à l'augmentation du débit dans le bec de l'instrument. Tiré de \cite{gibiat_phase_1988}.}
     \label{fig:gibiat-double-period}
 \end{figure}
