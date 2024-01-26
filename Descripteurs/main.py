@@ -1,7 +1,9 @@
 import numpy as np
 from numpy.typing import ArrayLike
+
 import matplotlib.pyplot as plt
 from matplotlib.widgets import Slider
+
 from scipy.io.wavfile import write, read
 from scipy.interpolate import CubicSpline
 
@@ -19,26 +21,40 @@ def compute_offset_signal(signal: ArrayLike, deltaT: float, samplerate: float) -
 
     return interpolated_signal
 
-    
+
+def import_signal(filepath: str, idx_begin=0, idx_end=None):
+    samplerate, signal = read(filepath)
+
+    if signal.ndim > 1:
+        signal = signal[idx_begin:idx_end, 0]
+
+    return samplerate, signal
+
 
 def main() -> None:
 
     print(filenames)
 
-    samplerate, signal = read(f"{samples_dir}/{filenames[2]}")
-    if signal.ndim > 1:
-        signal = signal[0:1000, 0]
+    samplerate, single_note_signal = import_signal(f"{samples_dir}/{filenames[1]}", 0, 1000)
+    _,          double_note_signal = import_signal(f"{samples_dir}/{filenames[2]}", 0, 1000)
     
+
     deltaT = 4e-4
-    interpolated_signal = compute_offset_signal(signal, deltaT, samplerate)
+    single_note_interpolated_signal = compute_offset_signal(single_note_signal, deltaT, samplerate)
+    double_note_interpolated_signal = compute_offset_signal(double_note_signal, deltaT, samplerate)
 
 
-    fig, ax = plt.subplots()
+    fig, (ax1, ax2) = plt.subplots(1, 2)
     
-    line, = ax.plot(signal, interpolated_signal)
-    ax.spines[['left', 'bottom']].set_position('center')
-    ax.spines[['top', 'right']].set_visible(False)
-    
+    line1, = ax1.plot(single_note_signal, single_note_interpolated_signal)
+    ax1.spines[['left', 'bottom']].set_position('center')
+    ax1.spines[['top', 'right']].set_visible(False)
+    ax1.set_title("une note")
+
+    line2, = ax2.plot(double_note_signal, double_note_interpolated_signal)
+    ax2.spines[['left', 'bottom']].set_position('center')
+    ax2.spines[['top', 'right']].set_visible(False)
+    ax2.set_title("deux notes")
 
     axtau = fig.add_axes([0.25, 0.1, 0.65, 0.03])
     tau_slider = Slider(
@@ -49,8 +65,9 @@ def main() -> None:
         valinit=deltaT        
     )
     
-    def slider_update(val):
-        line.set_ydata(compute_offset_signal(signal, tau_slider.val, samplerate))
+    def slider_update(val): 
+        line1.set_ydata(compute_offset_signal(single_note_signal, tau_slider.val, samplerate))
+        line2.set_ydata(compute_offset_signal(double_note_signal, tau_slider.val, samplerate))
 
     tau_slider.on_changed(slider_update)   
 
