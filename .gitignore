@@ -1,3 +1,7 @@
+# Python cache
+**/__pycache__/
+
+# VSCode workspace
 *.code-workspace
 
 # LaTeX
