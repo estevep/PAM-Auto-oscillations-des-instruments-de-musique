@@ -15,3 +15,4 @@ def save_P(save_dir, Fs, P):
                 n = temp
     n += 1
     write(save_dir+"/clarinet_synth_VDP_"+str(n)+".wav", Fs, P)
+    print("Saved "+save_dir+"/clarinet_synth_VDP_"+str(n)+".wav")
