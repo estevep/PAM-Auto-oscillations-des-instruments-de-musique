@@ -3,7 +3,7 @@
 import numpy as np
 
 
-# Description : Gives the dynamic model for a simplified reed (spring only) : VDP equation
+# Description : Gives the dynamic model for a simplified reed (prop. to p and no pressing) : VDP equation
 def VDP(X, t, gamma_func, zeta_func, in_params, Fn, Ymn, wn):
     gamma = gamma_func(t, in_params)
     zeta = zeta_func(t, in_params)
@@ -12,6 +12,17 @@ def VDP(X, t, gamma_func, zeta_func, in_params, Fn, Ymn, wn):
     C = -zeta*(gamma+1)/(16*gamma**(5/2))
     return [X[1], 
             -wn**2*X[0] - Fn*(Ymn-A)*X[1] + 2*Fn*B*X[0]*X[1] + 3*Fn*C*X[0]**2*X[1]]
+
+
+# Description : Gives the dynamic model for a simplified reed (prop. to p with pressing) NOT FUNCTIONNAL DUE TO DISCONTINUITIES
+def VDP_press(X, t, gamma_func, zeta_func, in_params, Fn, Ymn, wn):
+    gamma       = gamma_func(t, in_params)
+    zeta        = zeta_func(t, in_params)
+    Qn          = wn/(Fn*Ymn)
+    pdot        = -wn**2*X[0] - wn/Qn*X[1]
+    if (gamma - X[0]) < 1:
+        pdot    += X[1]*Fn*zeta*(np.sqrt(gamma-X[0]) - (1+X[0]-gamma)/(2*np.sqrt(gamma-X[0])))
+    return [X[1], pdot]
 
 
 # Description : constant gamma function w.r.t. time
