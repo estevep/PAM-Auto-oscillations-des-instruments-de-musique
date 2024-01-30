@@ -3,6 +3,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import odeint
+import os
 
 from VDP import *
 from impedance import *
@@ -12,18 +13,18 @@ from save import *
 # %% ------------------- USER INPUT -------------------
 
 plot_bool   = True
-save_bool   = False
-save_dir    = "C:/Users/vppit/Desktop/Sorbonne/PAM/WAV_VDP"
+save_bool   = True
+save_dir    = f"{os.getcwd()}\\Descripteurs\\samples"
 Fs          = 44100                         # Sampling frequency [Hz]
-T           = 2                             # Total time of the signal [s]
-N           = 3                             # Number of cavity modes 
-P0          = 1e-8*np.random.randn(1)       # Initial (normalized) pressure value [Pa]
+T           = 5                             # Total time of the signal [s]
+N           = 4                             # Number of cavity modes 
+P0          = 1e-8*np.random.randn()       # Initial (normalized) pressure value [Pa]
 Pdot0       = 0.                            # Initial time derivative of the (normalized) pressure value [Pa/s]
 gamma_func  = give_gamma_func("constant")   # Gamma function with respect to time
 zeta_func   = give_zeta_func("constant")    # Zeta function with respect to time
 
 # Gamma/Zeta parameters
-g0          = 0.5
+g0          = 0.6
 z0          = 0.5
 
 in_params = {

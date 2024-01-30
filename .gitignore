@@ -1,8 +1,20 @@
-# Python cache
+# Python cache and compiled files
 **/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+
+.ipynb_checkpoints/
+ipython_config.py
+profile_default/
+
+# Mac OS
+**/.DS_Store
 
 # VSCode workspace
 *.code-workspace
+.vscode
 
 # LaTeX
 *.aux
