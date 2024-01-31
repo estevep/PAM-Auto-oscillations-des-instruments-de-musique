@@ -14,7 +14,7 @@ from save import *
 
 plot_bool   = True
 save_bool   = True
-save_dir    = f"{os.getcwd()}\\Descripteurs\\samples"
+save_dir    = f"{os.getcwd()}\\..\\Descripteurs\\samples"
 Fs          = 44100                         # Sampling frequency [Hz]
 T           = 5                             # Total time of the signal [s]
 N           = 4                             # Number of cavity modes 
@@ -35,6 +35,26 @@ in_params = {
 
 # %% ------------------- DO NOT CHANGE -------------------
 
+# ODE solver 
+
+def RK4_step(ode_fun, t, y, h, args=()):
+    K1 = h*np.array(ode_fun(y, t, *args))
+    K2 = h*np.array(ode_fun(y+1/2*K1, t+1/2*h, *args))
+    K3 = h*np.array(ode_fun(y+1/2*K2, t+1/2*h, *args))
+    K4 = h*np.array(ode_fun(y+K3, t+h, *args))
+    
+    return y + 1/6*(K1+2*K2+2*K3+K4)
+
+def RK_solver(ode_fun, y0, t, args=()): 
+    y       = np.zeros((t.size, len(y0)))
+    y[0]    = np.array(y0)
+    
+    for i in range(1, t.size):
+        h       = t[i] - t[i-1] 
+        y[i]    = RK4_step(ode_fun, t[i-1], y[i-1], h, args)
+    
+    return y
+
 # Impedance   
 
 w               = give_w_axis()
@@ -53,7 +73,8 @@ for i in range(N):
     print('Mode ',i+1,'over ',N)
     args = (gamma_func, zeta_func, in_params, Fn[i], Ymn[i], wn[i])
     
-    temp    = odeint(VDP, Pn0, t, args)
+    #temp    = odeint(VDP, Pn0, t, args)
+    temp    = RK_solver(VDP, Pn0, t, args)
     P       += temp[:,0]
     Pdot    += temp[:,1]
 
