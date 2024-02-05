@@ -59,27 +59,17 @@ class Biquad:
         return signal
     
 
-def under_sample(signal: ArrayLike, filters: list[Biquad], factor: int, samplerate: float) -> ArrayLike:
-
-    newSamplerate = samplerate/factor
-
-    signal = filters[0].process(signal)
-    signal = filters[1].process(signal)
-
-    under_sampled_signal = signal[::4]
-
-    return under_sampled_signal
-
-
 def fft_display(signal, samplerate) -> None:
     
     factor = 4
-    under_sampled_signal = under_sample(signal, 
-                                        [Biquad(4500, 0.7, samplerate), Biquad(4500, 0.7, samplerate)],
-                                        factor,
-                                        samplerate)
+    filters = [Biquad(4500, 0.7, samplerate), Biquad(4500, 0.7, samplerate)]
 
-    fft_size = 1 << 16
+    signal = filters[0].process(signal)
+    signal = filters[1].process(signal)
+    under_sampled_signal = signal[::factor]
+
+
+    fft_size = 1 << 15
     window = None
     signal_size = under_sampled_signal.shape[0]
 
@@ -223,7 +213,7 @@ def main() -> None:
     print(filenames)
 
     # samplerate, signal = import_signal(f"{samples_dir}/{filenames[-3]}")
-    samplerate, signal = import_signal(f"Descripteurs\samples\single_note.wav")
+    samplerate, signal = import_signal(f"Descripteurs\\samples\\real\\Patinage.wav")
     
 
     deltaT = 4e-4
