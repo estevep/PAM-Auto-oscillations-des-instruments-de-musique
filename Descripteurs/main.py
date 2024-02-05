@@ -14,10 +14,90 @@ from os.path import isfile
 
 from time import sleep
 
-samples_dir = f"{os.getcwd()}\\Descripteurs\\samples\\real"
+samples_dir = f"{os.getcwd()}\\Descripteurs\\samples"
 filenames = os.listdir(samples_dir)
 filenames = [file for file in filenames if isfile(f"{samples_dir}/{file}")]
 
+class Biquad:
+    
+    def __init__(self, freq: float, Q: float, samplerate: float) -> None:
+        
+        self.x1: float = 0.0
+        self.x2: float = 0.0
+        self.y1: float = 0.0
+        self.y2: float = 0.0
+
+        w0 = 2 * np.pi * freq/samplerate;
+
+        alpha = np.sin(w0)/(2*Q)
+
+        a0 = 1 + alpha
+
+        self.b0 = (1 - np.cos(w0))/(2*a0)
+        self.b1 = 2*self.b0
+        self.b2 = self.b0
+        
+        self.a1 = -2*np.cos(w0)/a0
+        self.a2 = (1 - alpha)/a0
+
+    def process(self, signal: ArrayLike) -> ArrayLike:
+        
+        for (i,), _ in np.ndenumerate(signal):
+
+            output = (self.b0*signal[i]
+                    + self.b1*self.x1
+                    + self.b2*self.x2
+                    - self.a1*self.y1
+                    - self.a2*self.y2)
+            
+            self.x2 = self.x1
+            self.x1 = signal[i]
+            self.y2 = self.y1
+            self.y1 = output
+            signal[i] = output
+
+        return signal
+    
+
+def under_sample(signal: ArrayLike, filters: list[Biquad], factor: int, samplerate: float) -> ArrayLike:
+
+    newSamplerate = samplerate/factor
+
+    signal = filters[0].process(signal)
+    signal = filters[1].process(signal)
+
+    under_sampled_signal = signal[::4]
+
+    return under_sampled_signal
+
+
+def fft_display(signal, samplerate) -> None:
+    
+    factor = 4
+    under_sampled_signal = under_sample(signal, 
+                                        [Biquad(4500, 0.7, samplerate), Biquad(4500, 0.7, samplerate)],
+                                        factor,
+                                        samplerate)
+
+    fft_size = 1 << 16
+    window = None
+    signal_size = under_sampled_signal.shape[0]
+
+    if signal_size > fft_size:
+        window = under_sampled_signal[:fft_size] * np.hamming(fft_size)
+    else:
+        window = np.pad(under_sampled_signal, (0, fft_size - signal_size), "constant", constant_values=(0, 0))
+        window *= np.hamming(fft_size)
+
+    spectrum = 20*np.log10(np.abs(np.fft.rfft(window, fft_size)))
+    freqs = np.fft.rfftfreq(fft_size, factor/samplerate)
+
+    plt.figure()
+    plt.semilogx(freqs, spectrum)
+    plt.grid(which="both")
+    plt.xlim([100, 5000])
+    plt.show()
+    return 
 
 def compute_offset_signal(signal: ArrayLike, deltaT: float, samplerate: float) -> ArrayLike:
     
@@ -57,7 +137,7 @@ def display2D(signal, deltaT, samplerate):
     # ax.set_xlim((0, 10000))
 
     init_position = 0
-    init_window_size = 512
+    init_window_size = 256
     init_tau = deltaT
 
 
@@ -69,7 +149,7 @@ def display2D(signal, deltaT, samplerate):
     line_ax.spines[['left', 'bottom']].set_position('center')
     line_ax.spines[['top', 'right']].set_visible(False)
 
-    animate = True
+    animate = False
     index = 0
 
     def animation(i):
@@ -86,9 +166,10 @@ def display2D(signal, deltaT, samplerate):
 
     ani = None
     if animate:
-        ani = FuncAnimation(fig, animation, frames=int((signal.shape[0]/samplerate)*10), interval=100)
+        # int((signal.shape[0]/samplerate)*10)
+        ani = FuncAnimation(fig, animation, frames=1000, interval=100)
         
-    plt.show(block = True)
+    plt.show(block = False)
 
 
     ax_tau = fig.add_axes([0.25, 0.1, 0.65, 0.03])
@@ -132,20 +213,24 @@ def display2D(signal, deltaT, samplerate):
     window_slider.on_changed(update)   
     position_slider.on_changed(update)   
 
-
+    plt.show()
 
 
 def main() -> None:
 
+    # accumuler les passages à zeros et calculer la variance des écarts
+
     print(filenames)
 
-    samplerate, signal = import_signal(f"{samples_dir}/{filenames[1]}")
+    # samplerate, signal = import_signal(f"{samples_dir}/{filenames[-3]}")
+    samplerate, signal = import_signal(f"Descripteurs\samples\single_note.wav")
     
 
     deltaT = 4e-4
     # signal_interpolated2 = compute_offset_signal(signal1_interpolated, deltaT, samplerate)
 
-    display2D(signal, deltaT, samplerate)
+    # display2D(signal, deltaT, samplerate)
+    fft_display(signal, samplerate)
 
     return 
 
