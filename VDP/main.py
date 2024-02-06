@@ -17,7 +17,7 @@ save_bool   = True
 save_dir    = f"{os.getcwd()}\\..\\Descripteurs\\samples"
 Fs          = 44100                         # Sampling frequency [Hz]
 T           = 5                             # Total time of the signal [s]
-N           = 4                             # Number of cavity modes 
+N           = 1                             # Number of cavity modes 
 P0          = 1e-8*np.random.randn()       # Initial (normalized) pressure value [Pa]
 Pdot0       = 0.                            # Initial time derivative of the (normalized) pressure value [Pa/s]
 gamma_func  = give_gamma_func("constant")   # Gamma function with respect to time
@@ -75,23 +75,43 @@ for i in range(N):
     
     #temp    = odeint(VDP, Pn0, t, args)
     temp    = RK_solver(VDP, Pn0, t, args)
-    P       += temp[:,0]
-    Pdot    += temp[:,1]
+    P       += temp[:,0]/N
+    Pdot    += temp[:,1]/N
+    
+# Compute the FFT
+
+P_fft = np.fft.rfft(P)
+f_plot = np.fft.rfftfreq(P.size, 1/Fs)  
 
 # Plots
 
 if plot_bool :
     plt.figure(figsize = (15,10))
-    plt.subplot(2, 1, 1)
+    plt.subplot(2, 2, 1)
     plt.plot(t, P)
     plt.title('Pressure at resonator input')
     plt.xlabel('t (s)')
     plt.ylabel(r'$P$ (Pa)')
-    plt.subplot(2, 1, 2)
+    plt.subplot(2, 2, 2)
     plt.plot(t, Pdot)
     plt.title('Pressure time derivative at resonator input')
     plt.xlabel('t (s)')
     plt.ylabel(r'$\partial_t P$ (Pa/s)')
+    plt.subplot(2, 2, 3)
+    plt.plot(w/(2*np.pi), np.abs(Z_model))
+    plt.title('Modal impedance w.r.t frequency')
+    plt.xlabel('f (Hz)')
+    plt.ylabel(r'$|Z|$ (kg/s.m2)')
+    plt.show()
+    plt.subplot(2, 2, 4)
+    plt.plot(f_plot[f_plot<1000], np.abs(P_fft[f_plot<1000]))
+    plt.title('Pressure FFT w.r.t frequency')
+    plt.xlabel('f (Hz)')
+    plt.ylabel(r'FFT($P$) (Pa)')
+    plt.show()
+    
+    plt.figure()
+    plt.plot(P[100000:], Pdot[100000:])
 
 # Saving P
 
