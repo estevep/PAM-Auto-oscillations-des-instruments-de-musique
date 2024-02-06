@@ -35,7 +35,7 @@
 \tocpage
 
 \section*{Introduction}
-L'objectif de ce projet est de construire et contrôler des instrument auto-oscillants. Pour répondre à cet objectif, il est nécessaire de (1) modéliser le fonctionnement des instruments de musique auto-oscillants, (2) d'étudier les méthodes de résolution des équations non-linéaires issus des modèles physiques identifiés permettant une synthèse sonore et un contrôle de ces modèles en temps réel, et (3) de définir des décideur et des paramètres de contrôle des modèles numériques d'instruments. Ces trois questions font l'objet individuellement de nombreux travaux de recherche actuelle. Notre travail propose une étude succincte de la littérature existante sur ces différents sujets. 
+L'objectif de ce projet est de construire et contrôler des instrument auto-oscillants. Pour répondre à cet objectif, il est nécessaire de (1) modéliser le fonctionnement des instruments de musique auto-oscillants, (2) d'étudier les méthodes de résolution des équations non-linéaires issus des modèles physiques identifiés permettant une synthèse sonore et un contrôle de ces modèles en temps réel, et (3) de définir des descripteurs et des paramètres de contrôle des modèles numériques d'instruments. Ces trois questions font l'objet individuellement de nombreux travaux de recherche actuelle. Notre travail propose une étude succincte de la littérature existante sur ces différents sujets. 
 
 
 \section{Modèles physiques pour les instruments auto-oscillants}\label{sec:models physiques}
@@ -82,7 +82,7 @@ En intégrant à cette équation la relation entre la pression et la vitesse en 
 
 \paragraph{Modèle général}\label{sec:guide}
 
-Un modèle plus simple utilisé par McIntyre et al. \cite{mcintyre_oscillations_1983} et Maganza et al. \cite{maganza_bifurcations_1986} repose sur la décomposition de la variable potentiel $q(t)$ en deux : (1) une partie progressive $q_o(t)$ ; une partie rétrograde $q_i(t)$. Ces deux variables sont reliées par :
+Un modèle plus simple utilisé par McIntyre et al. \cite{mcintyre_oscillations_1983} et Maganza et al. \cite{maganza_bifurcations_1986} repose sur la décomposition de la variable potentiel $q(t)$ en deux : (1) une partie progressive aller $q_o(t)$ ; une partie rétrograde $q_i(t)$. Ces deux variables sont reliées par :
 
 \begin{equation}
     q_i(t)=r(t)*q_o(t).
@@ -230,7 +230,7 @@ Dans ce formalisme, le débit d'entrée dans le bec de la clarinette adimensionn
 \end{cases}
 \end{equation}
 
-Avec $\zeta$, une paramètre adimensionné régi par l'ouverture de l'anche, $\gamma$ un paramètre de la pression dans la bouche adimensionnée. 
+Avec $\zeta$, un paramètre adimensionné régi par l'ouverture de l'anche, $\gamma$ un paramètre de la pression dans la bouche adimensionnée. 
 
 On a donc $u(t) = F(p)$, avec $F(p)$ une fonction non-linéaire. En l'intégrant dans l'équation \ref{eq:model_modal}, on obtient une équation différentielle sur la pression. En faisant un développement limité de $u(t)$, on obtient une équation différentielle de type Van der Pol \cite{chaigne2008acoustique}.  Nous détaillerons les méthodes de résolution de ce type d'équation dans la section \ref{sec : méthode de résolution des equations non linéaires}. 
 
