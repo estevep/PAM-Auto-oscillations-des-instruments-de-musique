@@ -133,8 +133,6 @@ def display2D(signal, deltaT, samplerate):
 
     fig, line_ax = plt.subplots()
     
-    # line_ax = fig.add_axes()
-
     line1, = line_ax.plot(signal, signal_interpolated)
     line_ax.spines[['left', 'bottom']].set_position('center')
     line_ax.spines[['top', 'right']].set_visible(False)
@@ -213,7 +211,7 @@ def main() -> None:
     print(filenames)
 
     # samplerate, signal = import_signal(f"{samples_dir}/{filenames[-3]}")
-    samplerate, signal = import_signal(f"Descripteurs\\samples\\real\\Patinage.wav")
+    samplerate, signal = import_signal(f"Descripteurs\\samples\\real\\Changement de registre 2.wav")
     
 
     deltaT = 4e-4
