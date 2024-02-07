@@ -20,4 +20,7 @@ def save_P(save_dir, Fs, P):
             if n < temp:
                 n = temp
     n += 1
-    write(save_dir+"/clarinet_synth_VDP_"+str(n)+".wav", Fs, P)
+    
+    full_name = save_dir+"/clarinet_synth_VDP_"+str(n)+".wav"
+    write(full_name, Fs, P)
+    print("Saved as "+full_name)

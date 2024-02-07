@@ -15,7 +15,7 @@ def Z_cylinder():
     w   = give_w_axis()                             # Angular velocity axis w [rad/s]
     l   = 0.6                                       # Length of the resonator [m]
     R   = 13e-3                                     # Radius of the resonator [m]
-    S   = np.pi*R**2                                # Section of the resonator [m2]
+    #S   = np.pi*R**2                                # Section of the resonator [m2]
     
     f   = w/2*np.pi
     
@@ -30,9 +30,9 @@ def Z_cylinder():
     a   = w/c*(a1/rv + a2/rv**2)                    # Real part of propagation constant tau [m-1]  
     k   = w/c*(1+a1/rv)                             # Wavelength [m-1]
     dl  = 0.6*R                                     # Length correction [m] 
-    Zc  = rho*c/S                                   # Caracteristic impedance of the medium
+    #Zc  = rho*c/S                                   # Caracteristic impedance of the medium
     
-    Z = Zc*np.tanh(1j*k*(l+dl) + a*l + 1/4*(k*R)**2)   # Input impedance [kg/m2s]
+    Z = np.tanh(1j*k*(l+dl) + a*l + 1/4*(k*R)**2)   # Input impedance [kg/m2s]
     
     return Z
 
@@ -54,7 +54,7 @@ def find_Z_model(N, Z):
         d_idx       = 2*idx_half
         Qn[i]       = w[idx]/(dw*d_idx)
         
-    Fn  = Z[peaks]*wn/Qn
+    Fn  = Zreal[peaks]*wn/Qn
     Ymn = 1/Zreal[peaks]
     
     return wn, Qn, Fn, Ymn
@@ -90,6 +90,4 @@ def import_Z(w, model_type='clarinet', model_plot = False):
     
     Z = openwind.ImpedanceComputation(f, file, temperature=25)
     
-    Z.plot_impedance()
-    
-    return Z.impedance
+    return Z.impedance/Z.Zc
