@@ -5,8 +5,8 @@ from scipy.signal import find_peaks
 import openwind
 
 # Description : gives the angular velocity axis w [rad/s]
-def give_w_axis():
-    f = np.linspace(1, 1e3, 10000)
+def give_w_axis(f_min = 1, f_max=1e3):
+    f = np.linspace(f_min, f_max, 10000)
     return 2*np.pi*f
 
 
@@ -78,6 +78,8 @@ def import_Z(w, model_type='clarinet', model_plot = False):
     
     if model_type=='clarinet':
         file = "Impedance_models/clarinet.csv"
+    elif model_type=='saxophone':
+        file = "Impedance_models/saxophone.csv"
     elif model_type=='trumpet':
         file = "Impedance_models/simplified_trumpet.csv"
     else:
