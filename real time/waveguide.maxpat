@@ -3,14 +3,14 @@
 		"fileversion" : 1,
 		"appversion" : 		{
 			"major" : 8,
-			"minor" : 5,
-			"revision" : 6,
+			"minor" : 6,
+			"revision" : 0,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 34.0, 87.0, 1372.0, 779.0 ],
+		"rect" : [ 34.0, 77.0, 1852.0, 939.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -46,7 +46,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "float" ],
 					"parameter_enable" : 1,
-					"patching_rect" : [ 411.0, 294.0, 41.0, 48.0 ],
+					"patching_rect" : [ 411.0, 294.0, 41.0, 47.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
 							"parameter_longname" : "lambda",
@@ -252,8 +252,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 5,
-							"revision" : 6,
+							"minor" : 6,
+							"revision" : 0,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -606,8 +606,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 5,
-							"revision" : 6,
+							"minor" : 6,
+							"revision" : 0,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -747,8 +747,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 5,
-							"revision" : 6,
+							"minor" : 6,
+							"revision" : 0,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1023,7 +1023,7 @@
 					"offset" : 26,
 					"outlettype" : [ "int", "int" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 191.0, 14.0, 392.0, 60.0 ]
+					"patching_rect" : [ 224.0, 11.0, 392.0, 60.0 ]
 				}
 
 			}
@@ -1035,7 +1035,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "float" ],
 					"parameter_enable" : 1,
-					"patching_rect" : [ 366.5, 294.0, 41.0, 48.0 ],
+					"patching_rect" : [ 366.5, 294.0, 41.0, 47.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
 							"parameter_longname" : "live.dial[3]",
@@ -1059,7 +1059,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "float" ],
 					"parameter_enable" : 1,
-					"patching_rect" : [ 324.076641321182251, 289.0, 41.0, 48.0 ],
+					"patching_rect" : [ 324.076641321182251, 289.0, 41.0, 47.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
 							"parameter_longname" : "live.dial[2]",
@@ -1088,8 +1088,8 @@
 					"patching_rect" : [ 1227.0, 44.0, 230.0, 183.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 956.410266101360321, 130.769232094287872, 460.683765351772308, 487.179492115974426 ],
-					"xplace" : [ 0.417322834645669 ],
-					"yplace" : [ 0.566929133858268 ]
+					"xplace" : [ 0.373913043478261 ],
+					"yplace" : [ 0.655737704918033 ]
 				}
 
 			}
@@ -1127,9 +1127,9 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "float" ],
 					"parameter_enable" : 1,
-					"patching_rect" : [ 432.307733535766602, 835.384695053100586, 41.0, 48.0 ],
+					"patching_rect" : [ 432.307733535766602, 835.384695053100586, 41.0, 47.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 429.059833407402039, 41.880342304706573, 41.0, 48.0 ],
+					"presentation_rect" : [ 429.059833407402039, 41.880342304706573, 41.0, 47.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
 							"parameter_longname" : "live.dial[1]",
@@ -1178,7 +1178,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "float" ],
 					"parameter_enable" : 1,
-					"patching_rect" : [ 615.384674072265625, 440.000041961669922, 44.0, 48.0 ],
+					"patching_rect" : [ 615.384674072265625, 440.000041961669922, 44.0, 47.0 ],
 					"prototypename" : "gain",
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
@@ -1821,6 +1821,13 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-92", 0 ],
+					"source" : [ "obj-91", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-4", 1 ],
 					"source" : [ "obj-92", 0 ]
 				}
@@ -1849,7 +1856,7 @@
 ,
 		"dependency_cache" : [ 			{
 				"name" : "waveguide_engine.gendsp",
-				"bootpath" : "~/Documents/PAM-Auto-oscillations-des-instruments-de-musique/real time",
+				"bootpath" : "D:/Documents/IRCAM/PAM/PAM-Auto-oscillations-des-instruments-de-musique/real time",
 				"patcherrelativepath" : ".",
 				"type" : "gDSP",
 				"implicit" : 1
