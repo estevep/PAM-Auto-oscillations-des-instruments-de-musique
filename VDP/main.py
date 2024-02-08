@@ -58,12 +58,10 @@ def RK_solver(ode_fun, y0, t, args=()):
 
 # Impedance   
 
-w               = give_w_axis(1.5e3, 2e3)
+w               = give_w_axis(1, 1e3)
 #Z               = Z_cylinder()
 Z               = import_Z(w, model_type = instrument_type, 
                            model_plot=True)
-plt.figure()
-plt.plot(w/(2*np.pi), np.abs(Z))
 wn, Qn, Fn, Ymn = find_Z_model(N, Z)
 Z_model         = create_Z_model(wn, Qn, Fn)
 
@@ -103,10 +101,12 @@ if plot_bool :
     plt.xlabel('t (s)')
     plt.ylabel(r'$\partial_t P$ (Pa/s)')
     plt.subplot(2, 2, 3)
-    plt.plot(w/(2*np.pi), np.abs(Z_model))
-    plt.title('Modal normalized impedance w.r.t frequency')
+    plt.plot(w/(2*np.pi), np.real(Z), label='Real impedance')
+    plt.plot(w/(2*np.pi), np.real(Z_model), label='Model impedance')
+    plt.title('Modal and real normalized impedances w.r.t frequency')
     plt.xlabel('f (Hz)')
-    plt.ylabel(r'$\frac{|Z|}{Z_c}$ (-)')
+    plt.ylabel(r'$\frac{Re(Z)}{Z_c}$ (-)')
+    plt.legend()
     plt.subplot(2, 2, 4)
     plt.plot(f_plot[f_plot<1000], np.abs(P_fft[f_plot<1000]))
     plt.title('Pressure FFT w.r.t frequency')
