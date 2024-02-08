@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "dsp.gen",
-		"rect" : [ 34.0, 77.0, 1375.0, 939.0 ],
+		"rect" : [ 34.0, 77.0, 1852.0, 939.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -40,12 +40,36 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
+					"id" : "obj-15",
+					"maxclass" : "newobj",
+					"numinlets" : 0,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 1025.0, 82.0, 121.0, 22.0 ],
+					"text" : "in 8 @comment Ymn"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-11",
+					"maxclass" : "newobj",
+					"numinlets" : 0,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 1036.0, 24.0, 110.0, 22.0 ],
+					"text" : "in 7 @comment Fn"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-7",
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1260.0, 700.0, 44.0, 22.0 ],
+					"patching_rect" : [ 1281.538583755493164, 890.769315719604492, 44.0, 22.0 ],
 					"text" : "history"
 				}
 
@@ -57,7 +81,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 381.0, 696.0, 44.0, 22.0 ],
+					"patching_rect" : [ 403.076961517333984, 886.1539306640625, 44.0, 22.0 ],
 					"text" : "history"
 				}
 
@@ -69,7 +93,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1020.0, 696.0, 44.0, 22.0 ],
+					"patching_rect" : [ 1084.615488052368164, 866.0, 44.0, 22.0 ],
 					"text" : "history"
 				}
 
@@ -81,7 +105,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 91.0, 696.0, 44.0, 22.0 ],
+					"patching_rect" : [ 143.076936721801758, 873.0, 44.0, 22.0 ],
 					"text" : "history"
 				}
 
@@ -93,7 +117,7 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1246.0, 64.0, 119.0, 22.0 ],
+					"patching_rect" : [ 849.0, 75.0, 119.0, 22.0 ],
 					"text" : "in 6 @comment zeta"
 				}
 
@@ -105,7 +129,7 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1063.0, 64.0, 136.0, 22.0 ],
+					"patching_rect" : [ 849.0, 22.0, 136.0, 22.0 ],
 					"text" : "in 5 @comment gamma"
 				}
 
@@ -117,7 +141,7 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1708.105291128158569, 104.0, 111.0, 22.0 ],
+					"patching_rect" : [ 678.0, 82.0, 111.0, 22.0 ],
 					"text" : "in 4 @comment w2"
 				}
 
@@ -129,7 +153,7 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 885.105291128158569, 59.0, 111.0, 22.0 ],
+					"patching_rect" : [ 678.0, 22.0, 111.0, 22.0 ],
 					"text" : "in 3 @comment w1"
 				}
 
@@ -141,7 +165,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 969.629597842693329, 817.037010252475739, 29.5, 22.0 ],
+					"patching_rect" : [ 906.0, 933.0, 29.5, 22.0 ],
 					"text" : "+"
 				}
 
@@ -152,34 +176,23 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 966.666634976863861, 867.407378971576691, 35.0, 22.0 ],
+					"patching_rect" : [ 906.0, 982.0, 35.0, 22.0 ],
 					"text" : "out 3"
 				}
 
 			}
 , 			{
 				"box" : 				{
-					"id" : "obj-4",
-					"maxclass" : "newobj",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 1098.0, 715.0, 35.0, 22.0 ],
-					"text" : "out 2"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"code" : "ode_fun(p, dp, gamma, zeta, Fn, Ymn, wn) {\r\n\tA = zeta * (3 * gamma - 1)/(2 * sqrt(gamma));\r\n\tB = -zeta * (3 * gamma + 1)/(8 * pow(gamma, 3/2));\r\n\tC = -zeta * (gamma + 1)/(16 * pow(gamma, 5/2));\r\n\t\r\n\ty = -pow(wn, 2) * p \r\n        - Fn *(Ymn - A) * dp \r\n\t\t+ 2 * Fn * B * p * dp \r\n\t\t+ 3 * Fn * C * pow(p, 2) * dp; \r\n\t\r\n\treturn y;\r\n}\r\n\r\n\r\nRK4_step(p, dp, h, gamma, zeta, Fn, Ymn, wn) {\r\n\t\r\n\tK1p = h * dp;\r\n\tK1dp = h * ode_fun(p, dp, gamma, zeta, Fn, Ymn, wn);\r\n\t\r\n\tK2p = h * (dp + 1/2*K1dp);\r\n\tK2dp = h * ode_fun(p + 1/2*K1p, dp + 1/2*K1dp, gamma, zeta, Fn, Ymn, wn);\r\n\t\r\n\tK3p = h * (dp + 1/2*K2dp);\r\n\tK3dp = h* ode_fun(p + 1/2*K2p, dp + 1/2*K2dp, gamma, zeta, Fn, Ymn, wn);\r\n\t\r\n\tK4p = h * (dp + K3dp);\r\n\tK4dp = h * ode_fun(p + K3p, dp + K3dp, gamma, zeta, Fn, Ymn, wn);\r\n\t\r\n\t\r\n\tp_out = p + 1/6*(K1p + 2*K2p + 2*K3p + K4p);\r\n\tdp_out = dp + 1/6*(K1dp + 2*K2dp + 2*K3dp + K4dp);\r\n\t\r\n\treturn p_out, dp_out;\r\n}\r\n\r\n\r\ngamma = in6 ;//= 0.5;\r\nzeta = in7 ; //0.5;  \r\nFn = 1116.0;\r\nYmn = 0.0166;\r\n//wn = 869.0 * 3;\r\nwn = in5 * 2.0 * pi;\r\n\r\n\r\np_in = in1;\r\ndp_in = in2;\r\n\r\nperturbation = in3 * 1e-8;\r\npanic = in4;\r\n\r\np_out, dp_out = RK4_step(p_in + perturbation, dp_in, 1/samplerate, gamma, zeta, Fn, Ymn, wn);\r\n\r\n\r\nout1 = p_out * panic;\r\nout2 = dp_out * panic;\r\n\r\nout3 = p_out * panic / wn;",
+					"code" : "ode_fun(p, dp, gamma, zeta, Fn, Ymn, wn) {\r\n\tA = zeta * (3 * gamma - 1)/(2 * sqrt(gamma));\r\n\tB = -zeta * (3 * gamma + 1)/(8 * pow(gamma, 3/2));\r\n\tC = -zeta * (gamma + 1)/(16 * pow(gamma, 5/2));\r\n\t\r\n\ty = -pow(wn, 2) * p \r\n        - Fn *(Ymn - A) * dp \r\n\t\t+ 2 * Fn * B * p * dp \r\n\t\t+ 3 * Fn * C * pow(p, 2) * dp; \r\n\t\r\n\treturn y;\r\n}\r\n\r\n\r\nRK4_step(p, dp, h, gamma, zeta, Fn, Ymn, wn) {\r\n\t\r\n\tK1p = h * dp;\r\n\tK1dp = h * ode_fun(p, dp, gamma, zeta, Fn, Ymn, wn);\r\n\t\r\n\tK2p = h * (dp + 1/2*K1dp);\r\n\tK2dp = h * ode_fun(p + 1/2*K1p, dp + 1/2*K1dp, gamma, zeta, Fn, Ymn, wn);\r\n\t\r\n\tK3p = h * (dp + 1/2*K2dp);\r\n\tK3dp = h* ode_fun(p + 1/2*K2p, dp + 1/2*K2dp, gamma, zeta, Fn, Ymn, wn);\r\n\t\r\n\tK4p = h * (dp + K3dp);\r\n\tK4dp = h * ode_fun(p + K3p, dp + K3dp, gamma, zeta, Fn, Ymn, wn);\r\n\t\r\n\t\r\n\tp_out = p + 1/6*(K1p + 2*K2p + 2*K3p + K4p);\r\n\tdp_out = dp + 1/6*(K1dp + 2*K2dp + 2*K3dp + K4dp);\r\n\t\r\n\treturn p_out, dp_out;\r\n}\r\n\r\n\r\ngamma = in6 ;//= 0.5;\r\nzeta = in7 ; //0.5;  \r\nFn = 1116.0;\r\nYmn = 0.0166;\r\n//wn = 869.0 * 3;\r\nwn = in5 * 2.0 * pi;\r\nw1 = in8 * 2.0 * pi;\r\n\r\np_in = in1;\r\ndp_in = in2;\r\n\r\nperturbation = in3 * 1e-8;\r\npanic = in4;\r\n\r\np_out, dp_out = RK4_step(p_in + perturbation, dp_in, 1/samplerate, gamma, zeta, Fn, Ymn, wn);\r\n\r\n\r\nout1 = p_out * panic;\r\nout2 = dp_out * panic;\r\n\r\nout3 = p_out * panic / wn * w1;",
 					"fontface" : 0,
 					"fontname" : "<Monospaced>",
 					"fontsize" : 12.0,
 					"id" : "obj-2",
 					"maxclass" : "codebox",
-					"numinlets" : 7,
+					"numinlets" : 8,
 					"numoutlets" : 3,
 					"outlettype" : [ "", "", "" ],
-					"patching_rect" : [ 1063.0, 157.0, 782.105291128158569, 497.894754648208618 ]
+					"patching_rect" : [ 1084.615488052368164, 347.692340850830078, 782.105291128158569, 497.894754648208618 ]
 				}
 
 			}
@@ -190,7 +203,7 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 418.0, 51.0, 160.0, 22.0 ],
+					"patching_rect" : [ 344.576961517333984, 44.0, 160.0, 22.0 ],
 					"text" : "in 1 @comment perturbation"
 				}
 
@@ -202,34 +215,23 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 667.0, 51.0, 125.0, 22.0 ],
+					"patching_rect" : [ 362.576961517333984, 82.0, 125.0, 22.0 ],
 					"text" : "in 2 @comment panic"
 				}
 
 			}
 , 			{
 				"box" : 				{
-					"id" : "obj-9",
-					"maxclass" : "newobj",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 210.0, 751.0, 35.0, 22.0 ],
-					"text" : "out 1"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"code" : "ode_fun(p, dp, gamma, zeta, Fn, Ymn, wn) {\r\n\tA = zeta * (3 * gamma - 1)/(2 * sqrt(gamma));\r\n\tB = -zeta * (3 * gamma + 1)/(8 * pow(gamma, 3/2));\r\n\tC = -zeta * (gamma + 1)/(16 * pow(gamma, 5/2));\r\n\t\r\n\ty = -pow(wn, 2) * p \r\n        - Fn *(Ymn - A) * dp \r\n\t\t+ 2 * Fn * B * p * dp \r\n\t\t+ 3 * Fn * C * pow(p, 2) * dp; \r\n\t\r\n\treturn y;\r\n}\r\n\r\n\r\nRK4_step(p, dp, h, gamma, zeta, Fn, Ymn, wn) {\r\n\t\r\n\tK1p = h * dp;\r\n\tK1dp = h * ode_fun(p, dp, gamma, zeta, Fn, Ymn, wn);\r\n\t\r\n\tK2p = h * (dp + 1/2*K1dp);\r\n\tK2dp = h * ode_fun(p + 1/2*K1p, dp + 1/2*K1dp, gamma, zeta, Fn, Ymn, wn);\r\n\t\r\n\tK3p = h * (dp + 1/2*K2dp);\r\n\tK3dp = h* ode_fun(p + 1/2*K2p, dp + 1/2*K2dp, gamma, zeta, Fn, Ymn, wn);\r\n\t\r\n\tK4p = h * (dp + K3dp);\r\n\tK4dp = h * ode_fun(p + K3p, dp + K3dp, gamma, zeta, Fn, Ymn, wn);\r\n\t\r\n\t\r\n\tp_out = p + 1/6*(K1p + 2*K2p + 2*K3p + K4p);\r\n\tdp_out = dp + 1/6*(K1dp + 2*K2dp + 2*K3dp + K4dp);\r\n\t\r\n\treturn p_out, dp_out;\r\n}\r\n\r\n\r\ngamma = in6 ;//= 0.5;\r\nzeta = in7 ; //0.5; \r\nFn = 1116.0;\r\nYmn = 0.0166;\r\n//wn = 869.0;\r\nwn = in5 * 2.0 * pi;\r\n\r\np_in = in1;\r\ndp_in = in2;\r\n\r\nperturbation = in3 * 1e-8;\r\npanic = in4;\r\n\r\np_out, dp_out = RK4_step(p_in + perturbation, dp_in, 1/samplerate, gamma, zeta, Fn, Ymn, wn);\r\n\r\n\r\nout1 = p_out * panic;\r\nout2 = dp_out * panic;\r\n\r\nout3 = p_out * panic / wn;",
+					"code" : "ode_fun(p, dp, gamma, zeta, Fn, Ymn, wn) {\r\n\tA = zeta * (3 * gamma - 1)/(2 * sqrt(gamma));\r\n\tB = -zeta * (3 * gamma + 1)/(8 * pow(gamma, 3/2));\r\n\tC = -zeta * (gamma + 1)/(16 * pow(gamma, 5/2));\r\n\t\r\n\ty = -pow(wn, 2) * p \r\n        - Fn *(Ymn - A) * dp \r\n\t\t+ 2 * Fn * B * p * dp \r\n\t\t+ 3 * Fn * C * pow(p, 2) * dp; \r\n\t\r\n\treturn y;\r\n}\r\n\r\n\r\nRK4_step(p, dp, h, gamma, zeta, Fn, Ymn, wn) {\r\n\t\r\n\tK1p = h * dp;\r\n\tK1dp = h * ode_fun(p, dp, gamma, zeta, Fn, Ymn, wn);\r\n\t\r\n\tK2p = h * (dp + 1/2*K1dp);\r\n\tK2dp = h * ode_fun(p + 1/2*K1p, dp + 1/2*K1dp, gamma, zeta, Fn, Ymn, wn);\r\n\t\r\n\tK3p = h * (dp + 1/2*K2dp);\r\n\tK3dp = h* ode_fun(p + 1/2*K2p, dp + 1/2*K2dp, gamma, zeta, Fn, Ymn, wn);\r\n\t\r\n\tK4p = h * (dp + K3dp);\r\n\tK4dp = h * ode_fun(p + K3p, dp + K3dp, gamma, zeta, Fn, Ymn, wn);\r\n\t\r\n\t\r\n\tp_out = p + 1/6*(K1p + 2*K2p + 2*K3p + K4p);\r\n\tdp_out = dp + 1/6*(K1dp + 2*K2dp + 2*K3dp + K4dp);\r\n\t\r\n\treturn p_out, dp_out;\r\n}\r\n\r\np_in = in1;\r\ndp_in = in2;\r\nperturbation = in3 * 1e-8;\r\npanic = in4;\r\nwn = in5 * 2 * pi;\r\ngamma = in6 ;//= 0.5;\r\nzeta = in7 ; //0.5;\r\nFn = in8;\r\nYmn = in9;\r\n//Fn = 1116.0;\r\n//Ymn = 0.0166;\r\n//wn = 869.0;\r\n\r\n\r\n\r\np_out, dp_out = RK4_step(p_in + perturbation, dp_in, 1/samplerate, gamma, zeta, Fn, Ymn, wn);\r\n\r\n\r\nout1 = p_out * panic;\r\nout2 = dp_out * panic;\r\n\r\nout3 = p_out * panic;",
 					"fontface" : 0,
 					"fontname" : "<Monospaced>",
 					"fontsize" : 12.0,
 					"id" : "obj-5",
 					"maxclass" : "codebox",
-					"numinlets" : 7,
+					"numinlets" : 9,
 					"numoutlets" : 3,
 					"outlettype" : [ "", "", "" ],
-					"patching_rect" : [ 122.0, 157.0, 782.105291128158569, 497.894754648208618 ]
+					"patching_rect" : [ 143.076936721801758, 347.692340850830078, 782.105291128158569, 497.894754648208618 ]
 				}
 
 			}
@@ -237,8 +239,15 @@
 		"lines" : [ 			{
 				"patchline" : 				{
 					"destination" : [ "obj-5", 0 ],
-					"midpoints" : [ 100.5, 720.0, 78.0, 720.0, 78.0, 153.0, 131.5, 153.0 ],
+					"midpoints" : [ 152.576936721801758, 897.0, 129.0, 897.0, 129.0, 342.0, 152.576936721801758, 342.0 ],
 					"source" : [ "obj-1", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-5", 7 ],
+					"source" : [ "obj-11", 0 ]
 				}
 
 			}
@@ -276,6 +285,13 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-5", 8 ],
+					"source" : [ "obj-15", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-12", 0 ],
 					"source" : [ "obj-16", 0 ]
 				}
@@ -283,7 +299,16 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-2", 7 ],
+					"order" : 0,
+					"source" : [ "obj-17", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-5", 4 ],
+					"order" : 1,
 					"source" : [ "obj-17", 0 ]
 				}
 
@@ -313,23 +338,7 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-16", 1 ],
-					"source" : [ "obj-2", 2 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
 					"destination" : [ "obj-3", 0 ],
-					"order" : 1,
-					"source" : [ "obj-2", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-4", 0 ],
-					"order" : 0,
 					"source" : [ "obj-2", 0 ]
 				}
 
@@ -360,7 +369,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-2", 0 ],
-					"midpoints" : [ 1029.5, 720.0, 1005.0, 720.0, 1005.0, 153.0, 1072.5, 153.0 ],
+					"midpoints" : [ 1094.115488052368164, 891.0, 1071.0, 891.0, 1071.0, 342.0, 1094.115488052368164, 342.0 ],
 					"source" : [ "obj-3", 0 ]
 				}
 
@@ -368,7 +377,6 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-1", 0 ],
-					"order" : 1,
 					"source" : [ "obj-5", 0 ]
 				}
 
@@ -389,16 +397,8 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-9", 0 ],
-					"order" : 0,
-					"source" : [ "obj-5", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
 					"destination" : [ "obj-5", 1 ],
-					"midpoints" : [ 390.5, 723.0, 79.0, 723.0, 79.0, 666.0, 79.0, 666.0, 79.0, 144.0, 258.684215188026428, 144.0 ],
+					"midpoints" : [ 412.576961517333984, 909.0, 129.0, 909.0, 129.0, 333.0, 247.965098112821579, 333.0 ],
 					"source" : [ "obj-6", 0 ]
 				}
 
@@ -406,7 +406,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-2", 1 ],
-					"midpoints" : [ 1269.5, 723.0, 1143.0, 723.0, 1143.0, 666.0, 1050.0, 666.0, 1050.0, 144.0, 1199.684215188026428, 144.0 ],
+					"midpoints" : [ 1291.038583755493164, 939.0, 1071.0, 939.0, 1071.0, 333.0, 1203.130529642105103, 333.0 ],
 					"source" : [ "obj-7", 0 ]
 				}
 

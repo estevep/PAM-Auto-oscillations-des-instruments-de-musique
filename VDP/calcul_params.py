@@ -3,28 +3,18 @@ import openwind
 from scipy.signal import find_peaks
 from impedance import give_w_axis, find_Z_model
 
-target_pulsations = 2 * np.pi * np.array([130.81,
-                     138.59,
-                     146.83,
-                     155.56,
-                     164.81,
-                     174.61,
-                     185.00,
-                     196.00,
-                     207.65,
-                     220.00,
-                     233.08,
-                     246.94,
-                     261.63])
+target_pulsations = 2 * np.pi * np.array([261.63, 277.18, 293.66, 311.13,
+                                          329.63, 349.23, 369.99, 392.00,
+                                          415.30, 440.00, 466.16, 493.88,
+                                          523.25, 554.37, 587.33, 622.25,
+                                          659.25, 698.46, 739.99, 783.99,
+                                          830.61, 880.00, 932.33, 987.77])
 
 
-def Z_cylinder_mod(l):
+def compute_Fn_Ymn(l):
     w   = give_w_axis()                             # Angular velocity axis w [rad/s]
-    # l   = 0.6                                       # Length of the resonator [m]
     R   = 13e-3                                     # Radius of the resonator [m]
-    S   = np.pi*R**2                                # Section of the resonator [m2]
-    
-    f   = w/2*np.pi
+    N   = 1                                         # Number of holes    
     
     c   = 340                                       # Sound speed in the medium [m/s]
     rho = 1.2                                       # Density of the medium [kg/m3]
@@ -37,34 +27,53 @@ def Z_cylinder_mod(l):
     a   = w/c*(a1/rv + a2/rv**2)                    # Real part of propagation constant tau [m-1]  
     k   = w/c*(1+a1/rv)                             # Wavelength [m-1]
     dl  = 0.6*R                                     # Length correction [m] 
-    Zc  = rho*c/S                                   # Caracteristic impedance of the medium
     
-    Z = Zc*np.tanh(1j*k*(l+dl) + a*l + 1/4*(k*R)**2)   # Input impedance [kg/m2s]
+    Z = np.tanh(1j*k*(l+dl) + a*l + 1/4*(k*R)**2)   # Input impedance [kg/m2s]
     
-    return Z
 
-l_vec = np.linspace(0.1, 2.0, 150)
-l_result = []
-wn_vec = []
-Ymn_vec = []
-Fn_vec = []
-
-for i in range(l_vec.shape[0]):
+    dw          = w[1] - w[0]
+    Zreal       = np.real(Z)
+    peaks, _    = find_peaks(Zreal)
+    peaks       = peaks[:N]
+    wn          = w[peaks]
     
-    Z = Z_cylinder_mod(l_vec[i])
-    wn, _, Fn, Ymn = find_Z_model(1, Z)
+    Qn = np.zeros(N)
+    for i,peak in enumerate(peaks):
+        idx         = peak
+        idx_max     = int(peak + 50*2*np.pi//dw)
+        idx_half    = np.argmin(np.abs(Zreal[idx:idx_max] - Zreal[idx]/2))
+        d_idx       = 2*idx_half
+        Qn[i]       = w[idx]/(dw*d_idx)
+        
+    Fn  = Zreal[peaks]*wn/Qn
+    Ymn = 1/Zreal[peaks]
 
-    if np.isclose(wn, target_pulsations, rtol= 0.01).sum():
-        l_result.append(l_vec[i])
-        wn_vec.append(wn[0])
-        Ymn_vec.append(Ymn[0])
-        Fn_vec.append(Fn[0])
 
-# print(np.array(wn_vec) / (2* np.pi))
+    return wn[0], Fn[0], Ymn[0]
 
 
-file = open("real time/params.txt", "w")
-for i, value in enumerate(l_result):
-    file.writelines([f"{wn_vec[i]} {Ymn_vec[i]} {np.abs(Fn_vec[i])}\n"])
+if __name__ == "__main__":
 
-file.close()
+    c = 343.0
+    pulsations = target_pulsations.copy()
+    
+    # l_vec = c*2*np.pi/(4 * pulsations)
+    l_vec = np.linspace(0.08, 0.35, 2000)
+    l_vec = np.flip(l_vec)
+
+    file = open("real time/params.txt", "w")
+    
+    w_index = 0
+    for i in range(l_vec.shape[0]):
+        
+        wn, Fn, Ymn = compute_Fn_Ymn(l_vec[i])
+
+        if np.isclose(wn, pulsations[w_index], rtol=1e-3):
+
+
+            w_index += 1
+            file.writelines([f"{wn/(2*np.pi)} {Fn} {Ymn}\n"])
+
+    assert(w_index == pulsations.shape[0])
+
+    file.close()
