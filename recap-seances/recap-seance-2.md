@@ -102,3 +102,11 @@ Quand on met une équation centrée, elle fait quand même partie de la phrase.
 On commence rarement une phrase par un numéro (que ce soit d'équation, bibliographie, figure...).
 
 Article : Résumé et intro on peut garder. Ce sera un article sur notre travail, donc il y aura pas mal de références mais on ne gardera pas de biblio sous cette forme.
+
+
+## Questions :
+
+Pour la méthode de Maganza et al. on a compris comment faire pour la partie régime périodique, mais c'est pas encore clair pour le transitoire :
+
+besoin de la fonction G de la non-linéarité tq p+ = G(p-), mais on a que p= F(u)
+

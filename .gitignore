@@ -28,3 +28,6 @@ profile_default/
 *.synctex.gz
 *.toc
 *.run.xml
+
+# Wav files for the waveguide simulation
+acoustique/waveguide/sounds

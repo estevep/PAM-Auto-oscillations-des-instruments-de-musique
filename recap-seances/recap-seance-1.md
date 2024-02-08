@@ -53,6 +53,7 @@ Dans le rapport, bien couvrir tous les champs du projets (ici, pas encore de cou
     Pression en sortie : matrice de transfert
 
    2. Excitateurs : comment les modéliser.
+   
    Différents excitateurs possibles :
       1. Anche simple
       2. Anche double
@@ -67,3 +68,21 @@ Dans le rapport, bien couvrir tous les champs du projets (ici, pas encore de cou
     A approfondir
 
 1. Mentionner dans la biblio le contrôle (piloter, sur quelle base on peut s'appuyer (cartographies))
+
+
+## Questions
+
+### Régimes
+
+- Transitoires ?
+- Canards ?
+
+### Analogies violon
+
+Même chose que Maganza avec le violon
+
+Limitations : modèles différents pour les coeff de réflexion, faudrait prendre une porte mais du coup la technique marche plus.
+
+### Acoustique
+
+Résonateurs : equa diff vs. processus itératif (maganza)
