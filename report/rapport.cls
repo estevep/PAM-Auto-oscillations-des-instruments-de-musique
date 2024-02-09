@@ -58,6 +58,9 @@
   \@bookfalse
 }
 
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
+
+
 
 % execute default options
 % \ExecuteOptions{phelma_normal}
@@ -69,10 +72,13 @@
 \ProcessOptions\relax
 
 \LoadClass{\chosenclass}
+% \LoadClass[twocolomn]{book}
+
 
 %-------------------------------------------------------------------------------
 %                Required packages
 %-------------------------------------------------------------------------------
+\RequirePackage{xifthen}
 
 \RequirePackage{fullpage}
 
@@ -84,7 +90,6 @@
 
 % Pour ajouter des pdf_tex générés par inkscape (mais ça bug pour l'instant)
 \RequirePackage{import}
-\RequirePackage{xifthen}
 % \RequirePackage{pdfpages} % Already included for broader use
 \RequirePackage{transparent}
 
