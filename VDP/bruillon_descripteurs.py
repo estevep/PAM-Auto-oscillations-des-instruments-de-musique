@@ -33,7 +33,7 @@ from main import *
 
 from scipy.fft import fft, fftfreq
 
-#%%% Definition du pich de l'audio, d'après code tp benjamin
+#%%% fonction pour detécttion de pitch (d'après tp JP)
 
 
 
@@ -136,7 +136,6 @@ def detect_pich_pression(P, Fs): #ajouter en option les bornes fmin et fmax
     return f0_hz
 
 
-#%% suite fonction TP bj pour extraire les hamoniques: 
 def inharmonic(f0, h, beta):
     return h*f0*np.sqrt(1 + (h**2 - 1)*beta)
 
@@ -228,23 +227,23 @@ def F_getHarmonicsFromF0AndSpectre_pression(P,Fs):
     return harmoFreq_k_v, harmoAmpl_v
 
 
+
+
+
+
 #%%%
 def is_close(f1, f2, nb_cent_max):
     i = 1200*np.log(np.max([f1,f2])/np.min([f1,f2]))/np.log(2)
     return i< nb_cent_max
 
 #%%%%%% définition des descripteurs 
-
+'''
 def is_sound_audioFile(audioFile): #le truc de victor 
     sr_hz, data_v = scipy.io.wavfile.read(audioFile)
     data_v = data_v[:,1]
     P = data_v
     return np.any(P>1e-7)
-def is_sound_pression(P):
-    return np.any(P>1e-7)
 
-#permet de definir une zonne de jeu juste autour de la frequence fondamentale du resonateur 
-#ajouter calcul de f_attendu en fonction de la longueur du resonnateur? 
 def est_just_audioFile(audioFile , f_attendu): #f0 est la frequences fondamentale de jeu attendu
     if is_sound_audioFile(audioFile) : 
         f0 = detect_pich_audioFile(audioFile)
@@ -252,20 +251,35 @@ def est_just_audioFile(audioFile , f_attendu): #f0 est la frequences fondamental
         return is_close(f0, f_attendu,20 )
     return False
 
+
+#%%%%%%%
+audioFile = 'C:/Users/charl/Documents/PAM-Auto-oscillations-des-instruments-de-musique/Descripteurs/samples/real/Une note 2.wav' 
+
+sr_hz, data_v = scipy.io.wavfile.read(audioFile)
+data_v = data_v[:,1]
+P = data_v
+
+rugosite(P)
+est_rugueux(P)
+
+is_close(135, wn[0]/(2*np.pi) , 100)
+
+
+'''
+#%%%%%
+
+def is_sound_pression(P):
+    #return np.any(P>1e-7)
+    return ((1/len(P))*np.sum(np.abs(P[100:]))>0.1)
+#permet de definir une zonne de jeu juste autour de la frequence fondamentale du resonateur 
+#ajouter calcul de f_attendu en fonction de la longueur du resonnateur? 
+
 def est_just_pression(P , f_attendu,tolerence): #f0 est la frequences fondamentale de jeu attendu
     if is_sound_pression(P) : 
         f0 = detect_pich_pression(P,Fs)
         return is_close(f0, f_attendu, tolerence)
     else : return False
 
-#%%%
-#is_close(144, 141, 40)
-
-is_sound_pression(P[13])
-detect_pich_pression(P_matrice[13], Fs)
-print(est_just_pression(P_matrice[13] , wn[0]/(2*np.pi),5))
-
-#%%%%%
 
 def rugosite(P):
     harmoFreq_k_v, harmoAmpl_v = F_getHarmonicsFromF0AndSpectre_pression(P,Fs)
@@ -287,25 +301,41 @@ def rugosite(P):
 
     return(np.log(rug))
 
-def est_rugueux(P):
-    return rugosite(P)>np.log(1.45e+26)
+def est_rugueux(P,crit):
+    return rugosite(P)<crit
 
+from scipy.signal import hilbert
+import signal_envelope as se
 
-#%%%%%%%
-audioFile = 'C:/Users/charl/Documents/PAM-Auto-oscillations-des-instruments-de-musique/Descripteurs/samples/real/Une note 2.wav' 
+def quasi_periodic (P): 
+    P = P[10000:]
+    analytic_signal =( hilbert(P)) #amplitude_envelope 
+    Pe = np.abs(analytic_signal)
+    
+    indice = np.var(Pe)/np.mean(Pe)
+    #plt.plot(Pe[2000:8000])
+    #plt.plot(P[2000:8000])
+    return np.log(indice)
 
-sr_hz, data_v = scipy.io.wavfile.read(audioFile)
-data_v = data_v[:,1]
-P = data_v
+def is_quasi_periodic(P, crit): 
+    return  quasi_periodic (P) > crit
 
-rugosite(P)
-est_rugueux(P)
-
-is_close(135, wn[0]/(2*np.pi) , 100)
-
-
+def is_periodic(P, crit): 
+    return  quasi_periodic (P) < crit
 
 #%%%
+
+is_sound_pression(P_matrice[100])
+
+for k in range (g_grid.size) : 
+    if is_sound_pression(P_matrice[k]):
+        if is_periodic(P_matrice[k], -4):
+            print (k)
+        
+k = 108
+print(k,quasi_periodic(P_matrice[k]))
+detect_pich_pression(P_matrice[k],Fs)
+#%%% Code de Victor pour SVM 
 
 
 def plot_training_data_with_decision_boundary(X, y):
@@ -314,7 +344,7 @@ def plot_training_data_with_decision_boundary(X, y):
 
     # Settings for plotting
     _, ax = plt.subplots(figsize=(7, 7))
-    x_min, x_max, y_min, y_max = 0, 1, 0, 1
+    x_min, x_max, y_min, y_max = 0, 2, 0, 2
     ax.set(xlim=(x_min, x_max), ylim=(y_min, y_max))
 
     # Plot decision boundary and margins
@@ -358,7 +388,7 @@ plot_bool   = True
 save_bool   = True
 save_dir    = f"{os.getcwd()}\\..\\Descripteurs\\samples"
 Fs          = 44100                         # Sampling frequency [Hz]
-T           = 15                             # Total time of the signal [s]
+T           = 5                             # Total time of the signal [s]
 N           = 3                             # Number of cavity modes 
 P0          = 1e-8*np.random.randn()        # Initial (normalized) pressure value [Pa]
 Pdot0       = 0.                            # Initial time derivative of the (normalized) pressure value [Pa/s]
@@ -389,17 +419,14 @@ Pn0 = [P0, Pdot0]
 t = np.arange(0,T,1/Fs)
 
 # Gamma/Zeta parameters grid
-taille = 6
+taille = 15
 dim_grid = (taille,taille)
 
-g_grid          = np.linspace(1e-8, 1, dim_grid[0])
-z_grid          = np.linspace(1e-8,1, dim_grid[0])
+g_grid          = np.linspace(1e-8, 2, dim_grid[0])
+z_grid          = np.linspace(1e-8,2, dim_grid[0])
 g_grid, z_grid  = np.meshgrid(g_grid, z_grid)
 g_grid, z_grid  = g_grid.reshape((-1,1)), z_grid.reshape((-1,1))  
-crit_grid_is_sound = np.full(g_grid.size, False)
 
-crit_grid_is_juste = np.full(g_grid.size, False)
-crit_grid_est_rugueux = np.full(g_grid.size, False)
 
 P_matrice = np.zeros((taille*taille,len(t)))
 
@@ -424,18 +451,42 @@ for k in range(g_grid.size):
 
     P_matrice[k] = P
 
+#%%%%%
+#P_matrice2 = P_matrice 
+#P_matrice = P_matrice1 
+
 #%%%%%%%%
+
+crit_grid_is_sound = np.full(g_grid.size, False)
+
+crit_grid_is_juste = np.full(g_grid.size, False)
+crit_grid_est_rugueux = np.full(g_grid.size, False)
+crit_grid_is_second = np.full(g_grid.size, False)
+crit_grid_is_quasi_periodic = np.full(g_grid.size, False)
+crit_grid_is_periodic = np.full(g_grid.size, False)
+
+
 for k in range(g_grid.size):
     
     if is_sound_pression(P_matrice[k]) : 
-        print( detect_pich_pression(P_matrice[k],Fs) ) 
         crit_grid_is_sound[k] = is_sound_pression(P_matrice[k])
-        crit_grid_est_rugueux[k]=est_rugueux(P_matrice[k])
+        crit_grid_est_rugueux[k]=est_rugueux(P_matrice[k],np.log(1e+28))
+        crit_grid_is_second[k]= est_just_pression(P_matrice[k],wn[1]/(2*(np.pi)),200)
+        crit_grid_is_quasi_periodic[k] = is_quasi_periodic(P_matrice[k], -2)
+        crit_grid_is_periodic[k] = is_periodic(P_matrice[k], -2)
+        crit_grid_is_juste[k]= est_just_pression(P_matrice[k], wn[0]/(2*np.pi),20)
+
     else : 
         crit_grid_is_juste[k]= False
         crit_grid_est_rugueux[k]=False
         crit_grid_is_sound[k] = False
-    crit_grid_is_juste[k]= est_just_pression(P_matrice[k], wn[0]/(2*np.pi),5)
+        crit_grid_is_second[k]=False
+        crit_grid_is_quasi_periodic[k] = False
+        crit_grid_is_periodic[k] = False
+
+    
+#%%%%
+i = 1200*np.log(np.max([180,wn[0]/(2*np.pi)])/np.min([150,wn[0]/(2*np.pi)]))/np.log(2)
 
     
 
@@ -448,6 +499,11 @@ plot_training_data_with_decision_boundary(X, crit_grid_is_juste)
 
 plot_training_data_with_decision_boundary(X,crit_grid_est_rugueux)
 
+#plot_training_data_with_decision_boundary(X,crit_grid_is_second)
+
+plot_training_data_with_decision_boundary(X,crit_grid_is_quasi_periodic)
+
+plot_training_data_with_decision_boundary(X,crit_grid_is_periodic)
 
 
 
