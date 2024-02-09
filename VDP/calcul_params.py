@@ -1,9 +1,9 @@
 import numpy as np
-import openwind
+# import openwind
 from scipy.signal import find_peaks
-from impedance import give_w_axis, find_Z_model
+# from impedance import give_w_axis, find_Z_model
 
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 target_pulsations = 2 * np.pi * np.array([261.63, 277.18, 293.66, 311.13,
                                           329.63, 349.23, 369.99, 392.00,
@@ -81,8 +81,13 @@ if __name__ == "__main__":
             w_index += 1
 
             for mode in range(number_of_modes):
-                
-                file.write(f"{wn[mode]/(2*np.pi)} {Fn[mode]} {Ymn[mode]} ")
+                file.write(f"{wn[mode]/(2*np.pi)} ")
+            
+            for mode in range(number_of_modes):
+                file.write(f"{Fn[mode]} ")
+            
+            for mode in range(number_of_modes):
+                file.write(f"{Ymn[mode]} ")
 
             file.write("\n")
 
