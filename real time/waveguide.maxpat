@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 34.0, 77.0, 1432.0, 939.0 ],
+		"rect" : [ 34.0, 77.0, 1852.0, 939.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -507,7 +507,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1332.0, 396.0, 103.0, 22.0 ],
-					"text" : "scale 0. 1. 0. 2. 1."
+					"text" : "scale 0. 1. 0. 1. 1."
 				}
 
 			}
@@ -519,7 +519,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1372.0, 326.0, 103.0, 22.0 ],
-					"text" : "scale 0. 1. 0. 2. 1."
+					"text" : "scale 0. 1. 0. 1. 1."
 				}
 
 			}
@@ -1043,7 +1043,7 @@
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
 							"parameter_longname" : "live.dial[3]",
-							"parameter_mmax" : 2.0,
+							"parameter_mmax" : 1.0,
 							"parameter_shortname" : "zeta",
 							"parameter_type" : 0,
 							"parameter_unitstyle" : 1
@@ -1069,7 +1069,7 @@
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
 							"parameter_longname" : "live.dial[2]",
-							"parameter_mmax" : 2.0,
+							"parameter_mmax" : 1.0,
 							"parameter_shortname" : "gamma",
 							"parameter_type" : 0,
 							"parameter_unitstyle" : 1
@@ -1200,6 +1200,8 @@
 					"outlettype" : [ "signal", "signal", "", "float", "list" ],
 					"parameter_enable" : 1,
 					"patching_rect" : [ 684.745730876922607, 574.576244473457336, 48.0, 136.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 507.0, 298.0, 48.0, 136.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
 							"parameter_longname" : "live.gain~",
@@ -1411,8 +1413,8 @@
 					"patching_rect" : [ 1227.0, 44.0, 230.0, 183.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 120.0, 137.0, 257.0, 228.0 ],
-					"xplace" : [ 0.373913043478261 ],
-					"yplace" : [ 0.655737704918033 ]
+					"xplace" : [ 0.389105058365759 ],
+					"yplace" : [ 0.62719298245614 ]
 				}
 
 			}
