@@ -23,7 +23,7 @@ def main():
     fft_freqs = np.fft.rfftfreq(nfft, 1/samplerate) + 0.001
 
     c   = 340                                       # Sound speed in the medium [m/s]
-    l_vec = np.flip(c/(4 * target_frequencies))
+    l_vec = (c/(4 * target_frequencies))
 
     # l   = 0.6                                       # Length of the resonator [m]
     R   = 13e-3                                     # Radius of the resonator [m]
@@ -61,8 +61,12 @@ def main():
 
     write("real time/reflexion_impulse_response.wav", int(samplerate), (amplitude * impulse_response).T.astype(np.int32))
 
+    file = open("real time/waveguide_target_frequencies.txt", "w")
+    
+    for value in target_frequencies:
+        file.write(f"{value}\n ")
 
-
+    file.close()
 
 if __name__ == "__main__":
     main()
