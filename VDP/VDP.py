@@ -14,6 +14,24 @@ def VDP(X, t, gamma_func, zeta_func, in_params, Fn, Ymn, wn):
             -wn**2*X[0] - Fn*(Ymn-A)*X[1] + 2*Fn*B*X[0]*X[1] + 3*Fn*C*X[0]**2*X[1]]
 
 
+# Description : Gives the dynamic model for a simplified reed (prop. to p and no pressing) : coupled VDP equation
+def VDP_coupled(X, t, gamma_func, zeta_func, in_params, Fn, Ymn, wn):
+    N       = X.size//2
+    Xdot    = np.zeros(X.shape)
+    Xsum    = np.array([np.sum(X[:N]), np.sum(X[N:])])
+    
+    gamma   = gamma_func(t, in_params)
+    zeta    = zeta_func(t, in_params)
+    A       = zeta*(3*gamma-1)/(2*np.sqrt(gamma))
+    B       = -zeta*(3*gamma+1)/(8*gamma**(3/2))
+    C       = -zeta*(gamma+1)/(16*gamma**(5/2))
+    
+    Xdot[:N] = X[N:] 
+    Xdot[N:] = -wn**2*X[:N] - Fn*Ymn*X[N:] + 2*Fn*B*Xsum[0]*Xsum[1] + \
+            3*Fn*C*Xsum[0]**2*Xsum[1] + Fn*A*Xsum[1] 
+    return Xdot.tolist()
+    
+
 # Description : Gives the dynamic model for a simplified reed (prop. to p with pressing) NOT FUNCTIONNAL DUE TO DISCONTINUITIES
 def VDP_press(X, t, gamma_func, zeta_func, in_params, Fn, Ymn, wn):
     gamma       = gamma_func(t, in_params)
