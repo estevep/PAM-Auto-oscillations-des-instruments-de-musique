@@ -15,7 +15,8 @@ from save import *
 plot_bool       = True
 save_bool       = True
 save_dir        = f"{os.getcwd()}\\..\\Descripteurs\\samples"
-instrument_type = 'saxophone'
+instrument_type = 'clarinet'
+solver_type     = "coupled"
 Fs              = 44100                         # Sampling frequency [Hz]
 T               = 5                             # Total time of the signal [s]
 N               = 3                             # Number of cavity modes 
@@ -46,6 +47,7 @@ def RK4_step(ode_fun, t, y, h, args=()):
     
     return y + 1/6*(K1+2*K2+2*K3+K4)
 
+
 def RK_solver(ode_fun, y0, t, args=()): 
     y       = np.zeros((t.size, len(y0)), dtype = complex)
     y[0]    = np.array(y0, dtype=complex)
@@ -55,6 +57,40 @@ def RK_solver(ode_fun, y0, t, args=()):
         y[i]    = RK4_step(ode_fun, t[i-1], y[i-1], h, args)
     
     return np.real(y)
+
+
+def uncoupled_solver(N, t, gamma_func, zeta_func, in_params, Fn, Ymn, wn, Pn0):
+    P, Pdot = np.zeros(t.size), np.zeros(t.size)
+
+    for i in range(N):
+        print('Mode ',i+1,'over ',N)
+        args = (gamma_func, zeta_func, in_params, Fn[i], Ymn[i], wn[i])
+        
+        temp    = odeint(VDP, Pn0, t, args)
+        #temp    = RK_solver(VDP, Pn0, t, args)
+        P       += temp[:,0]/N
+        Pdot    += temp[:,1]/N    
+        
+    return P, Pdot
+
+
+def coupled_solver(N, t, gamma_func, zeta_func, in_params, Fn, Ymn, wn, Pn0):
+    X = np.zeros((t.size, 2*N))
+    X[0] = np.repeat(np.array(Pn0), N)
+    
+    for i in range(1, t.size):
+        if i%5000==0:
+            print("Step " + str(i) + " over "+ str(t.size) + "(" + str(np.round(i/t.size*100)) + " %)")
+        h           = t[i] - t[i-1] 
+        
+        args    = (gamma_func, zeta_func, in_params, Fn, Ymn, wn)
+        X[i]    =  RK4_step(VDP_coupled, t[i-1], X[i-1], h, args)
+    
+    P       = np.sum(X[:,:N]/N, axis=1)
+    Pdot    = np.sum(X[:,N:]/N, axis=1)
+        
+    return P, Pdot
+
 
 # Impedance   
 
@@ -67,20 +103,20 @@ Z_model         = create_Z_model(wn, Qn, Fn)
 
 # Solve the VDP equation
 
+if solver_type == 'uncoupled':
+        solver =  uncoupled_solver
+elif solver_type == 'coupled':
+    solver =  coupled_solver
+else:
+    solver =  coupled_solver
+        
+    
 Pn0 = [P0, Pdot0]
 t = np.arange(0,T,1/Fs)
 
-P, Pdot = np.zeros(t.size), np.zeros(t.size)
+P, Pdot = solver(N, t, gamma_func, zeta_func, in_params, Fn, Ymn, wn, Pn0)
 
-for i in range(N):
-    print('Mode ',i+1,'over ',N)
-    args = (gamma_func, zeta_func, in_params, Fn[i], Ymn[i], wn[i])
-    
-    #temp    = odeint(VDP, Pn0, t, args)
-    temp    = RK_solver(VDP, Pn0, t, args)
-    P       += temp[:,0]/N
-    Pdot    += temp[:,1]/N
-    
+
 # Compute the FFT
 
 P_fft = np.fft.rfft(P)
