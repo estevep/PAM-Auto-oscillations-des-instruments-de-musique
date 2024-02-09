@@ -3,6 +3,8 @@ import openwind
 from scipy.signal import find_peaks
 from impedance import give_w_axis, find_Z_model
 
+import matplotlib.pyplot as plt
+
 target_pulsations = 2 * np.pi * np.array([261.63, 277.18, 293.66, 311.13,
                                           329.63, 349.23, 369.99, 392.00,
                                           415.30, 440.00, 466.16, 493.88,
@@ -11,10 +13,15 @@ target_pulsations = 2 * np.pi * np.array([261.63, 277.18, 293.66, 311.13,
                                           830.61, 880.00, 932.33, 987.77])
 
 
-def compute_Fn_Ymn(l):
-    w   = give_w_axis()                             # Angular velocity axis w [rad/s]
+def give_w_axis_mod():
+    f = np.arange(1, 1e4, 0.2)
+    return 2*np.pi*f
+
+
+def compute_Fn_Ymn(l, N):
+    w   = give_w_axis_mod()                         # Angular velocity axis w [rad/s]
     R   = 13e-3                                     # Radius of the resonator [m]
-    N   = 1                                         # Number of holes    
+    # N   = 5                                         # Number of holes    
     
     c   = 340                                       # Sound speed in the medium [m/s]
     rho = 1.2                                       # Density of the medium [kg/m3]
@@ -34,6 +41,7 @@ def compute_Fn_Ymn(l):
     dw          = w[1] - w[0]
     Zreal       = np.real(Z)
     peaks, _    = find_peaks(Zreal)
+
     peaks       = peaks[:N]
     wn          = w[peaks]
     
@@ -49,16 +57,16 @@ def compute_Fn_Ymn(l):
     Ymn = 1/Zreal[peaks]
 
 
-    return wn[0], Fn[0], Ymn[0]
+    return wn, Fn, Ymn
 
 
 if __name__ == "__main__":
 
     c = 343.0
+    number_of_modes = 5
     pulsations = target_pulsations.copy()
     
-    # l_vec = c*2*np.pi/(4 * pulsations)
-    l_vec = np.linspace(0.08, 0.35, 2000)
+    l_vec = np.linspace(0.08, 0.4, 2000)
     l_vec = np.flip(l_vec)
 
     file = open("real time/params.txt", "w")
@@ -66,13 +74,18 @@ if __name__ == "__main__":
     w_index = 0
     for i in range(l_vec.shape[0]):
         
-        wn, Fn, Ymn = compute_Fn_Ymn(l_vec[i])
+        wn, Fn, Ymn = compute_Fn_Ymn(l_vec[i], number_of_modes)
 
-        if np.isclose(wn, pulsations[w_index], rtol=1e-3):
-
+        if np.isclose(wn[0], pulsations[w_index], rtol=1e-3):
 
             w_index += 1
-            file.writelines([f"{wn/(2*np.pi)} {Fn} {Ymn}\n"])
+
+            for mode in range(number_of_modes):
+                
+                file.write(f"{wn[mode]/(2*np.pi)} {Fn[mode]} {Ymn[mode]} ")
+
+            file.write("\n")
+
 
     assert(w_index == pulsations.shape[0])
 
