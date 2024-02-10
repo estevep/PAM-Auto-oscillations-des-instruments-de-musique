@@ -39,9 +39,9 @@ def compute_Fn_Ymn(l, N):
     
     Z = np.tanh(1j*k*(l+dl) + a*l + 1/4*(k*R)**2)   # Input impedance [kg/m2s]
     
-    plt.figure()
-    plt.plot(w/(2 * np.pi), np.abs((Z - 1)/(Z + 1)))
-    plt.show(block=True)
+    # plt.figure()
+    # plt.plot(w/(2 * np.pi), np.abs((Z - 1)/(Z + 1)))
+    # plt.show(block=False)
 
 
     dw          = w[1] - w[0]
@@ -77,10 +77,10 @@ if __name__ == "__main__":
 
     file = None
 
-    write = False
+    write = True
 
     if write:
-        file = open("real time/params.txt", "w")
+        file = open("real time/modal_synth/params.txt", "w")
 
     compute_Fn_Ymn(0.6, number_of_modes)
 
