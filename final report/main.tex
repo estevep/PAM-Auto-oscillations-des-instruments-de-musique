@@ -1,0 +1,235 @@
+%% LyX 2.3.3 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[french, twocolumn]{article}
+\usepackage[T1]{fontenc}
+% \usepackage[latin9]{inputenc}
+\RequirePackage[utf8]{inputenc}
+\usepackage[a4paper]{geometry}
+\geometry{verbose,tmargin=2cm,bmargin=2cm,lmargin=2cm,rmargin=2cm}
+\setlength{\parindent}{0bp}
+\usepackage[french]{babel}
+\usepackage{textcomp}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{biblatex}[
+    backend=biber,        % compilateur par défaut pour biblatex
+    sorting=nyt,          % trier par nom, année, titre
+    citestyle=authoryear, % style de citation auteur-année
+    bibstyle=alphabetic,  % style de bibliographie alphabétique
+]
+\usepackage[unicode=true]
+ {hyperref}
+\addbibresource{biblio.bib}
+\usepackage{fancyhdr}
+\usepackage{comment}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{graphicx}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\newcommand{\lyxaddress}[1]{
+	\par {\raggedright #1
+	\vspace{1.4em}
+	\noindent\par}
+}
+
+\@ifundefined{date}{}{\date{}}
+\makeatother
+
+\begin{document}
+\title{Instruction for authors - Latex template}
+\author{
+C. Fernandez, P. Jardin, V. Piton, H. Audas, P. Estève, B. Quiédeville}
+\maketitle
+
+
+
+% \lyxaddress{$^{3}$ CNRS, UPR 7051, Aix-Marseille Univ, Centrale Marseille, F-13453
+% Marseille Cedex 13, France }
+
+% \lyxaddress{$^{*}$ Corresponding author, scotti@lma.cnrs-mrs.fr}
+\begin{abstract}
+    Ceci est notre abstract
+\end{abstract}
+
+% Default content with instructions
+% \input{default}
+
+\tableofcontents
+\section{Introduction}
+
+\subsection{Synthèse sonore}
+%On s'intéresse à créer des instrument auto-oscillants... virtuels. Avec de fortes non linéarité ... 
+%But du projet : créer des instruments virtuels jouables et définir des cartographies et des descripteurs. 
+
+% La synthèse de sons inspirés par les instruments de musique classique présente des intérêts à la fois pour les compositeurs, les instrumentistes, les industriels et les chercheurs qui souhaitent expliquer la physique de ces instruments. Un très grand nombre  d'entreprises développent en effet aujourd'hui des instruments virtuels très réalistes basés sur la modélisation physique des instruments. 
+
+Depuis les années 1970, plusieurs méthodes permettent de synthétiser des sons musicaux. La synthèse additive permet par exemple de générer des sons par addition de formes d'ondes et la synthèse soustractive génère des sons par filtrage de signaux aux riches composantes harmoniques. La synthèse additive et soustractive ne permettent cependant pas tout le temps de générer des sons réalistes en conservant une faible complexité. La synthèse par table d'ondes permet quand à elle de générer des sons réalistes mais issus d'enregistrement réels immuables. 
+
+Même si ces techniques sont utiles musicalement, elles ne permettent pas d'apprécier la physique des instruments de musique classique d'un point de vue scientifique. C'est ici que les techniques de synthèse par modélisation physique présentent un intérêt puisqu'elles permettent de maîtriser, les mécanismes qui régissent l'émission des sons par ces instruments, depuis les paramètres de contrôles des musiciens, jusqu'à l'évolution des variables acoustiques dans les instrument ainsi que l'influence de leur géométrie et de leurs matériaux sur la qualité du son qu'ils produisent. Ces connaissances sont également utiles aux facteurs d'instruments dans le but d'une maîtrise aboutie de leur savoir-faire mais également pour guider la conception de nouveaux instruments.
+
+% Un des enjeux de la synthèse par modélisation physique cependant est de formuler mathématiquement l'ensemble de ces interactions complexes.
+
+\subsection{Présentation du projet}
+
+Dans cette étude, nous proposons donc de synthétiser un instrument auto-oscillant par modélisation physique. 
+Les instruments auto-oscillants sont des systèmes intrinsèquement non linéaires et complexes qui font toujours l'objet d'étude par les acousticiens. On se concentre ici sur le cas d'instruments à vent à anche simple : la clarinette et le saxophone.
+
+Le modèle physique étudié est implémenté dans un environnement temps réel afin de pouvoir être joué à l'aide d'un contrôleur midi.
+
+Pour pouvoir ajuster les caractéristiques du son et pas simplement les paramètres du modèle physique, il est nécessaire d'étudier des descripteurs sonores. Le but de ceux-ci est de permettre ensuite la création d'une interface de contrôle : le musicien indique quel type de son il souhaite créer (intensité sonore, timbre) et les paramètres du modèle s'ajustent pour y correspondre.
+
+% Avec cette modélisation nous proposons également d'explorer l'espace de contrôle du musicien et de caractériser par des descripteurs bien choisis le type de sons produits. 
+
+% Objectifs : 
+
+% 1: modélisation : En général 2 approches principales : guide onde et modal. (citer les docs pour la modélisation).  
+
+% 2 : résolution temps réel
+
+
+% 3 : Analyse du son obtenu pour décrire ses propriétés du point de vue perceptif et non du modèle physique. Le musicien souhaite savoir quel est le timbre du son, son volume... pas quel pression de bouche a été utilisée pour l'obtenir.
+
+% 4 : Contrôle : utilisation des descripteurs pour 
+
+
+
+% Méthode : En partcilier utilisation des deux modèls qui apportent infos differentes et classification plus rapide pour guide d'onde. 
+
+% les instrument virtuels : 
+% par table d'onde, synthèse additive ... 
+% , synthèse par modèle physique.
+
+% Intérêt par modèle physique : pas boite noir on contrôle tout. Mais difficulté du formalisme et donc simplification nécessaire pour résoudre en temps réel, en particulier pour les parties non linéaires.  
+% Aujourd'hui capable temps réel et modèles plus complexes. 
+% Intérêt des modèle physique : nouveau instruments, inspirer facteurs, renseigner et identifier les paramètres de contrôle des musiciens ... 
+
+\section{Modèle physique}
+\input{final report/sections/modele_physique}
+
+\section{Implémentation des modèles physiques en temps réel}
+
+\subsection{État de l'art}
+
+
+
+% \href{Max MSP}{https://cycling74.com/products/max}
+
+
+
+
+% \subsection{modélisation et résolution}
+% - approches analytiques : guide d'onde et modes
+
+
+
+
+
+\section{Descripteurs}
+
+La clarinette possède des modes de jeu et de régimes sonores divers. Comme pour l'instrument réel, on souhaite étudier et classifier les différents types de jeu disponible grâce à notre instrument numérique. Pour cela, il est nécessaire de définir des descripteurs permettant ensuite de classifier les différents types de jeu en fonction des paramètres d'entrée du modèle $\zeta$ et $\gamma$. 
+
+\subsection{État de l'art}
+% \subsubsection{Descripteur/ méthode de classification : cartographie}
+\paragraph{Descripteurs : Présence de son}
+%Description des bifurcation et donc de l'apparition possible de branches de solutions périodiques par étude de la solution linéarisée \cite{chaigne2008acoustique}. 
+On définit la présence de son comme \cite{missoum_explicit_2014}: 
+
+\begin{equation*}
+    \frac{1}{N}\sum_{N}p(t_i)>\epsilon  
+\end{equation*}
+
+%\begin{equation*}
+%    \frac{1}{N}\sum_{N}p(t_i)< \epsilon
+%\end{equation*}
+Avec $\epsilon$ un seuil choisis.
+
+\paragraph{Descripteur : Justesse}
+On peut définir l'intervalle entre deux notes en cent comme : 
+\begin{equation*}
+    i = 1200 \log_2 \left( \frac{f_1}{f_2}\right)
+\end{equation*}
+On peut alors un descripteur de justesse qui caractérise si l'écart entre la fréquence jouée par le modèle est proche, selon un intervalle définit, de la fréquence correspondant au premier mode propre du résonateur. 
+
+On choisis $i=5$ comme limite de proximité entre deux fréquences \cite{missoum_explicit_2014}. 
+
+On peut suivre la même approche pour déterminer la présence de second registre en étudiant la proximité de la présence jouée à la fréquence du second mode du résonateur.
+
+\paragraph{Descripteur : son périodique}
+Pour étudier la périodicité du signal, on utilise le signal d'enveloppe du signal de pression. Et définir un critère entre régimes périodiques et pseudo-périodiques comme \cite{doc2014minimal}: 
+\begin{equation*}
+    \epsilon = \frac{Var(pe)}{\langle pe \rangle}
+\end{equation*}
+
+
+\paragraph{Descripteur : rugosité}
+On peut caracteriser la rugosité du son produit par la clarinette. 
+La rugosité est définie comme : 
+
+\paragraph{Espace de phase}
+Gibiat \cite{gibiat_phase_1988} propose d'utiliser la représentation en espace des phases accompagnée d'une analyse de Fourier pour détecter le comportement multiphonique d'une clarinette. Cette représentation est obtenue en traçant l'évolution des degrés de liberté du système ou dans le cas d'une réduction à un degré de liberté principal, la représentation du degré de liberté à un instant $t$ et $t + \tau$. 
+
+En effet, la représentation dans l'espace des phases propose une lecture graphique intéressante des phénonomènes vibratoires de la clarinette. Une première tentative à été d'essayer de construire un descripteur pour identifier le registre utilisé sur des enregistrements réels où cette information nous est connue. 
+
+Malheureusement, même si deux registres se distinguent bien graphiquement, il a été difficile de construire un algorithme simple pour distinguer les registres les uns des autres. Deux tentatives ont été menées : la première, assez bancale, consistait à compter le nombre de points à vitesse lente (en dessous d'un seuil), mais cette méthode était trop sensible à de faibles variations de timbre. La deuxième consistait à colorier une image avec la courbe obtenue en considérant le nombre de pixels coloriés (plus cette valeur est grande, plus la trajectoire est irrégulière). Malheureusement, cette information n'était pas suffisante pour extraire des informations fiables.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\columnwidth]{Descripteurs/images/espace_des_phases_premier_registre.pdf}
+    \caption{Portait de phase de la note Ré (premier registre)}
+    \label{phase-reg-1}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\columnwidth]{Descripteurs/images/espace_des_phases_second_registre.pdf}
+    \caption{Portait de phase de la note La (deuxième registre)}
+    \label{phase-reg-2}
+\end{figure}
+
+\paragraph{SVM}
+
+Bien souvent, les descripteurs sont longs à évaluer pour des raison de temps de calcul. Ainsi, un grand nombre d'évaluations n'est pas possible pour cartographier l'espace des paramètres. Une manière d'interpoler les descripteurs sur l'espace des paramètres échantillonné grossièrement est de d'utiliser une SVM (\textit{state vector machine}). Cette dernière fait apparaître une frontière de décision continue permettant d'interpoler les descripteur sur l'espace des paramètres qui est meilleure que d'utiliser la valeur du voisin le plus proche.
+
+En général, une cartographie peut être réalisée en quadrillant l'espace des paramètres et en évaluant les descripteurs en un point de chaque cellule. Cependant, pour éviter d'avoir recours à un quadrillage trop fin, une méthode d'échantillonnage adaptatif est employée. Cette méthode consiste à évaluer les points de la frontière qui présentent le plus d'incertitude (ceux qui sont loin des points déjà évalués).
+
+\subsection{Méthodes et résultats}
+
+
+
+\section{Contrôle}
+\subsection{État de l'art}
+
+\subsection{Implémentation et interface temps réel : max}
+
+
+
+
+% \section{Méthodes et résultats}
+% \subsection{Méthode}
+
+
+
+
+% \subsubsection{Méthode d'évaluation du dispositif}
+
+\subsubsection{cartographie}
+\section{Évaluation du dispositif}
+apprécier en situation de jeu/intérêt de l'intérêt : évaluation de l'instrument créé. (réalisme, jouabilité, compréhension de la physique : outil didactique)  %
+
+\section{Conclusion et perspectives}
+
+\begin{comment}
+    axe d'approche "type PAM"
+        aborder les éléments appris pendant le projet en plus des contributions.
+\end{comment}
+
+Perspectives : rappel de l'état de l'art pour adapter notre travail à un instrument à cordes frottées -> perspective logique pour appliquer le travail à d'autres instruments (à voir si on peut utiliser l'approche modale ou si l'analogie est vraie qu'en guide d'ondes).
+% \newpage
+
+\fancypagestyle{plain}{plain}
+ {\hypersetup{hidelinks} \printbibliography }
+
+
+\end{document}

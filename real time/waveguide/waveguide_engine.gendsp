@@ -40,6 +40,40 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
+					"id" : "obj-7",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 345.609764337539673, 225.365859031677246, 150.0, 20.0 ]
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-3",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 265.359485507011414, 75.163401067256927, 27.0, 22.0 ],
+					"text" : "* 2."
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-2",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 265.359485507011414, 107.843140661716461, 29.0, 22.0 ],
+					"text" : "!/ 1."
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-39",
 					"maxclass" : "newobj",
 					"numinlets" : 0,
@@ -57,7 +91,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 370.666662931442261, 808.003332657813985, 127.0, 22.0 ],
-					"text" : "out @comment p_m 2"
+					"text" : "out 2 @comment p_m"
 				}
 
 			}
@@ -109,83 +143,12 @@
 			}
 , 			{
 				"box" : 				{
-					"id" : "obj-31",
-					"maxclass" : "newobj",
-					"numinlets" : 0,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
-					"patching_rect" : [ 291.5, 168.0, 19.0, 22.0 ],
-					"text" : "1"
-				}
-
-			}
-, 			{
-				"box" : 				{
 					"id" : "obj-30",
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 318.0, 136.0, 23.0, 20.0 ],
+					"patching_rect" : [ 312.418310523033142, 108.496735453605652, 23.0, 20.0 ],
 					"text" : "T"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-27",
-					"maxclass" : "newobj",
-					"numinlets" : 1,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
-					"patching_rect" : [ 281.0, 106.0, 23.0, 22.0 ],
-					"text" : "* 2"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-26",
-					"maxclass" : "newobj",
-					"numinlets" : 1,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
-					"patching_rect" : [ 281.0, 136.0, 21.0, 22.0 ],
-					"text" : "/ c"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-25",
-					"maxclass" : "comment",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 318.0, 86.0, 52.0, 20.0 ],
-					"text" : "L"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-21",
-					"maxclass" : "newobj",
-					"numinlets" : 1,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
-					"patching_rect" : [ 323.0, 54.0, 23.0, 22.0 ],
-					"text" : "* 4"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-15",
-					"maxclass" : "newobj",
-					"numinlets" : 0,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
-					"patching_rect" : [ 215.0, 40.0, 66.0, 22.0 ],
-					"text" : "float 2*pi*c"
 				}
 
 			}
@@ -196,20 +159,8 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 14.0, 54.0, 127.0, 22.0 ],
+					"patching_rect" : [ 81.0, 35.121952056884766, 127.0, 22.0 ],
 					"text" : "param c @default 340"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-10",
-					"maxclass" : "newobj",
-					"numinlets" : 2,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
-					"patching_rect" : [ 281.0, 78.0, 29.5, 22.0 ],
-					"text" : "/"
 				}
 
 			}
@@ -280,23 +231,8 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 323.0, 26.0, 105.0, 22.0 ],
-					"text" : "in 2 @comment w"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"code" : "ode_fun(p, dp, gamma, zeta, Fn, Ymn, wn) {\r\n\tA = zeta * (3 * gamma - 1)/(2 * sqrt(gamma));\r\n\tB = -zeta * (3 * gamma + 1)/(8 * pow(gamma, 3/2));\r\n\tC = -zeta * (gamma + 1)/(16 * pow(gamma, 5/2));\r\n\t\r\n\ty = -pow(wn, 2) * p \r\n        - Fn *(Ymn - A) * dp \r\n\t\t+ 2 * Fn * B * p * dp \r\n\t\t+ 3 * Fn * C * pow(p, 2) * dp; \r\n\t\r\n\treturn y;\r\n}\r\n\r\n\r\nRK4_step(p, dp, h, gamma, zeta, Fn, Ymn, wn) {\r\n\t\r\n\tK1p = h * dp;\r\n\tK1dp = h * ode_fun(p, dp, gamma, zeta, Fn, Ymn, wn);\r\n\t\r\n\tK2p = h * (dp + 1/2*K1dp);\r\n\tK2dp = h * ode_fun(p + 1/2*K1p, dp + 1/2*K1dp, gamma, zeta, Fn, Ymn, wn);\r\n\t\r\n\tK3p = h * (dp + 1/2*K2dp);\r\n\tK3dp = h* ode_fun(p + 1/2*K2p, dp + 1/2*K2dp, gamma, zeta, Fn, Ymn, wn);\r\n\t\r\n\tK4p = h * (dp + K3dp);\r\n\tK4dp = h * ode_fun(p + K3p, dp + K3dp, gamma, zeta, Fn, Ymn, wn);\r\n\t\r\n\t\r\n\tp_out = p + 1/6*(K1p + 2*K2p + 2*K3p + K4p);\r\n\tdp_out = dp + 1/6*(K1dp + 2*K2dp + 2*K3dp + K4dp);\r\n\t\r\n\treturn p_out, dp_out;\r\n}\r\n\r\n\r\ngamma = in6 ;//= 0.5;\r\nzeta = in7 ; //0.5;  \r\nFn = 1116.0;\r\nYmn = 0.0166;\r\n//wn = 869.0 * 3;\r\nwn = in5 * 2.0 * pi;\r\n\r\n\r\np_in = in1;\r\ndp_in = in2;\r\n\r\nperturbation = in3 * 1e-8;\r\npanic = in4;\r\n\r\np_out, dp_out = RK4_step(p_in + perturbation, dp_in, 1/samplerate, gamma, zeta, Fn, Ymn, wn);\r\n\r\n\r\nout1 = p_out * panic;\r\nout2 = dp_out * panic;\r\n\r\nout3 = p_out * panic / wn;",
-					"fontface" : 0,
-					"fontname" : "<Monospaced>",
-					"fontsize" : 12.0,
-					"id" : "obj-2",
-					"maxclass" : "codebox",
-					"numinlets" : 7,
-					"numoutlets" : 3,
-					"outlettype" : [ "", "", "" ],
-					"patching_rect" : [ 1212.0, 144.0, 782.105291128158569, 497.894754648208618 ]
+					"patching_rect" : [ 265.359485507011414, 47.712419807910919, 99.0, 22.0 ],
+					"text" : "in 2 @comment f"
 				}
 
 			}
@@ -318,14 +254,14 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 129.666666746139526, 827.666672110557556, 120.0, 22.0 ],
-					"text" : "out 1@comment p_p"
+					"patching_rect" : [ 129.666666746139526, 827.666672110557556, 123.0, 22.0 ],
+					"text" : "out 1 @comment p_p"
 				}
 
 			}
 , 			{
 				"box" : 				{
-					"code" : "X(Y, zeta) {\n\tpsi = 1/pow(zeta,2);\n\tmu = 9/2 * (3*Y - 1);\n\tif (and(Y >= 0, Y <= 1)){ // non-beating reed case, positive flow u > 0\n        eta = sqrt(3 + psi);\n\t\treturn pow(-2/3 * eta * sin(1/3 * asin((psi-mu)/(zeta * pow(eta,3)))) + 1/(3*zeta), 2);\n\t}\n\telse {\n        if (Y < 0) { // non-beating reed case, negative flow u < 0\n            q = 1/9 * (3 - psi);\n            r = -(psi + mu)/(27*zeta);\n            discr = pow(q, 3) + pow(r, 2);\n            if (discr >= 0) { //# In the paper it is written for discr > 0\n                s = pow(r + sqrt(discr), 1/3);\n                return -pow(s - q/s - 1/(3 * zeta),2);\n            }\n            if (discr < 0) {\n                eta2 = sqrt(-3 + psi);\n                return -pow(2/3 * eta2 * cos(1/3 * acos(- (psi+mu)/(zeta * pow(eta2,3)))) - 1/(3*zeta), 2);\n            }\n        }\n\t\t// # Y > 1: beating reed case, Y = X, p+ = p-, u = 0\n    \telse {\n            if (Y > 1) {\n\t\t\t    return Y;\n            }\n\t\t};\n\t};\n}\r\n\r\nf_iterate(x, gamma, zeta, lda) {\r\n\t  //  # X = gamma - p_n = gamma - p^+_{n} - p^-_{n} = gamma - p^+_{n} + \\lambda p^+_{n-1}\n    //# Y = u_n + X\n   // # x = p^+_{n-1}\r\n\tY = gamma + 2 * lda * x;\r\n\treturn gamma - X(Y, zeta) + lda * x;\r\n}\r\n\r\n\r\np_p = in1;\r\np_m = in2;\r\n\r\ngamma = in3 ;//= 0.5;\nzeta = in4 ; //0.5; \nlda = in5;\r\n\r\ncurr_counter = in6;\r\ncarry = in7;\r\nt_sample = in8;\n\r\npanic = in9;\r\nif (carry == 1){\n\tp_p = f_iterate(p_p, gamma, zeta, lda);\n\tp_m = p_p;\n}\nelse{\n\tp_p = p_p;\n\tp_m = p_m;\n};\n\nout1 = p_p * panic;\nout2 = p_m * panic;\nout3 = (p_m + p_p) * panic;",
+					"code" : "X(Y, zeta) {\n\tpsi = 1/pow(zeta,2);\n\tmu = 9/2 * (3*Y - 1);\n\tif (and(Y >= 0, Y <= 1)){ // non-beating reed case, positive flow u > 0\n        eta = sqrt(3 + psi);\n\t\treturn pow(-2/3 * eta * sin(1/3 * asin((psi-mu)/(zeta * pow(eta,3)))) + 1/(3*zeta), 2);\n\t}\n\telse {\n        if (Y < 0) { // non-beating reed case, negative flow u < 0\n            q = 1/9 * (3 - psi);\n            r = -(psi + mu)/(27*zeta);\n            discr = pow(q, 3) + pow(r, 2);\n            if (discr >= 0) { //# In the paper it is written for discr > 0\n                s = pow(r + sqrt(discr), 1/3);\n                return -pow(s - q/s - 1/(3 * zeta),2);\n            }\n            if (discr < 0) {\n                eta2 = sqrt(-3 + psi);\n                return -pow(2/3 * eta2 * cos(1/3 * acos(- (psi+mu)/(zeta * pow(eta2,3)))) - 1/(3*zeta), 2);\n            }\n        }\n\t\t// # Y > 1: beating reed case, Y = X, p+ = p-, u = 0\n    \telse {\n            if (Y > 1) {\n\t\t\t    return Y;\n            }\n\t\t};\n\t};\n}\r\n\r\nf_iterate(x, gamma, zeta, lda) {\r\n\t  //  # X = gamma - p_n = gamma - p^+_{n} - p^-_{n} = gamma - p^+_{n} + \\lambda p^+_{n-1}\n    //# Y = u_n + X\n   // # x = p^+_{n-1}\r\n\tY = gamma + 2 * lda * x;\r\n\treturn gamma - X(Y, zeta) + lda * x;\r\n}\r\n\r\n\r\np_p = in1;\r\np_m = in2;\r\n\r\ngamma = in3 ;//= 0.5;\nzeta = in4 ; //0.5; \nlda = in5;\r\n\r\ncurr_counter = in6;\r\ncarry = in7;\r\nt_sample = in8;\n\r\npanic = in9;\r\nif (carry == 1){\n\tp_p = f_iterate(p_p, gamma, zeta, lda); // mini erreur à corriger @paul\n\tp_m = p_p;\n}\nelse{\n\tp_p = p_p;\n\tp_m = p_m;\n};\n\nout1 = p_p * panic;\nout2 = p_m * panic;\nout3 = (p_m + p_p) * panic;",
 					"fontface" : 0,
 					"fontname" : "<Monospaced>",
 					"fontsize" : 12.0,
@@ -349,13 +285,6 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-27", 0 ],
-					"source" : [ "obj-10", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
 					"destination" : [ "obj-5", 8 ],
 					"source" : [ "obj-13", 0 ]
 				}
@@ -363,14 +292,7 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-10", 0 ],
-					"source" : [ "obj-15", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-21", 0 ],
+					"destination" : [ "obj-3", 0 ],
 					"source" : [ "obj-17", 0 ]
 				}
 
@@ -384,6 +306,13 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-8", 2 ],
+					"source" : [ "obj-2", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-5", 3 ],
 					"source" : [ "obj-20", 0 ]
 				}
@@ -391,29 +320,8 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-10", 1 ],
-					"source" : [ "obj-21", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-8", 1 ],
-					"source" : [ "obj-26", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-26", 0 ],
-					"source" : [ "obj-27", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-8", 2 ],
-					"source" : [ "obj-31", 0 ]
+					"destination" : [ "obj-2", 0 ],
+					"source" : [ "obj-3", 0 ]
 				}
 
 			}

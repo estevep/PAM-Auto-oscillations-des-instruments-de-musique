@@ -131,11 +131,20 @@ def display2D(signal, deltaT, samplerate):
     init_tau = deltaT
 
 
-    fig, line_ax = plt.subplots()
-    
+    # fig, line_ax = plt.subplots()
+    fig = plt.figure(figsize=(8,6))
+    plt.tight_layout()
+    line_ax = fig.add_axes([0.15, 0.3, 0.7, 0.6])
+
+
     line1, = line_ax.plot(signal, signal_interpolated)
-    line_ax.spines[['left', 'bottom']].set_position('center')
-    line_ax.spines[['top', 'right']].set_visible(False)
+    # line_ax.spines[['left', 'bottom']].set_position('center')
+    # line_ax.spines[['top', 'right']].set_visible(False)
+    line_ax.set_xlabel("s(t)")
+    line_ax.set_ylabel("$s(t + \\tau)$")
+    line_ax.set_xlim([-1.5, 1.5])
+    line_ax.set_ylim([-1.5, 1.5])
+    line_ax.grid(True, which = "major")
 
     animate = False
     index = 0
@@ -159,14 +168,13 @@ def display2D(signal, deltaT, samplerate):
         
     plt.show(block = False)
 
-
-    ax_tau = fig.add_axes([0.25, 0.1, 0.65, 0.03])
-    ax_window = fig.add_axes([0.25, 0.15, 0.65, 0.03])
-    ax_position = fig.add_axes([0.25, 0.2, 0.65, 0.03])
+    ax_tau = fig.add_axes([0.25, 0.05, 0.65, 0.03])
+    ax_window = fig.add_axes([0.25, 0.1, 0.65, 0.03])
+    ax_position = fig.add_axes([0.25, 0.15, 0.65, 0.03])
 
     window_slider = Slider(
         ax=ax_window, 
-        label="window length", 
+        label="largeur de fenêtre", 
         valmin=0,
         valmax=1024,
         valinit=init_window_size
@@ -174,7 +182,7 @@ def display2D(signal, deltaT, samplerate):
 
     position_slider = Slider(
         ax=ax_position, 
-        label="window position", 
+        label="position de la fenêtre", 
         valmin=0,
         valmax=signal.shape[0] - 1024,
         valinit=init_position
@@ -182,17 +190,17 @@ def display2D(signal, deltaT, samplerate):
 
     tau_slider = Slider(
         ax=ax_tau,
-        label="tau", 
-        valmin=1e-4,
-        valmax=1e-3,
-        valinit=deltaT
+        label=r"$\tau \; \; (ms)$", 
+        valmin=1e-1,
+        valmax=1.,
+        valinit=deltaT * 1000,
     )
 
     def update(val):
         
         position = position_slider.val
         window_length = window_slider.val
-        tau = tau_slider.val
+        tau = tau_slider.val * 1e-3
         
         line1.set_ydata(compute_offset_signal(signal[int(position):int(position + window_length)], tau, samplerate))
         line1.set_xdata(signal[int(position):int(position + window_length)])
@@ -217,8 +225,8 @@ def main() -> None:
     deltaT = 4e-4
     # signal_interpolated2 = compute_offset_signal(signal1_interpolated, deltaT, samplerate)
 
-    # display2D(signal, deltaT, samplerate)
-    fft_display(signal, samplerate)
+    display2D(signal, deltaT, samplerate)
+    # fft_display(signal, samplerate)
 
     return 
 
