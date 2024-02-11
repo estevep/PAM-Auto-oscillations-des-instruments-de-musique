@@ -110,14 +110,20 @@ Pour pouvoir ajuster les caractéristiques du son et pas simplement les paramèt
 
 \section{Implémentation des modèles physiques en temps réel}
 
+\subsection{État de l'art}
+
+
+
+% \href{Max MSP}{https://cycling74.com/products/max}
+
+
+
+
 % \subsection{modélisation et résolution}
 % - approches analytiques : guide d'onde et modes
 
-\subsection{Liste des algo utilisés (sans rentrer dans le détail de l'implem)}
-- résolution numérique : runge kuta
-- cartes itérées, ligne à retard
 
-\subsection{Implémentation et interface temps réel : max}
+
 
 
 \section{Descripteurs}
@@ -153,7 +159,7 @@ On peut suivre la même approche pour déterminer la présence de second registr
 \paragraph{Descripteur : son périodique}
 Pour étudier la périodicité du signal, on utilise le signal d'enveloppe du signal de pression. Et définir un critère entre régimes périodiques et pseudo-périodiques comme \cite{doc2014minimal}: 
 \begin{equation*}
-    \epsilon = \frac{Var(pe)}{<pe>}
+    \epsilon = \frac{Var(pe)}{\langle pe \rangle}
 \end{equation*}
 
 
@@ -168,7 +174,25 @@ En effet, la représentation dans l'espace des phases propose une lecture graphi
 
 Malheureusement, même si deux registres se distinguent bien graphiquement, il a été difficile de construire un algorithme simple pour distinguer les registres les uns des autres. Deux tentatives ont été menées : la première, assez bancale, consistait à compter le nombre de points à vitesse lente (en dessous d'un seuil), mais cette méthode était trop sensible à de faibles variations de timbre. La deuxième consistait à colorier une image avec la courbe obtenue en considérant le nombre de pixels coloriés (plus cette valeur est grande, plus la trajectoire est irrégulière). Malheureusement, cette information n'était pas suffisante pour extraire des informations fiables.
 
+\begin{figure}
+    \centering
+    \includegraphics[width=\columnwidth]{Descripteurs/images/espace_des_phases_premier_registre.pdf}
+    \caption{Portait de phase de la note Ré (premier registre)}
+    \label{phase-reg-1}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\columnwidth]{Descripteurs/images/espace_des_phases_second_registre.pdf}
+    \caption{Portait de phase de la note La (deuxième registre)}
+    \label{phase-reg-2}
+\end{figure}
+
 \paragraph{SVM}
+
+Bien souvent, les descripteurs sont longs à évaluer pour des raison de temps de calcul. Ainsi, un grand nombre d'évaluations n'est pas possible pour cartographier l'espace des paramètres. Une manière d'interpoler les descripteurs sur l'espace des paramètres échantillonné grossièrement est de d'utiliser une SVM (\textit{state vector machine}). Cette dernière fait apparaître une frontière de décision continue permettant d'interpoler les descripteur sur l'espace des paramètres qui est meilleure que d'utiliser la valeur du voisin le plus proche.
+
+En général, une cartographie peut être réalisée en quadrillant l'espace des paramètres et en évaluant les descripteurs en un point de chaque cellule. Cependant, pour éviter d'avoir recours à un quadrillage trop fin, une méthode d'échantillonnage adaptatif est employée. Cette méthode consiste à évaluer les points de la frontière qui présentent le plus d'incertitude (ceux qui sont loin des points déjà évalués).
 
 \subsection{Méthodes et résultats}
 
@@ -177,7 +201,8 @@ Malheureusement, même si deux registres se distinguent bien graphiquement, il a
 \section{Contrôle}
 \subsection{État de l'art}
 
-Cartographie - SVM
+\subsection{Implémentation et interface temps réel : max}
+
 
 
 
