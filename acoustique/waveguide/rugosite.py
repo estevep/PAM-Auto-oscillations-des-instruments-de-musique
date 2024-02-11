@@ -1,3 +1,5 @@
+import numpy as np
+
 def rugosite(amp, freq):
     denom = 0
     num = 0 
@@ -18,4 +20,13 @@ def rugosite(amp, freq):
     return(rug)
 
 
-print(rugosite(np.abs(X[peaks]), f[peaks]))
+#print(rugosite(np.abs(X[peaks]), f[peaks]))
+
+
+
+
+
+
+
+
+
