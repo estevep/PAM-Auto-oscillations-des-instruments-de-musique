@@ -268,161 +268,266 @@ for _ in range (7) :
 
 #%%%
 
-#%%%%
+#%%%%  
 dim_obj = 100 #taille de la grille objectif 
-N_iter = 1 #nombre d'itération
-n_dim_init=4  # dimension grille de départ 
+N_iter = 10 #nombre d'itération
+n_dim_init=2  # dimension grille de départ 
 
-dim_grid = (n_dim_init,n_dim_init)
 
-g_grid          = np.linspace(1e-8, 2, dim_grid[0])
-z_grid          = np.linspace(1e-8,2, dim_grid[0])
-g_grid, z_grid  = np.meshgrid(g_grid, z_grid)
-g_grid, z_grid  = g_grid.reshape((-1,1)), z_grid.reshape((-1,1))  
-X = np.concatenate((g_grid, z_grid),axis=1)
 
-dim_grid = (dim_obj,dim_obj)
-g_grid          = np.linspace(1e-8, 2, dim_grid[0])
-z_grid          = np.linspace(1e-8,2, dim_grid[0])
-g_grid, z_grid  = np.meshgrid(g_grid, z_grid)
-g_grid, z_grid  = g_grid.reshape((-1,1)), z_grid.reshape((-1,1))  
-X_objectif = np.concatenate((g_grid, z_grid),axis=1)
+def calcul_carto_init(dim_obj ,n_dim_init ) : 
+    
+    tolerence_is_sound_pression = 0.1
+    tolerence_est_just_pression = 200 #est juste 
+    tolerence_is_periodic = -2 # rugosité 
+    tolerence_est_rugueux= np.log(1e+28) # rugosité 
 
-y = np.full(n_dim_init*n_dim_init, False)
-#X_objectif = X
-
-#y : les valeurs à remplacer par calcul dans descripteurs 
-for k in range(n_dim_init*n_dim_init):
-    print('------ Point (',k+1,' over ',n_dim_init*n_dim_init ,') ------')
-    g0, z0 = float(X[k,0]), float(X[k,1]) 
-    in_params = {
-        "T"     : T,
-        "g0"    : g0,
-        "z0"    : z0
-        }
-        
-   
+    instrument_type = 'clarinet'
+    solver_type     = "coupled"
+    Fs              = 44100                         # Sampling frequency [Hz]
+    T               = 5                             # Total time of the signal [s]
+    N               = 2                             # Number of cavity modes 
+    """P0              = 1e-8*np.random.randn()        # Initial (normalized) pressure value [Pa]
+    Pdot0           = 0. 
     w               = give_w_axis(1, 1e3)
     #Z               = Z_cylinder()
     Z               = import_Z(w, model_type = instrument_type, 
-                               model_plot=True)
+                               model_plot=False)
     wn, Qn, Fn, Ymn = find_Z_model(3, Z) #3 : N nombre de modes
     Z_model         = create_Z_model(wn, Qn, Fn)
+    """
+    dim_grid = (n_dim_init,n_dim_init)
     
-    P0              = 1e-8*np.random.randn()        # Initial (normalized) pressure value [Pa]
-    Pdot0           = 0. 
-
-
-    solver_type = 'coupled'
-    if solver_type == 'uncoupled':
-            solver =  uncoupled_solver
-    elif solver_type == 'coupled':
-        solver =  coupled_solver
-    else:
-        solver =  coupled_solver
+    g_grid          = np.linspace(1e-4, 2, dim_grid[0])
+    z_grid          = np.linspace(1e-4,2, dim_grid[0])
+    g_grid, z_grid  = np.meshgrid(g_grid, z_grid)
+    g_grid, z_grid  = g_grid.reshape((-1,1)), z_grid.reshape((-1,1))  
+    X = np.concatenate((g_grid, z_grid),axis=1)
+    
+    dim_grid = (dim_obj,dim_obj)
+    g_grid          = np.linspace(1e-8, 2, dim_grid[0])
+    z_grid          = np.linspace(1e-8,2, dim_grid[0])
+    g_grid, z_grid  = np.meshgrid(g_grid, z_grid)
+    g_grid, z_grid  = g_grid.reshape((-1,1)), z_grid.reshape((-1,1))  
+    X_objectif = np.concatenate((g_grid, z_grid),axis=1)
+    
+    #y = np.full(n_dim_init*n_dim_init, False)
+    #X_objectif = X
+    y_is_sound_pression = np.full(n_dim_init*n_dim_init, False)
+    y_est_just_pression =np.full(n_dim_init*n_dim_init, False)
+    y_is_periodic =np.full(n_dim_init*n_dim_init, False)
+    y_est_rugueux =np.full(n_dim_init*n_dim_init, False)
+    
+    
+    
+    
+    #y : les valeurs à remplacer par calcul dans descripteurs 
+    for k in range(n_dim_init*n_dim_init):
+        print('------ Point (',k+1,' over ',n_dim_init*n_dim_init ,') ------')
+        g0, z0 = float(X[k,0]), float(X[k,1]) 
+        in_params = {
+            "T"     : T,
+            "g0"    : g0,
+            "z0"    : z0
+            }
+        P0              = 1e-8*np.random.randn()        # Initial (normalized) pressure value [Pa]
+        Pdot0           = 0. 
+        
+        w               = give_w_axis(1, 1e3)
+        #Z               = Z_cylinder()
+        Z               = import_Z(w, model_type = instrument_type, 
+                                   model_plot=True)
+        wn, Qn, Fn, Ymn = find_Z_model(N, Z)
+        Z_model         = create_Z_model(wn, Qn, Fn)
+        
+        # Solve the VDP equation
+        
+        if solver_type == 'uncoupled':
+                solver =  uncoupled_solver
+        elif solver_type == 'coupled':
+            solver =  coupled_solver
+        else:
+            solver =  coupled_solver
+                
             
+        Pn0 = [P0, Pdot0]
+        t = np.arange(0,T,1/Fs)
         
-    Pn0 = [P0, Pdot0]
-    t = np.arange(0,T,1/Fs)
-
-    P, Pdot = solver(N, t, gamma_func, zeta_func, in_params, Fn, Ymn, wn, Pn0)
-    
+        P, Pdot = solver(N, t, gamma_func, zeta_func, in_params, Fn, Ymn, wn, Pn0)
+        f_attendu = wn[0]/(2*np.pi)
         
-    y[k] = is_sound_pression(P)
-
-
-#y[6] = True
-
-clf = classification (X, y)
-
-
-#y[3] =True
-#taille = 100
-
-#X_objectif = X
-X_new,ynew=X,y
-
-for _ in range (N_iter) : 
-    X,y=X_new,ynew
-    front1 = front (clf,X_objectif)
-    coord_new = new_point (X, front1)
-    
-    plt.plot(front1[:,0],front1[:,1], "x")
-    print(coord_new)
-    length =  X.shape[0]
-    X_new = np.zeros((length+1,2))
-    X_new[:length,:] = X
-    #coord_new = X_objectif[index,:]
-    X_new[length,:] = coord_new
-    
-    k = length
-
-    print('------ Point (',k+1,' over ',n_dim_init*n_dim_init ,') ------')
-    g0, z0 = float(X_new[k,0]), float(X_new[k,1]) 
-    in_params = {
-        "T"     : T,
-        "g0"    : g0,
-        "z0"    : z0
-        }
+        #tolerence_is_sound_pression = 0.1
+        #tolerence_est_just_pression = 200 #est juste 
+        #tolerence_is_periodic = -2 # rugosité 
         
-   
-    w               = give_w_axis(1, 1e3)
-    #Z               = Z_cylinder()
-    Z               = import_Z(w, model_type = instrument_type, 
-                               model_plot=True)
-    wn, Qn, Fn, Ymn = find_Z_model(3, Z) #3 : N nombre de modes
-    Z_model         = create_Z_model(wn, Qn, Fn)
+        y_is_sound_pression[k] = is_sound_pression(P , f_attendu,tolerence_is_sound_pression)
+        y_est_just_pression[k] = est_just_pression(P , f_attendu,tolerence_est_just_pression)
+        print(rugosite(P))
+        y_est_rugueux [k] = est_rugueux(P , f_attendu,tolerence_est_rugueux)
+        print(quasi_periodic (P))
+        y_is_periodic [k] = is_periodic (P , f_attendu,tolerence_is_periodic)
+
+
+
     
-    P0              = 1e-8*np.random.randn()        # Initial (normalized) pressure value [Pa]
-    Pdot0           = 0. 
+    #clf_is_sound_pression = classification (X, y_is_sound_pression)
+    #clf_est_just_pression = classification (X, y_est_just_pression)
+    #clf_is_periodic = classification (X, y_is_periodic) clf_is_sound_pression,clf_est_just_pression,clf_is_periodic,
+    return X, y_is_sound_pression,y_est_just_pression,y_is_periodic , y_est_rugueux, X_objectif
 
 
-    solver_type = 'coupled'
-    if solver_type == 'uncoupled':
-            solver =  uncoupled_solver
-    elif solver_type == 'coupled':
-        solver =  coupled_solver
-    else:
-        solver =  coupled_solver
+def calcul_iter (X, y, clf, X_objectif, N_iter, descripteur) : 
+    
+    X_new,ynew=X,y
+    
+    for _ in range (N_iter) : 
+        X,y=X_new,ynew
+        front1 = front (clf,X_objectif)
+        coord_new = new_point (X, front1)
+        
+        plt.plot(front1[:,0],front1[:,1], "x")
+        print(coord_new)
+        length =  X.shape[0]
+        X_new = np.zeros((length+1,2))
+        X_new[:length,:] = X
+        #coord_new = X_objectif[index,:]
+        X_new[length,:] = coord_new
+        
+        k = length
+    
+        print('------ Point (',k+1,' over ',n_dim_init*n_dim_init ,') ------')
+        g0, z0 = float(X_new[k,0]), float(X_new[k,1]) 
+        in_params = {
+            "T"     : T,
+            "g0"    : g0,
+            "z0"    : z0
+            }
+        P0              = 1e-8*np.random.randn()        # Initial (normalized) pressure value [Pa]
+        Pdot0           = 0. 
+        
+        w               = give_w_axis(1, 1e3)
+        #Z               = Z_cylinder()
+        Z               = import_Z(w, model_type = instrument_type, 
+                                   model_plot=True)
+        wn, Qn, Fn, Ymn = find_Z_model(N, Z)
+        Z_model         = create_Z_model(wn, Qn, Fn)
+        
+        # Solve the VDP equation
+        
+        if solver_type == 'uncoupled':
+                solver =  uncoupled_solver
+        elif solver_type == 'coupled':
+            solver =  coupled_solver
+        else:
+            solver =  coupled_solver
+                
             
+        Pn0 = [P0, Pdot0]
+        t = np.arange(0,T,1/Fs)
         
-    Pn0 = [P0, Pdot0]
-    t = np.arange(0,T,1/Fs)
+        P, Pdot = solver(N, t, gamma_func, zeta_func, in_params, Fn, Ymn, wn, Pn0)
 
-    P, Pdot = solver(N, t, gamma_func, zeta_func, in_params, Fn, Ymn, wn, Pn0)
-    
+            
+        #ynew[k] = is_sound_pression(P)
         
-    #ynew[k] = is_sound_pression(P)
+        f_attendu = wn[0]/(2*np.pi)
+        #descripteur = is_sound_pression#(P , f_attendu,tolerence)
+
+
+        #descripteur = est_just_pression#(P , f_attendu,tolerence)
+
+        if descripteur ==is_sound_pression:
+            tolerence = 0.1
+        if descripteur ==est_just_pression:
+            tolerence = 200 #est juste 
+        if descripteur ==is_periodic:
+            tolerence = -2 # log d'une valeur 
+        if descripteur == est_rugueux : 
+            tolerence = np.log(1e+28)
+            #est_rugueux(P,f_attendu,tolerence)
+        
+            
+        ynew = np.full(length+1, False)
+        ynew[:length] = y
+        ynew[length] = descripteur(P , f_attendu,tolerence)
+        #ynew[length] = valeur_descipteur(coord_new)#[0]
+        clf = classification (X_new, ynew)
+    return clf, X_new, ynew
+#%%%%%
+n_dim_init = 3
+X, y_is_sound_pression,y_est_just_pression,y_is_periodic,y_est_rugueux, X_objectif = calcul_carto_init(dim_obj ,n_dim_init )
+
+#%%%%
+clf_is_sound_pression = classification( X, y_is_sound_pression)
+clf_est_just_pression =  classification( X,y_est_just_pression)
+clf_is_periodic =  classification( X,y_is_periodic)
+clf_est_rugueux =  classification( X,y_est_rugueux)
+
+#%%%%%
+N_iter = 10
+clf =clf_is_sound_pression
+y = y_is_sound_pression
+
+clf,X_new, y_new = calcul_iter (X, y, clf, X_objectif, N_iter, is_sound_pression)
+
+clf_new_is_sound_pression,X_new_is_sound_pression, y_new_is_sound_pression = clf,X_new, y_new 
+#%%%%
+
+N_iter = 10
+clf =clf_is_periodic
+y = y_is_periodic
+
+clf,X_new, y_new = calcul_iter (X, y, clf, X_objectif, N_iter, is_sound_pression)
+
+clf_new_is_periodic,X_new_is_periodic, y_new_is_periodic = clf,X_new, y_new 
+#%%%%
+
+def new_classification (X, y):
+    # Train the SVC
+    kernel = "poly"
+    clf = svm.SVC(kernel=kernel,gamma=convolve2d0,probability=True).fit(X, y) #,probability=True
     
+    # Settings for plotting
+    _, ax = plt.subplots(figsize=(7, 7))
+    x_min, x_max, y_min, y_max = 0, 2, 0, 2
+    ax.set(xlim=(x_min, x_max), ylim=(y_min, y_max))
+    
+    # Plot decision boundary and margins
+    common_params = {"estimator": clf, "X": X, "ax": ax}
+    DecisionBoundaryDisplay.from_estimator(
+        **common_params,
+        grid_resolution=1000,
+        response_method="predict",
+        plot_method="pcolormesh",
+        alpha=0.3,
+    )
+    
+    DecisionBoundaryDisplay.from_estimator(
+        **common_params,
+        response_method="decision_function",
+        plot_method="contour",
+        levels=[-1, 0, 1],
+        colors=["k", "k", "k"],
+        linestyles=["--", "-", "--"],
+    )
+    
+    # Plot bigger circles around samples that serve as support vectors
+    ax.scatter(
+        clf.support_vectors_[:, 0],
+        clf.support_vectors_[:, 1],
+        s=50,
+        facecolors="none",
+        edgecolors="k",
+    )
+    # Plot samples by color and add legend
+    scatter = ax.scatter(X[:, 0], X[:, 1], c=y, s=50, label=y, edgecolors="k")
+    ax.legend(*scatter.legend_elements(), loc="upper right", title="Classes")
+    ax.set_title(f" Decision boundaries in SVC")
+    
+    _ = plt.show()
+    return clf
 
-
-    ynew = np.full(length+1, False)
-    ynew[:length] = y
-    ynew[k] = is_sound_pression(P)
-    #ynew[length] = valeur_descipteur(coord_new)#[0]
-    clf = classification (X_new, ynew)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+new_classification(X_new, y_new)
 
 #%%%%
 mat = clf.predict(X_objectif).reshape((100,100))

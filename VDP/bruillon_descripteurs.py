@@ -268,14 +268,16 @@ is_close(135, wn[0]/(2*np.pi) , 100)
 '''
 #%%%%%
 
-def is_sound_pression(P):
+
+def is_sound_pression(P,f_attendu,tolerence):
     #return np.any(P>1e-7)
-    return ((1/len(P))*np.sum(np.abs(P[100:]))>0.1)
+    return ((1/len(P))*np.sum(np.abs(P[100:]))>tolerence)
+ #tolerence : 0.1
 #permet de definir une zonne de jeu juste autour de la frequence fondamentale du resonateur 
 #ajouter calcul de f_attendu en fonction de la longueur du resonnateur? 
 
 def est_just_pression(P , f_attendu,tolerence): #f0 est la frequences fondamentale de jeu attendu
-    if is_sound_pression(P) : 
+    if is_sound_pression(P,f_attendu,tolerence) : 
         f0 = detect_pich_pression(P,Fs)
         return is_close(f0, f_attendu, tolerence)
     else : return False
@@ -301,14 +303,18 @@ def rugosite(P):
 
     return(np.log(rug))
 
-def est_rugueux(P,crit):
-    return rugosite(P)<crit
+def est_rugueux(P,f_attendu,tolerence):
+    if is_sound_pression(P, f_attendu, 0.1):
+        return rugosite(P)<tolerence
+    else :
+        return False 
+    
 
 from scipy.signal import hilbert
 import signal_envelope as se
 
 def quasi_periodic (P): 
-    P = P[10000:]
+    P = P[100:]
     analytic_signal =( hilbert(P)) #amplitude_envelope 
     Pe = np.abs(analytic_signal)
     
@@ -317,14 +323,17 @@ def quasi_periodic (P):
     #plt.plot(P[2000:8000])
     return np.log(indice)
 
-def is_quasi_periodic(P, crit): 
-    return  quasi_periodic (P) > crit
+def is_quasi_periodic(P, f_attendu,tolerence): 
+    return  quasi_periodic (P) > tolerence
 
-def is_periodic(P, crit): 
-    return  quasi_periodic (P) < crit
+def is_periodic(P, f_attendu,tolerence): 
+    if is_sound_pression(P, f_attendu, 0.1):
+        return  quasi_periodic (P) < tolerence
+    else :
+        return False 
 
 #%%%
-
+"""
 is_sound_pression(P_matrice[100])
 
 for k in range (g_grid.size) : 
@@ -335,9 +344,11 @@ for k in range (g_grid.size) :
 k = 108
 print(k,quasi_periodic(P_matrice[k]))
 detect_pich_pression(P_matrice[k],Fs)
+
+"""
 #%%% Code de Victor pour SVM 
 
-
+"""
 def plot_training_data_with_decision_boundary(X, y):
     # Train the SVC
     clf = svm.SVC(gamma=10).fit(X, y)
@@ -379,11 +390,11 @@ def plot_training_data_with_decision_boundary(X, y):
     ax.set_title(f" Decision boundaries in SVC")
 
     _ = plt.show()
-
+"""
 
 #%%%% Essay carto d'après code de victor
 # %% ------------------- USER INPUT -------------------
-
+"""
 plot_bool   = True
 save_bool   = True
 save_dir    = f"{os.getcwd()}\\..\\Descripteurs\\samples"
@@ -450,13 +461,13 @@ for k in range(g_grid.size):
 
 
     P_matrice[k] = P
-
+"""
 #%%%%%
 #P_matrice2 = P_matrice 
 #P_matrice = P_matrice1 
 
 #%%%%%%%%
-
+"""
 crit_grid_is_sound = np.full(g_grid.size, False)
 
 crit_grid_is_juste = np.full(g_grid.size, False)
@@ -505,5 +516,5 @@ plot_training_data_with_decision_boundary(X,crit_grid_is_quasi_periodic)
 
 plot_training_data_with_decision_boundary(X,crit_grid_is_periodic)
 
-
+"""
 
