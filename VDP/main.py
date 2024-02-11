@@ -12,8 +12,8 @@ from save import *
 
 # %% ------------------- USER INPUT -------------------
 
-plot_bool       = True
-save_bool       = True
+plot_bool       = False
+save_bool       = False
 save_dir        = f"{os.getcwd()}\\..\\Descripteurs\\samples"
 instrument_type = 'clarinet'
 solver_type     = "coupled"

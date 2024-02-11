@@ -59,9 +59,9 @@ def main():
     amplitude = np.iinfo(np.int32).max
 
 
-    write("real time/reflexion_impulse_response.wav", int(samplerate), (amplitude * impulse_response).T.astype(np.int32))
+    write("real time/waveguide/reflexion_impulse_response.wav", int(samplerate), (amplitude * impulse_response).T.astype(np.int32))
 
-    file = open("real time/waveguide_target_frequencies.txt", "w")
+    file = open("real time/waveguide/waveguide_target_frequencies.txt", "w")
     
     for value in target_frequencies:
         file.write(f"{value}\n ")
