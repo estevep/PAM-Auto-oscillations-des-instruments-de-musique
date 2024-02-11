@@ -1,6 +1,6 @@
 %% LyX 2.3.3 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
-\documentclass[french]{article}
+\documentclass[french, twocolumn]{article}
 \usepackage[T1]{fontenc}
 % \usepackage[latin9]{inputenc}
 \RequirePackage[utf8]{inputenc}
@@ -22,6 +22,9 @@
 \addbibresource{biblio.bib}
 \usepackage{fancyhdr}
 \usepackage{comment}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{graphicx}
 
 \makeatletter
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
@@ -55,57 +58,74 @@ C. Fernandez, P. Jardin, V. Piton, H. Audas, P. Estève, B. Quiédeville}
 
 \tableofcontents
 \section{Introduction}
+
+\subsection{Synthèse sonore}
 %On s'intéresse à créer des instrument auto-oscillants... virtuels. Avec de fortes non linéarité ... 
 %But du projet : créer des instruments virtuels jouables et définir des cartographies et des descripteurs. 
 
-La synthèse de sons inspirés par les instruments de musique classique présente des intérêts à la fois pour les compositeurs, les instrumentistes, les industriels et les chercheurs qui souhaitent expliquer la physique de ces instruments. Un très grand nombre  d'entreprises développent en effet aujourd'hui des instruments virtuels très réalistes basés sur la modélisation physique des instruments. 
+% La synthèse de sons inspirés par les instruments de musique classique présente des intérêts à la fois pour les compositeurs, les instrumentistes, les industriels et les chercheurs qui souhaitent expliquer la physique de ces instruments. Un très grand nombre  d'entreprises développent en effet aujourd'hui des instruments virtuels très réalistes basés sur la modélisation physique des instruments. 
 
-Dans cette étude, nous proposons donc de synthétiser par modélisation physique un instrument auto-oscillant tel qu'une clarinette. Les instruments auto-oscillant sont des systèmes intrinsèquement non linéaires et complexes qui font toujours l'objet d'étude par les acousticiens. Avec cette modélisation nous proposons également d'explorer l'espace de contrôle du musicien et de caractériser par des descripteurs bien choisis le type de sons produits. 
+Depuis les années 1970, plusieurs méthodes permettent de synthétiser des sons musicaux. La synthèse additive permet par exemple de générer des sons par addition de formes d'ondes et la synthèse soustractive génère des sons par filtrage de signaux aux riches composantes harmoniques. La synthèse additive et soustractive ne permettent cependant pas tout le temps de générer des sons réalistes en conservant une faible complexité. La synthèse par table d'ondes permet quand à elle de générer des sons réalistes mais issus d'enregistrement réels immuables. 
 
-\section{Présentation du projet}
-On se concentre sur la clarinette et autres instruments dérivés. 
+Même si ces techniques sont utiles musicalement, elles ne permettent pas d'apprécier la physique des instruments de musique classique d'un point de vue scientifique. C'est ici que les techniques de synthèse par modélisation physique présentent un intérêt puisqu'elles permettent de maîtriser, les mécanismes qui régissent l'émission des sons par ces instruments, depuis les paramètres de contrôles des musiciens, jusqu'à l'évolution des variables acoustiques dans les instrument ainsi que l'influence de leur géométrie et de leurs matériaux sur la qualité du son qu'ils produisent. Ces connaissances sont également utiles aux facteurs d'instruments dans le but d'une maîtrise aboutie de leur savoir-faire mais également pour guider la conception de nouveaux instruments.
 
-Objectifs : 
+% Un des enjeux de la synthèse par modélisation physique cependant est de formuler mathématiquement l'ensemble de ces interactions complexes.
 
-1: modélisation : En général 2 approches principales : guide onde et modal. (citer les docs pour la modélisation).   et résolution temps réel
+\subsection{Présentation du projet}
 
-On s'intéresse à comparer deux approches de modélisation de ces instrument, afin de les comparer en terme d'intérêt pour la synthèse sonore, capacité prédicative.. et explorer l'espace de contrôle. 
+Dans cette étude, nous proposons donc de synthétiser un instrument auto-oscillant par modélisation physique. 
+Les instruments auto-oscillants sont des systèmes intrinsèquement non linéaires et complexes qui font toujours l'objet d'étude par les acousticiens. On se concentre ici sur le cas d'instruments à vent à anche simple : la clarinette et le saxophone.
 
-2 : Compréhension du contrôle et des modèles : besoin de descipteurs : citer les articles 
+Le modèle physique étudié est implémenté dans un environnement temps réel afin de pouvoir être joué à l'aide d'un contrôleur midi.
+
+Pour pouvoir ajuster les caractéristiques du son et pas simplement les paramètres du modèle physique, il est nécessaire d'étudier des descripteurs sonores. Le but de ceux-ci est de permettre ensuite la création d'une interface de contrôle : le musicien indique quel type de son il souhaite créer (intensité sonore, timbre) et les paramètres du modèle s'ajustent pour y correspondre.
+
+% Avec cette modélisation nous proposons également d'explorer l'espace de contrôle du musicien et de caractériser par des descripteurs bien choisis le type de sons produits. 
+
+% Objectifs : 
+
+% 1: modélisation : En général 2 approches principales : guide onde et modal. (citer les docs pour la modélisation).  
+
+% 2 : résolution temps réel
+
+
+% 3 : Analyse du son obtenu pour décrire ses propriétés du point de vue perceptif et non du modèle physique. Le musicien souhaite savoir quel est le timbre du son, son volume... pas quel pression de bouche a été utilisée pour l'obtenir.
+
+% 4 : Contrôle : utilisation des descripteurs pour 
+
+
+
 % Méthode : En partcilier utilisation des deux modèls qui apportent infos differentes et classification plus rapide pour guide d'onde. 
 
+% les instrument virtuels : 
+% par table d'onde, synthèse additive ... 
+% , synthèse par modèle physique.
 
-\section{État de l'art}
+% Intérêt par modèle physique : pas boite noir on contrôle tout. Mais difficulté du formalisme et donc simplification nécessaire pour résoudre en temps réel, en particulier pour les parties non linéaires.  
+% Aujourd'hui capable temps réel et modèles plus complexes. 
+% Intérêt des modèle physique : nouveau instruments, inspirer facteurs, renseigner et identifier les paramètres de contrôle des musiciens ... 
 
-Depuis les années 1970, plusieurs méthodes permettent de synthétiser des sons musicaux. La synthèse additive permet par exemple de générer des sons par addition de formes d'ondes et la synthèse soustractive génère des sons par filtrage de signaux aux riches composantes harmoniques. La synthèse additive et soustractive ne permettent cependant pas tout le temps de générer des sons réalistes. La synthèse par table d'ondes permet quand à elle de générer des sons réalistes mais issus d'enregistrement réels. 
+\section{Modèle physique}
+\input{final report/sections/modele_physique}
 
-Même si musicalement ces techniques sont utiles, elles ne permettent pas d'un point de vue scientifique d'apprécier la physique des instruments de musique classique. C'est ici que la technique de synthèse par modélisation physique présente un intérêt puisqu'elle permet de maîtriser, les mécanismes qui régissent l'émission des sons par ces instruments, depuis les paramètres de contrôles des musiciens, jusqu'à l'évolution des variables acoustiques dans les instrument ainsi que l'influence de leur géométrie et de leurs matériaux sur la qualité du son qu'ils produisent. Ces connaissances sont également utiles aux les facteurs d'instruments dans le but d'une maîtrise abouti de leur savoir faire mais également pour guider la conception de nouveaux instruments.
+\section{Implémentation des modèles physiques en temps réel}
 
-Un des enjeux des la synthèse par modélisation physique cependant est de formuler mathématiquement l'ensemble de ces interactions complexes.  
+% \subsection{modélisation et résolution}
+% - approches analytiques : guide d'onde et modes
 
+\subsection{Liste des algo utilisés (sans rentrer dans le détail de l'implem)}
+- résolution numérique : runge kuta
+- cartes itérées, ligne à retard
 
-les instrument virtuels : 
-par table d'onde, synthèse additive ... 
-, synthèse par modèle physique.
-
-Intérêt par modèle physique : pas boite noir on contrôle tout. Mais difficulté du formalisme et donc simplification nécessaire pour résoudre en temps réel, en particulier pour les parties non linéaires.  
-Aujourd'hui capable temps réel et modèles plus complexes. 
-Intérêt des modèle physique : nouveau instruments, inspirer facteurs, renseigner et identifier les paramètres de contrôle des musiciens ... 
-
-
-
+\subsection{Implémentation et interface temps réel : max}
 
 
-\section{Méthodes et résultats}
-\subsection{Méthode}
-\subsubsection{modélisation et résolution}
-- approches analytiques : guide d'onde et modes
-- résolution numérique : runge kuta, cartes itérées
+\section{Descripteurs}
 
-\subsubsection{interface temps réel : max}
+La clarinette possède des modes de jeu et de régimes sonores divers. Comme pour l'instrument réel, on souhaite étudier et classifier les différents types de jeu disponible grâce à notre instrument numérique. Pour cela, il est nécessaire de définir des descripteurs permettant ensuite de classifier les différents types de jeu en fonction des paramètres d'entrée du modèle $\zeta$ et $\gamma$. 
 
-\subsubsection{déscripteur/ méthode de classification : cartographie}
-La clarinette possède des modes de jeu et de régimes sonores divers. Comme pour l(instrument réel, on souhaite étudier et classifier les différents types de jeu disponible grâce à notre instrument numérique. Pour cela, il est nécessaire de définir des descripteurs permettant ensuite de classifier les différents types de jeu en fonction des paramètres d'entrée du modèle $\zeta$ et $\gamma$. 
+\subsection{État de l'art}
+% \subsubsection{Descripteur/ méthode de classification : cartographie}
 \paragraph{Descripteurs : Présence de son}
 %Description des bifurcation et donc de l'apparition possible de branches de solutions périodiques par étude de la solution linéarisée \cite{chaigne2008acoustique}. 
 On définit la présence de son comme \cite{missoum_explicit_2014}: 
@@ -141,16 +161,36 @@ Pour étudier la périodicité du signal, on utilise le signal d'enveloppe du si
 On peut caracteriser la rugosité du son produit par la clarinette. 
 La rugosité est définie comme : 
 
+\paragraph{Espace de phase}
+Gibiat \cite{gibiat_phase_1988} propose d'utiliser la représentation en espace des phases accompagnée d'une analyse de Fourier pour détecter le comportement multiphonique d'une clarinette. Cette représentation est obtenue en traçant l'évolution des degrés de liberté du système ou dans le cas d'une réduction à un degré de liberté principal, la représentation du degré de liberté à un instant $t$ et $t + \tau$. 
 
-\paragraph{- espace de phase }
+En effet, la représentation dans l'espace des phases propose une lecture graphique intéressante des phénonomènes vibratoires de la clarinette. Une première tentative à été d'essayer de construire un descripteur pour identifier le registre utilisé sur des enregistrements réels où cette information nous est connue. 
+
+Malheureusement, même si deux registres se distinguent bien graphiquement, il a été difficile de construire un algorithme simple pour distinguer les registres les uns des autres. Deux tentatives ont été menées : la première, assez bancale, consistait à compter le nombre de points à vitesse lente (en dessous d'un seuil), mais cette méthode était trop sensible à de faibles variations de timbre. La deuxième consistait à colorier une image avec la courbe obtenue en considérant le nombre de pixels coloriés (plus cette valeur est grande, plus la trajectoire est irrégulière). Malheureusement, cette information n'était pas suffisante pour extraire des informations fiables.
 
 \paragraph{SVM}
 
-\subsubsection{methode d'évaluation du dispositif}
+\subsection{Méthodes et résultats}
 
-\subsection{Résultats}
+
+
+\section{Contrôle}
+\subsection{État de l'art}
+
+Cartographie - SVM
+
+
+
+% \section{Méthodes et résultats}
+% \subsection{Méthode}
+
+
+
+
+% \subsubsection{Méthode d'évaluation du dispositif}
+
 \subsubsection{cartographie}
-\subsection{évaluation du dispositif}
+\section{Évaluation du dispositif}
 apprécier en situation de jeu/intérêt de l'intérêt : évaluation de l'instrument créé. (réalisme, jouabilité, compréhension de la physique : outil didactique)  %
 
 \section{Conclusion et perspectives}
@@ -160,6 +200,7 @@ apprécier en situation de jeu/intérêt de l'intérêt : évaluation de l'instr
         aborder les éléments appris pendant le projet en plus des contributions.
 \end{comment}
 
+Perspectives : rappel de l'état de l'art pour adapter notre travail à un instrument à cordes frottées -> perspective logique pour appliquer le travail à d'autres instruments (à voir si on peut utiliser l'approche modale ou si l'analogie est vraie qu'en guide d'ondes).
 % \newpage
 
 \fancypagestyle{plain}{plain}
