@@ -135,7 +135,7 @@ def front (clf,X_objectif) :
 
 #%%%%
 
-front1 = front (clf,X_objectif)
+#front1 = front (clf,X_objectif)
 def new_point (X, front1): 
     
     l = X.shape[0]
@@ -450,7 +450,7 @@ def calcul_iter (X, y, clf, X_objectif, N_iter, descripteur, P_matrice) :
         if descripteur ==is_periodic:
             tolerence = -2 # log d'une valeur 
         if descripteur == est_rugueux : 
-            tolerence = np.log(2e+27)
+            tolerence = np.log(1e+28)
             #est_rugueux(P,f_attendu,tolerence)
         
             
@@ -465,12 +465,22 @@ def calcul_iter (X, y, clf, X_objectif, N_iter, descripteur, P_matrice) :
     return clf, X_new, ynew, P_matrice
 #%%%%%
 #n_dim_init = 10
+#dim_obj = 100
 #X, y_is_sound_pression,y_est_just_pression,y_is_periodic,y_est_rugueux, X_objectif, P_matrice = calcul_carto_init(dim_obj ,n_dim_init )
 
     
+
+#%%%%
+
+np.save("donne_post_init_X.npy",X)
+np.save("donne_post_init_P_matrice.npy",P_matrice)
+np.save("donne_post_init_X_objectif.npy", X_objectif)
+
+
+
+
 #%%%%%
 n_dim_init = 10
-
 
 
 #%%%%
@@ -525,15 +535,18 @@ file.close()
 
 """
 
-new_classification(X_new_is_sound_pression, y_new_is_sound_pression)
+#new_classification(X_new_is_sound_pression, y_new_is_sound_pression)
 
 #%%%%%%
+
+#%%%%%
+"""
 
 y_est_rugueux = np.full(n_dim_init*n_dim_init, False)
 for k in range (n_dim_init*n_dim_init) : 
     
     f_attendu = wn[0]/(2*np.pi)
-    tolerence = np.log(2e+27)
+    tolerence = np.log(1e+28)
     #print(est_just_pression(P_matrice[k] , f_attendu,tolerence))
     #print(detect_pich_pression(P_matrice[k], Fs) )
     #plt.plot(P_matric[k])
@@ -575,6 +588,10 @@ file.write("\n")
 
 file.close()
 
+np.save("X_new_est_rugueux_1e28.npy",X_new_est_rugueux)
+np.save(" y_new_est_rugueux_1e28.npy", y_new_est_rugueux)
+np.save("P_new_est_rugueux_1e28.npy", P_new_est_rugueux)
+"""
 #%%%%%%
 
 y_is_periodic = np.full(n_dim_init*n_dim_init, False)
@@ -623,7 +640,9 @@ file.write("\n")
 
 file.close()
 
-
+np.save("X_periodic.npy",X_new_is_periodic)
+np.save(" y_periodic.npy",y_new_is_periodic)
+np.save("P_periodic.npy", P_new_is_periodic)
 
 #%%%%
 y_est_just_pression = np.full(n_dim_init*n_dim_init, False)
@@ -672,6 +691,11 @@ file.write("\n")
 
 file.close()
 
+
+np.save("X_new_est_juste.npy",X_new_est_just_pression)
+np.save(" y_new_est_juste.npy", y_new_est_just_pression)
+np.save("P_new_est_juste.npy", P_new_est_just_pression)
+
 #%%%
 file = open("C:/Users/charl/Documents/PAM-Auto-oscillations-des-instruments-de-musique/VDP/carto.txt", "w")
 file.write(f"{'P_matrice'} ")
@@ -697,16 +721,16 @@ file.write(f"{clf_new_est_just_pression,X_new_est_just_pression, y_new_est_just_
 file.close()
 #%%%%
 
-def new_classification (X, y):
+def new_classification (X, y,save_name):
     # Train the SVC
     #kernel = "poly"
-    clf = svm.SVC(gamma=10,probability=True).fit(X, y) #,probability=True
+    clf = svm.SVC(gamma=20,probability=True).fit(X, y) #,probability=True
     
     # Settings for plotting
     fig, ax = plt.subplots(figsize=(7, 7))
     x_min, x_max, y_min, y_max = 0, 2, 0, 2
     ax.set(xlim=(x_min, x_max), ylim=(y_min, y_max))
-    ax.set_title("présence de son")
+    ax.set_title("Rugosité")
     ax.set_xlabel('Gamma')
     ax.set_ylabel('Zeta')
     # Plot decision boundary and margins
@@ -755,8 +779,8 @@ def new_classification (X, y):
     
     
     _ = plt.show()
-    plt.show()
-    plt.savefig('son_carto.png')
+    #plt.show()
+    plt.savefig("juste.png")
     
     
     return clf
