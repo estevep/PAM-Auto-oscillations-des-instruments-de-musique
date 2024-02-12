@@ -1,0 +1,121 @@
+VDP(x1, x2, x3, dx1, dx2, dx3, gamma, zeta, Fn, Ymn, freqs) {
+
+    w1 = freqs.peek(0) * 2 * pi;
+    w2 = freqs.peek(1) * 2 * pi;
+    w3 = freqs.peek(2) * 2 * pi;
+
+	x_sum1 = x1 + x2 + x3;
+	x_sum2 = dx1 + dx2 + dx3;
+
+	A = zeta*(3*gamma-1)/(2*sqrt(gamma));
+	B = -zeta*(3*gamma+1)/(8*pow(gamma, 3/2));
+	C = -zeta*(gamma+1)/(16*pow(gamma, 5/2));
+
+    Fn1 = Fn.peek(0);
+    Fn2 = Fn.peek(1);
+    Fn3 = Fn.peek(2);
+
+    Ymn1 = Ymn.peek(0);
+    Ymn2 = Ymn.peek(1);
+    Ymn3 = Ymn.peek(2);
+
+	xdot1 = dx1;
+	xdot2 = dx2;
+	xdot3 = dx3;
+
+	xdot4 = - pow(w1, 2)*x1 
+			- Fn1 * Ymn1 * dx1
+			+ 2 * Fn1 * B * x_sum1 * x_sum2 
+			+ 3 * Fn1 * C * pow(x_sum1, 2) * x_sum2
+			+ Fn1*A*x_sum2;
+
+	xdot5 = - pow(w2, 2)*x2
+			- Fn2 * Ymn2 * dx2
+			+ 2 * Fn2 * B * x_sum1 * x_sum2 
+			+ 3 * Fn2 * C * pow(x_sum1, 2) * x_sum2
+			+ Fn2 * A * x_sum2;
+
+	xdot6 = - pow(w3, 2) * x3 
+			- Fn3 * Ymn3 * dx3
+			+ 2 * Fn3 * B * x_sum1 * x_sum2 
+			+ 3 * Fn3 * C * pow(x_sum1, 2) * x_sum2
+			+ Fn3 * A * x_sum2;
+
+
+    return xdot1, xdot2, xdot3, xdot4, xdot5, xdot6;
+}
+
+RK4_step(x1, x2, x3, dx1, dx2, dx3, h, gamma, zeta, Fn, Ymn, freqs) {
+	
+	K11, K12, K13, K14, K15, K16 = h * VDP(x1, x2, x3, dx1, dx2, dx3, 
+                                           gamma, Fn, Ymn, freqs);
+
+	K21, K22, K23, K24, K25, K26 = h * VDP(x1 + 0.5 * K11, 
+                                           x2 + 0.5 * K12, 
+                                           x3 + 0.5 * K13, 
+                                           dx1 + 0.5 * K14, 
+                                           dx2 + 0.5 * K15, 
+                                           dx3 + 0.5 * K16, 
+                                           gamma, Fn, Ymn, freqs);
+
+	K31, K32, K33, K34, K35, K36 = h * VDP(x1 + 0.5 * K21, 
+                                           x2 + 0.5 * K22, 
+                                           x3 + 0.5 * K23, 
+                                           dx1 + 0.5 * K24, 
+                                           dx2 + 0.5 * K25, 
+                                           dx3 + 0.5 * K26, 
+                                           gamma, Fn, Ymn, freqs);
+
+	K41, K42, K43, K44, K45, K46 = h * VDP(x1 + K31, 
+                                           x2 + K32, 
+                                           x3 + K33, 
+                                           dx1 + K34, 
+                                           dx2 + K35, 
+                                           dx3 + K36, 
+                                           gamma, Fn, Ymn, freqs);
+	
+		
+	return x1 + 1/6 * (K11 + 2 * K21 + 2 * K31 + K41),
+           x2 + 1/6 * (K12 + 2 * K22 + 2 * K32 + K42),
+           x3 + 1/6 * (K13 + 2 * K23 + 2 * K33 + K43),
+           dx1 + 1/6 * (K14 + 2 * K24 + 2 * K34 + K44),
+           dx2 + 1/6 * (K15+ 2 * K25 + 2 * K35 + K45),
+           dx3 + 1/6 * (K16 + 2 * K26 + 2 * K36 + K46);
+}
+
+excitation = in7 * 1e-8;
+
+poke(freqs, pf1, 0);
+poke(freqs, pf2, 1);
+poke(freqs, pf3, 2);
+
+poke(Fn, pFn1, 0);
+poke(Fn, pFn2, 1);
+poke(Fn, pFn3, 2);
+
+poke(Ymn, pYmn1, 0);
+poke(Ymn, pYmn2, 1);
+poke(Ymn, pYmn3, 2);
+
+x1 = in1 + excitation;
+x2 = in2 + excitation;
+x3 = in3 + excitation;
+dx1 = in4;
+dx2 = in5;
+dx3 = in6;
+
+x1, x2, x3, dx1, dx2, dx3 = 
+    RK4_step(x1, x2, x3, dx1, dx2, dx3, 
+             1/samplerate, gamma, zeta, Fn, Ymn, freqs);
+
+
+P = (x1 + x2 + x3)/ 3 * panic;
+
+out1 = x1 * panic;
+out2 = x2 * panic;
+out3 = x3 * panic;
+out4 = dx1 * panic;
+out5 = dx2 * panic;
+out6 = dx3 * panic;
+
+out7 = P;

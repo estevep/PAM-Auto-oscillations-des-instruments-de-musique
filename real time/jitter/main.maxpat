@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 34.0, 77.0, 1314.0, 939.0 ],
+		"rect" : [ 134.0, 134.0, 851.0, 939.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -40,6 +40,25 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
+					"bgcolor" : [ 0.2, 0.2, 0.2, 0.13 ],
+					"id" : "obj-6",
+					"maxclass" : "nodes",
+					"nodesnames" : [ "1" ],
+					"nsize" : [ 0.05 ],
+					"numinlets" : 1,
+					"numoutlets" : 3,
+					"outlettype" : [ "", "", "" ],
+					"parameter_enable" : 0,
+					"patching_rect" : [ 15.0, 15.0, 256.779649078845978, 249.999988377094269 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 332.530099868774414, 26.801197439432144, 257.0, 248.198802560567856 ],
+					"xplace" : [ 0.394824514129282 ],
+					"yplace" : [ 0.528603688684402 ]
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-58",
 					"maxclass" : "newobj",
 					"numinlets" : 1,
@@ -59,7 +78,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 508.474552631378174, 590.677938640117645, 135.864403903484344, 35.0 ],
-					"text" : "0.338812 0.516 0.33 0.51"
+					"text" : "0.394825 0.528604 0.39 0.52"
 				}
 
 			}
@@ -72,7 +91,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 530.508449912071228, 659.033867061138153, 107.62711364030838, 35.0 ],
-					"text" : "setnode 1 0.33 0.51"
+					"text" : "setnode 1 0.39 0.52"
 				}
 
 			}
@@ -216,18 +235,21 @@
 				"box" : 				{
 					"bgcolor" : [ 0.2, 0.2, 0.2, 0.18 ],
 					"id" : "obj-104",
+					"ignoreclick" : 1,
 					"maxclass" : "nodes",
+					"nodecolor" : [ 0.925490196078431, 0.211764705882353, 0.211764705882353, 1.0 ],
 					"nodesnames" : [ "1" ],
-					"nsize" : [ 0.05 ],
+					"nsize" : [ 0.0 ],
 					"numinlets" : 1,
 					"numoutlets" : 3,
 					"outlettype" : [ "", "", "" ],
 					"parameter_enable" : 0,
 					"patching_rect" : [ 554.901978313922882, 73.856211483478546, 256.779649078845978, 249.999988377094269 ],
+					"pointcolor" : [ 1.0, 0.317647058823529, 0.317647058823529, 1.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 332.530099868774414, 25.30120325088501, 256.779649078845978, 249.999988377094269 ],
-					"xplace" : [ 0.33 ],
-					"yplace" : [ 0.51 ]
+					"xplace" : [ 0.39 ],
+					"yplace" : [ 0.52 ]
 				}
 
 			}
@@ -264,7 +286,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 273.779649078845978, 143.50000786781311, 155.500001311302185, 35.0 ],
-					"text" : "mouseidle 0.338812 0.516 0 1 0 0 0 1"
+					"text" : "mouseidle 0.036848 0.456081 0 1 0 0 1 1"
 				}
 
 			}
@@ -701,7 +723,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 272.033885657787323, 733.050813376903534, 50.0, 35.0 ],
-					"text" : "getcell 33 51"
+					"text" : "getcell 39 52"
 				}
 
 			}
@@ -714,7 +736,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 30.0, 325.620708465576172, 102.0, 35.0 ],
-					"text" : "node 1 0.338812 0.516 0.05 1"
+					"text" : "node 1 0.394825 0.528604 0.05 1"
 				}
 
 			}
@@ -726,7 +748,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 225.423718333244324, 777.966065526008606, 180.0, 22.0 ],
-					"text" : "cell 33 51 val 255 255 255 255"
+					"text" : "cell 39 52 val 255 255 255 255"
 				}
 
 			}
@@ -867,24 +889,6 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 1066.101645350456238, 288.983037412166595, 103.0, 22.0 ],
 					"text" : "jit.matrixinfo carto"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-6",
-					"maxclass" : "nodes",
-					"nodesnames" : [ "1" ],
-					"nsize" : [ 0.05 ],
-					"numinlets" : 1,
-					"numoutlets" : 3,
-					"outlettype" : [ "", "", "" ],
-					"parameter_enable" : 0,
-					"patching_rect" : [ 15.0, 15.0, 256.779649078845978, 249.999988377094269 ],
-					"presentation" : 1,
-					"presentation_rect" : [ 15.0, 15.0, 256.779649078845978, 249.999988377094269 ],
-					"xplace" : [ 0.338811896940034 ],
-					"yplace" : [ 0.516000023989679 ]
 				}
 
 			}
