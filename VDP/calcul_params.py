@@ -91,7 +91,7 @@ if __name__ == "__main__":
             wn, Fn, Ymn = compute_Fn_Ymn(l_vec[i], number_of_modes)
 
             if np.isclose(wn[0], pulsations[w_index], rtol=1e-3):
-
+                print(f"Frequency {pulsations[w_index]/(2 * np.pi)}")
                 w_index += 1
 
                 for mode in range(number_of_modes):

@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "dsp.gen",
-		"rect" : [ 34.0, 77.0, 1852.0, 939.0 ],
+		"rect" : [ 34.0, 77.0, 1055.0, 939.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -40,12 +40,48 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
+					"id" : "obj-3",
+					"maxclass" : "newobj",
+					"numinlets" : 0,
+					"numoutlets" : 2,
+					"outlettype" : [ "", "" ],
+					"patching_rect" : [ 182.0, 218.644073009490967, 80.0, 22.0 ],
+					"text" : "data Ymn 3 1"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-2",
+					"maxclass" : "newobj",
+					"numinlets" : 0,
+					"numoutlets" : 2,
+					"outlettype" : [ "", "" ],
+					"patching_rect" : [ 182.0, 188.983055353164673, 69.0, 22.0 ],
+					"text" : "data Fn 3 1"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-1",
+					"maxclass" : "newobj",
+					"numinlets" : 0,
+					"numoutlets" : 2,
+					"outlettype" : [ "", "" ],
+					"patching_rect" : [ 182.0, 159.322037696838379, 82.0, 22.0 ],
+					"text" : "data freqs 3 1"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-30",
 					"maxclass" : "newobj",
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 255.0, 32.0, 147.0, 22.0 ],
+					"patching_rect" : [ 1101.694941520690918, 25.423729419708252, 147.0, 22.0 ],
 					"text" : "in 1 @comment excitation"
 				}
 
@@ -141,8 +177,8 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 182.0, 693.0, 142.0, 22.0 ],
-					"text" : "param Ymn3 @default 0."
+					"patching_rect" : [ 181.355936527252197, 692.372897863388062, 149.0, 22.0 ],
+					"text" : "param pYmn3 @default 0."
 				}
 
 			}
@@ -153,8 +189,8 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 184.0, 568.0, 131.0, 22.0 ],
-					"text" : "param Fn3 @default 0."
+					"patching_rect" : [ 184.0, 568.0, 138.0, 22.0 ],
+					"text" : "param pFn3 @default 0."
 				}
 
 			}
@@ -165,8 +201,8 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 182.0, 659.0, 142.0, 22.0 ],
-					"text" : "param Ymn2 @default 0."
+					"patching_rect" : [ 182.0, 659.0, 149.0, 22.0 ],
+					"text" : "param pYmn2 @default 0."
 				}
 
 			}
@@ -177,8 +213,8 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 184.0, 528.0, 131.0, 22.0 ],
-					"text" : "param Fn2 @default 0."
+					"patching_rect" : [ 184.0, 528.0, 138.0, 22.0 ],
+					"text" : "param pFn2 @default 0."
 				}
 
 			}
@@ -189,8 +225,8 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 182.0, 623.0, 142.0, 22.0 ],
-					"text" : "param Ymn1 @default 0."
+					"patching_rect" : [ 182.0, 623.0, 149.0, 22.0 ],
+					"text" : "param pYmn1 @default 0."
 				}
 
 			}
@@ -201,8 +237,8 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 183.0, 499.0, 131.0, 22.0 ],
-					"text" : "param Fn1 @default 0."
+					"patching_rect" : [ 183.0, 499.0, 138.0, 22.0 ],
+					"text" : "param pFn1 @default 0."
 				}
 
 			}
@@ -213,7 +249,7 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 183.0, 456.0, 133.0, 22.0 ],
+					"patching_rect" : [ 183.050851821899414, 455.932214260101318, 133.0, 22.0 ],
 					"text" : "param zeta @default 0."
 				}
 
@@ -237,8 +273,8 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 183.0, 395.0, 134.0, 22.0 ],
-					"text" : "param f3 @default 100."
+					"patching_rect" : [ 183.0, 395.0, 141.0, 22.0 ],
+					"text" : "param pf3 @default 100."
 				}
 
 			}
@@ -249,8 +285,8 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 183.0, 366.0, 134.0, 22.0 ],
-					"text" : "param f2 @default 100."
+					"patching_rect" : [ 183.0, 366.0, 141.0, 22.0 ],
+					"text" : "param pf2 @default 100."
 				}
 
 			}
@@ -261,22 +297,22 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 183.0, 337.0, 134.0, 22.0 ],
-					"text" : "param f1 @default 100."
+					"patching_rect" : [ 183.050851821899414, 337.288143634796143, 141.0, 22.0 ],
+					"text" : "param pf1 @default 100."
 				}
 
 			}
 , 			{
 				"box" : 				{
-					"code" : "x1 = in1;\r\nx2 = in2;\r\nx3 = in3;\r\ndx1 = in4;\r\ndx2 = in5;\r\ndx3 = in6;\r\n\r\nexcitation = in7 * 1e-8;\r\n\r\nw1 = f1 * 2 * pi;\r\nw2 = f2 * 2 * pi;\r\nw3 = f3 * 2 * pi;\r\n\r\n\r\nx_sum1 = x1 + x2 + x3 + excitation;\r\nx_sum2 = dx1 + dx2 + dx3;\r\n\r\nA = zeta*(3*gamma-1)/(2*sqrt(gamma));\r\nB = -zeta*(3*gamma+1)/(8*pow(gamma, 3/2));\r\nC = -zeta*(gamma+1)/(16*pow(gamma, 5/2));\r\n\r\n\r\nxdot1 = dx1;\r\nxdot2 = dx2;\r\nxdot3 = dx3;\r\n\r\nxdot4 = - pow(w1, 2)*x1 \r\n\t\t   - Fn1 * Ymn1 * dx1\r\n\t\t   + 2 * Fn1*B * x_sum1*x_sum2 \r\n\t\t   + 3 * Fn1 *C * pow(x_sum1, 2)*x_sum2\r\n\t\t   + Fn1*A*x_sum2;\r\n\r\nxdot5 = - pow(w1, 2)*x1 \r\n\t\t   - Fn1 * Ymn1 * dx1\r\n\t\t   + 2 * Fn1*B * x_sum1*x_sum2 \r\n\t\t   + 3 * Fn1 *C * pow(x_sum1, 2)*x_sum2\r\n\t\t   + Fn1*A*x_sum2;\r\n\r\nxdot6 = - pow(w1, 2)*x1 \r\n\t\t   - Fn1 * Ymn1 * dx1\r\n\t\t   + 2 * Fn1*B * x_sum1*x_sum2 \r\n\t\t   + 3 * Fn1 *C * pow(x_sum1, 2)*x_sum2\r\n\t\t   + Fn1*A*x_sum2;\r\n\r\nP = (xdot1 + xdot2 + xdot3) / 3;\r\nPdot = (xdot4 + xdot5 + xdot6)/3;\r\n\r\n\r\nout1 = xdot1;\r\nout2 = xdot2;\r\nout3 = xdot3;\r\nout4 = xdot4;\r\nout5 = xdot5;\r\nout6 = xdot6;\r\n\r\nout7 = P;\r\nout8 = Pdot;",
+					"code" : "VDP(x1, x2, x3, dx1, dx2, dx3, gamma, zeta, Fn, Ymn, freqs) {\r\n\r\n    w1 = freqs.peek(0) * 2 * pi;\r\n    w2 = freqs.peek(1) * 2 * pi;\r\n    w3 = freqs.peek(2) * 2 * pi;\r\n\r\n\tx_sum1 = x1 + x2 + x3;\r\n\tx_sum2 = dx1 + dx2 + dx3;\r\n\r\n\tA = zeta*(3*gamma-1)/(2*sqrt(gamma));\r\n\tB = -zeta*(3*gamma+1)/(8*pow(gamma, 3/2));\r\n\tC = -zeta*(gamma+1)/(16*pow(gamma, 5/2));\r\n\r\n    Fn1 = Fn.peek(0);\r\n    Fn2 = Fn.peek(1);\r\n    Fn3 = Fn.peek(2);\r\n\r\n    Ymn1 = Ymn.peek(0);\r\n    Ymn2 = Ymn.peek(1);\r\n    Ymn3 = Ymn.peek(2);\r\n\r\n\txdot1 = dx1;\r\n\txdot2 = dx2;\r\n\txdot3 = dx3;\r\n\r\n\txdot4 = - pow(w1, 2)*x1 \r\n\t\t\t- Fn1 * Ymn1 * dx1\r\n\t\t\t+ 2 * Fn1 * B * x_sum1 * x_sum2 \r\n\t\t\t+ 3 * Fn1 * C * pow(x_sum1, 2) * x_sum2\r\n\t\t\t+ Fn1*A*x_sum2;\r\n\r\n\txdot5 = - pow(w2, 2)*x2\r\n\t\t\t- Fn2 * Ymn2 * dx2\r\n\t\t\t+ 2 * Fn2 * B * x_sum1 * x_sum2 \r\n\t\t\t+ 3 * Fn2 * C * pow(x_sum1, 2) * x_sum2\r\n\t\t\t+ Fn2 * A * x_sum2;\r\n\r\n\txdot6 = - pow(w3, 2) * x3 \r\n\t\t\t- Fn3 * Ymn3 * dx3\r\n\t\t\t+ 2 * Fn3 * B * x_sum1 * x_sum2 \r\n\t\t\t+ 3 * Fn3 * C * pow(x_sum1, 2) * x_sum2\r\n\t\t\t+ Fn3 * A * x_sum2;\r\n\r\n\r\n    return xdot1, xdot2, xdot3, xdot4, xdot5, xdot6;\r\n}\r\n\r\nRK4_step(x1, x2, x3, dx1, dx2, dx3, h, gamma, zeta, Fn, Ymn, freqs) {\r\n\t\r\n\tK11, K12, K13, K14, K15, K16 = VDP(x1, x2, x3, dx1, dx2, dx3, \r\n                                           gamma, zeta, Fn, Ymn, freqs);\r\n\r\n\tK21, K22, K23, K24, K25, K26 = VDP(x1 + 0.5 * K11, \r\n                                           x2 + 0.5 * K12, \r\n                                           x3 + 0.5 * K13, \r\n                                           dx1 + 0.5 * K14, \r\n                                           dx2 + 0.5 * K15, \r\n                                           dx3 + 0.5 * K16, \r\n                                           gamma, zeta, Fn, Ymn, freqs);\r\n\r\n\tK31, K32, K33, K34, K35, K36 = VDP(x1 + 0.5 * K21, \r\n                                           x2 + 0.5 * K22, \r\n                                           x3 + 0.5 * K23, \r\n                                           dx1 + 0.5 * K24, \r\n                                           dx2 + 0.5 * K25, \r\n                                           dx3 + 0.5 * K26, \r\n                                           gamma, zeta, Fn, Ymn, freqs);\r\n\r\n\tK41, K42, K43, K44, K45, K46 = VDP(x1 + K31, \r\n                                           x2 + K32, \r\n                                           x3 + K33, \r\n                                           dx1 + K34, \r\n                                           dx2 + K35, \r\n                                           dx3 + K36, \r\n                                           gamma, zeta, Fn, Ymn, freqs);\r\n\t\r\n\t\t\r\n\treturn x1 + 1/6 * h * (K11 + 2 * K21 + 2 * K31 + K41),\r\n           x2 + 1/6 * h * (K12 + 2 * K22 + 2 * K32 + K42),\r\n           x3 + 1/6 * h * (K13 + 2 * K23 + 2 * K33 + K43),\r\n           dx1 + 1/6 * h * (K14 + 2 * K24 + 2 * K34 + K44),\r\n           dx2 + 1/6 * h * (K15+ 2 * K25 + 2 * K35 + K45),\r\n           dx3 + 1/6 * h * (K16 + 2 * K26 + 2 * K36 + K46);\r\n}\r\n\r\nData freqs(3, 1);\r\nData Fn(3, 1);\r\nData Ymn(3, 1);\r\n\r\nexcitation = in7 * 1e-8;\r\n\r\npoke(freqs, pf1, 0);\r\npoke(freqs, pf2, 1);\r\npoke(freqs, pf3, 2);\r\n\r\npoke(Fn, pFn1, 0);\r\npoke(Fn, pFn2, 1);\r\npoke(Fn, pFn3, 2);\r\n\r\npoke(Ymn, pYmn1, 0);\r\npoke(Ymn, pYmn2, 1);\r\npoke(Ymn, pYmn3, 2);\r\n\r\nx1 = in1 + excitation;\r\nx2 = in2 + excitation;\r\nx3 = in3 + excitation;\r\ndx1 = in4;\r\ndx2 = in5;\r\ndx3 = in6;\r\n\r\nx1, x2, x3, dx1, dx2, dx3 = \r\n    RK4_step(x1, x2, x3, dx1, dx2, dx3, \r\n             1/samplerate, gamma, zeta, Fn, Ymn, freqs);\r\n\r\n\r\nP = (x1 + x2 + x3)/ 3 * panic;\r\n\r\nout1 = x1 * panic;\r\nout2 = x2 * panic;\r\nout3 = x3 * panic;\r\nout4 = dx1 * panic;\r\nout5 = dx2 * panic;\r\nout6 = dx3 * panic;\r\n\r\nout7 = P;\r\n",
 					"fontface" : 0,
 					"fontname" : "<Monospaced>",
 					"fontsize" : 12.0,
 					"id" : "obj-5",
 					"maxclass" : "codebox",
 					"numinlets" : 7,
-					"numoutlets" : 8,
-					"outlettype" : [ "", "", "", "", "", "", "", "" ],
+					"numoutlets" : 7,
+					"outlettype" : [ "", "", "", "", "", "", "" ],
 					"patching_rect" : [ 455.0, 118.0, 817.0, 698.0 ]
 				}
 
@@ -328,7 +364,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-5", 4 ],
-					"midpoints" : [ 920.5, 868.0, 443.0, 868.0, 443.0, 103.0, 996.5, 103.0 ],
+					"midpoints" : [ 920.5, 862.814814984798431, 443.0, 862.814814984798431, 443.0, 103.0, 996.5, 103.0 ],
 					"source" : [ "obj-27", 0 ]
 				}
 
@@ -336,7 +372,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-5", 5 ],
-					"midpoints" : [ 1034.5, 868.0, 441.0, 868.0, 441.0, 103.0, 1129.5, 103.0 ],
+					"midpoints" : [ 1034.5, 862.814814984798431, 441.0, 862.814814984798431, 441.0, 103.0, 1129.5, 103.0 ],
 					"source" : [ "obj-28", 0 ]
 				}
 
@@ -359,7 +395,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-24", 0 ],
-					"midpoints" : [ 578.5, 817.0, 578.5, 817.0 ],
+					"midpoints" : [ 597.5, 817.0, 578.5, 817.0 ],
 					"source" : [ "obj-5", 1 ]
 				}
 
@@ -367,7 +403,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-25", 0 ],
-					"midpoints" : [ 692.5, 817.0, 692.5, 817.0 ],
+					"midpoints" : [ 730.5, 817.0, 692.5, 817.0 ],
 					"source" : [ "obj-5", 2 ]
 				}
 
@@ -375,7 +411,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-26", 0 ],
-					"midpoints" : [ 806.5, 817.0, 806.5, 817.0 ],
+					"midpoints" : [ 863.5, 817.0, 806.5, 817.0 ],
 					"source" : [ "obj-5", 3 ]
 				}
 
@@ -383,7 +419,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-27", 0 ],
-					"midpoints" : [ 920.5, 817.0, 920.5, 817.0 ],
+					"midpoints" : [ 996.5, 817.0, 920.5, 817.0 ],
 					"source" : [ "obj-5", 4 ]
 				}
 
@@ -391,7 +427,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-28", 0 ],
-					"midpoints" : [ 1034.5, 817.0, 1034.5, 817.0 ],
+					"midpoints" : [ 1129.5, 817.0, 1034.5, 817.0 ],
 					"source" : [ "obj-5", 5 ]
 				}
 
