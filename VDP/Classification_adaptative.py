@@ -38,7 +38,7 @@ from scipy.fft import fft, fftfreq
 #%%%%%%
 def classification (X, y):
     # Train the SVC
-    clf = svm.SVC(gamma=10,probability=True).fit(X, y) #,probability=True
+    clf = svm.SVC(gamma=20,probability=True).fit(X, y) #,probability=True
     
     # Settings for plotting
     _, ax = plt.subplots(figsize=(7, 7))
@@ -87,7 +87,7 @@ def front (clf,X_objectif) :
     index = -1
     val = clf.predict(X_objectif)
     proba = clf.predict_proba(X_objectif)
-    
+
     #front = np.zeros_like(X_objectif[0,:])
     front = [0,0]
     fontiere_new = front
@@ -130,7 +130,7 @@ def front (clf,X_objectif) :
 
 
 #front1 = front (clf,X_objectif) 
-plt.plot(front1[:,0],front1[:,1], "x")
+#plt.plot(front1[:,0],front1[:,1], "x")
 
 
 #%%%%
@@ -270,17 +270,18 @@ for _ in range (7) :
 
 #%%%%  
 dim_obj = 100 #taille de la grille objectif 
-N_iter = 10 #nombre d'itération
-n_dim_init=2  # dimension grille de départ 
+#N_iter = 10 #nombre d'itération
+#n_dim_init=6  # dimension grille de départ 
 
 
 
 def calcul_carto_init(dim_obj ,n_dim_init ) : 
     
     tolerence_is_sound_pression = 0.1
-    tolerence_est_just_pression = 200 #est juste 
+    tolerence_est_just_pression = 5 #est juste 
     tolerence_is_periodic = -2 # rugosité 
-    tolerence_est_rugueux= np.log(1e+28) # rugosité 
+    tolerence_est_rugueux= np.log(2e+27) # rugosité 
+    
 
     instrument_type = 'clarinet'
     solver_type     = "coupled"
@@ -318,8 +319,8 @@ def calcul_carto_init(dim_obj ,n_dim_init ) :
     y_is_periodic =np.full(n_dim_init*n_dim_init, False)
     y_est_rugueux =np.full(n_dim_init*n_dim_init, False)
     
-    
-    
+    t = np.arange(0,T,1/Fs)
+    P_matrice = np.zeros((n_dim_init *n_dim_init ,len(t)))
     
     #y : les valeurs à remplacer par calcul dans descripteurs 
     for k in range(n_dim_init*n_dim_init):
@@ -351,7 +352,7 @@ def calcul_carto_init(dim_obj ,n_dim_init ) :
                 
             
         Pn0 = [P0, Pdot0]
-        t = np.arange(0,T,1/Fs)
+        
         
         P, Pdot = solver(N, t, gamma_func, zeta_func, in_params, Fn, Ymn, wn, Pn0)
         f_attendu = wn[0]/(2*np.pi)
@@ -361,24 +362,31 @@ def calcul_carto_init(dim_obj ,n_dim_init ) :
         #tolerence_is_periodic = -2 # rugosité 
         
         y_is_sound_pression[k] = is_sound_pression(P , f_attendu,tolerence_is_sound_pression)
+        print(detect_pich_pression(P,Fs))
         y_est_just_pression[k] = est_just_pression(P , f_attendu,tolerence_est_just_pression)
         print(rugosite(P))
         y_est_rugueux [k] = est_rugueux(P , f_attendu,tolerence_est_rugueux)
         print(quasi_periodic (P))
         y_is_periodic [k] = is_periodic (P , f_attendu,tolerence_is_periodic)
-
+        
+        P_matrice[k]=P
 
 
     
     #clf_is_sound_pression = classification (X, y_is_sound_pression)
     #clf_est_just_pression = classification (X, y_est_just_pression)
     #clf_is_periodic = classification (X, y_is_periodic) clf_is_sound_pression,clf_est_just_pression,clf_is_periodic,
-    return X, y_is_sound_pression,y_est_just_pression,y_is_periodic , y_est_rugueux, X_objectif
+    return X, y_is_sound_pression,y_est_just_pression,y_is_periodic , y_est_rugueux, X_objectif,P_matrice
 
 
-def calcul_iter (X, y, clf, X_objectif, N_iter, descripteur) : 
-    
+def calcul_iter (X, y, clf, X_objectif, N_iter, descripteur, P_matrice) : 
+    P_mat_init = P_matrice
+    n_dim_init = len(P_matrice[:,0])
     X_new,ynew=X,y
+    t = np.arange(0,T,1/Fs)
+    
+    P_matrice = np.zeros((n_dim_init+N_iter ,len(t)))
+    P_matrice[:n_dim_init,:]=P_mat_init
     
     for _ in range (N_iter) : 
         X,y=X_new,ynew
@@ -423,7 +431,6 @@ def calcul_iter (X, y, clf, X_objectif, N_iter, descripteur) :
                 
             
         Pn0 = [P0, Pdot0]
-        t = np.arange(0,T,1/Fs)
         
         P, Pdot = solver(N, t, gamma_func, zeta_func, in_params, Fn, Ymn, wn, Pn0)
 
@@ -439,11 +446,11 @@ def calcul_iter (X, y, clf, X_objectif, N_iter, descripteur) :
         if descripteur ==is_sound_pression:
             tolerence = 0.1
         if descripteur ==est_just_pression:
-            tolerence = 200 #est juste 
+            tolerence = 5 #est juste 
         if descripteur ==is_periodic:
             tolerence = -2 # log d'une valeur 
         if descripteur == est_rugueux : 
-            tolerence = np.log(1e+28)
+            tolerence = np.log(2e+27)
             #est_rugueux(P,f_attendu,tolerence)
         
             
@@ -452,65 +459,277 @@ def calcul_iter (X, y, clf, X_objectif, N_iter, descripteur) :
         ynew[length] = descripteur(P , f_attendu,tolerence)
         #ynew[length] = valeur_descipteur(coord_new)#[0]
         clf = classification (X_new, ynew)
-    return clf, X_new, ynew
+        
+        P_matrice[k]=P
+        
+    return clf, X_new, ynew, P_matrice
 #%%%%%
-n_dim_init = 3
-X, y_is_sound_pression,y_est_just_pression,y_is_periodic,y_est_rugueux, X_objectif = calcul_carto_init(dim_obj ,n_dim_init )
+#n_dim_init = 10
+#X, y_is_sound_pression,y_est_just_pression,y_is_periodic,y_est_rugueux, X_objectif, P_matrice = calcul_carto_init(dim_obj ,n_dim_init )
+
+    
+#%%%%%
+n_dim_init = 10
+
+
 
 #%%%%
-clf_is_sound_pression = classification( X, y_is_sound_pression)
-clf_est_just_pression =  classification( X,y_est_just_pression)
-clf_is_periodic =  classification( X,y_is_periodic)
-clf_est_rugueux =  classification( X,y_est_rugueux)
 
-#%%%%%
-N_iter = 10
+"""
+y_is_sound_pression = np.full(n_dim_init*n_dim_init, False)
+for k in range (n_dim_init*n_dim_init) : 
+    f_attendu = wn[0]/(2*np.pi)
+    tolerence = 0.1
+    #print(est_just_pression(P_matrice[k] , f_attendu,tolerence))
+    #print(detect_pich_pression(P_matrice[k], Fs) )
+    #plt.plot(P_matric[k])
+    y_is_sound_pression[k] =is_sound_pression(P_matrice[k] , f_attendu,tolerence)
+
+
+clf_is_sound_pression = classification( X, y_is_sound_pression)
+
+N_iter = 60
 clf =clf_is_sound_pression
 y = y_is_sound_pression
 
-clf,X_new, y_new = calcul_iter (X, y, clf, X_objectif, N_iter, is_sound_pression)
+clf_new_is_sound_pression,X_new_is_sound_pression, y_new_is_sound_pression,P_new_is_sound_pression = calcul_iter (X, y, clf, X_objectif, N_iter, is_sound_pression, P_matrice)
 
-clf_new_is_sound_pression,X_new_is_sound_pression, y_new_is_sound_pression = clf,X_new, y_new 
-#%%%%
 
-N_iter = 10
+file = open("C:/Users/charl/Documents/PAM-Auto-oscillations-des-instruments-de-musique/VDP/carto_sound.txt", "w")
+file.write(f"{'P_matrice_init'} ")
+file.write("\n")
+file.write(f"{P_matrice} ")
+file.write("\n")
+file.write(f"{'P_new_is_sound_pression'} ")
+file.write("\n")
+file.write(f"{P_new_is_sound_pression} ")
+file.write("\n")
+
+file.write(f"{'X_new_is_sound_pression'} ")
+file.write("\n")
+file.write(f"{X_new_is_sound_pression} ")
+file.write("\n")
+
+file.write(f"{'y_new_is_sound_pression'} ")
+file.write("\n")
+file.write(f"{y_new_is_sound_pression} ")
+file.write("\n")
+
+file.write(f"{'sound'} ")
+file.write("\n")
+file.write(f"{clf_new_is_sound_pression } ")
+file.write("\n")
+
+file.close()
+
+
+"""
+
+new_classification(X_new_is_sound_pression, y_new_is_sound_pression)
+
+#%%%%%%
+
+y_est_rugueux = np.full(n_dim_init*n_dim_init, False)
+for k in range (n_dim_init*n_dim_init) : 
+    
+    f_attendu = wn[0]/(2*np.pi)
+    tolerence = np.log(2e+27)
+    #print(est_just_pression(P_matrice[k] , f_attendu,tolerence))
+    #print(detect_pich_pression(P_matrice[k], Fs) )
+    #plt.plot(P_matric[k])
+    y_est_rugueux[k] = est_rugueux(P_matrice[k] , f_attendu,tolerence)
+
+clf_est_rugueux =  classification( X,y_est_rugueux)
+
+
+N_iter = 50
+clf =clf_est_rugueux
+y = y_est_rugueux
+clf_new_est_rugueux,X_new_est_rugueux, y_new_est_rugueux,P_new_est_rugueux= calcul_iter (X, y, clf, X_objectif, N_iter, est_rugueux, P_matrice)
+
+
+file = open("C:/Users/charl/Documents/PAM-Auto-oscillations-des-instruments-de-musique/VDP/carto_rugueux.txt", "w")
+file.write(f"{'P_matrice_init'} ")
+file.write("\n")
+file.write(f"{P_matrice} ")
+file.write("\n")
+file.write(f"{'P_new_est_rugueux'} ")
+file.write("\n")
+file.write(f"{P_new_est_rugueux} ")
+file.write("\n")
+
+file.write(f"{'X_new_est_rugueux'} ")
+file.write("\n")
+file.write(f"{X_new_est_rugueux} ")
+file.write("\n")
+
+file.write(f"{'y_new_est_rugueux'} ")
+file.write("\n")
+file.write(f"{y_new_est_rugueux} ")
+file.write("\n")
+
+file.write(f"{'rugeux'} ")
+file.write("\n")
+file.write(f"{clf_new_est_rugueux} ")
+file.write("\n")
+
+file.close()
+
+#%%%%%%
+
+y_is_periodic = np.full(n_dim_init*n_dim_init, False)
+for k in range (n_dim_init*n_dim_init) : 
+    
+    f_attendu = wn[0]/(2*np.pi)
+    tolerence = -1.9
+    #print(est_just_pression(P_matrice[k] , f_attendu,tolerence))
+    #print(detect_pich_pression(P_matrice[k], Fs) )
+    #plt.plot(P_matric[k])
+    y_is_periodic[k] = is_periodic(P_matrice[k] , f_attendu,tolerence)
+
+clf_is_periodic =  classification( X,y_is_periodic)
+
+
+N_iter = 50
 clf =clf_is_periodic
 y = y_is_periodic
+clf_new_is_periodic,X_new_is_periodic, y_new_is_periodic,P_new_is_periodic= calcul_iter (X, y, clf, X_objectif, N_iter, is_periodic, P_matrice)
 
-clf,X_new, y_new = calcul_iter (X, y, clf, X_objectif, N_iter, is_sound_pression)
 
-clf_new_is_periodic,X_new_is_periodic, y_new_is_periodic = clf,X_new, y_new 
+file = open("C:/Users/charl/Documents/PAM-Auto-oscillations-des-instruments-de-musique/VDP/carto_periodic.txt", "w")
+file.write(f"{'P_matrice_init'} ")
+file.write("\n")
+file.write(f"{P_matrice} ")
+file.write("\n")
+file.write(f"{'P_new_is_periodic'} ")
+file.write("\n")
+file.write(f"{P_new_is_periodic} ")
+file.write("\n")
+
+file.write(f"{'X_new_is_periodic'} ")
+file.write("\n")
+file.write(f"{X_new_is_periodic} ")
+file.write("\n")
+
+file.write(f"{'y_new_is_periodic'} ")
+file.write("\n")
+file.write(f"{y_new_is_periodic} ")
+file.write("\n")
+
+file.write(f"{'periodic'} ")
+file.write("\n")
+file.write(f"{clf_new_is_periodic } ")
+file.write("\n")
+
+file.close()
+
+
+
+#%%%%
+y_est_just_pression = np.full(n_dim_init*n_dim_init, False)
+for k in range (n_dim_init*n_dim_init) : 
+    
+    f_attendu = wn[0]/(2*np.pi)
+    tolerence = 5
+    #print(est_just_pression(P_matrice[k] , f_attendu,tolerence))
+    #print(detect_pich_pression(P_matrice[k], Fs) )
+    #plt.plot(P_matric[k])
+    y_est_just_pression[k] = est_just_pression(P_matrice[k] , f_attendu,tolerence)
+
+clf_est_just_pression =  classification( X,y_est_just_pression)
+
+
+N_iter = 50
+clf =clf_est_just_pression
+y = y_est_just_pression
+clf_new_est_just_pression,X_new_est_just_pression, y_new_est_just_pression,P_new_est_just_pression= calcul_iter (X, y, clf, X_objectif, N_iter, est_just_pression, P_matrice)
+
+
+file = open("C:/Users/charl/Documents/PAM-Auto-oscillations-des-instruments-de-musique/VDP/carto_juste.txt", "w")
+file.write(f"{'P_matrice_init'} ")
+file.write("\n")
+file.write(f"{P_matrice} ")
+file.write("\n")
+file.write(f"{'P_new_est_just_pression'} ")
+file.write("\n")
+file.write(f"{P_new_est_just_pression} ")
+file.write("\n")
+
+file.write(f"{'X_new_est_just_pression'} ")
+file.write("\n")
+file.write(f"{X_new_est_just_pression} ")
+file.write("\n")
+
+file.write(f"{'y_new_est_just_pression'} ")
+file.write("\n")
+file.write(f"{y_new_est_just_pression} ")
+file.write("\n")
+
+file.write(f"{'periodic'} ")
+file.write("\n")
+file.write(f"{clf_new_est_just_pression} ")
+file.write("\n")
+
+file.close()
+
+#%%%
+file = open("C:/Users/charl/Documents/PAM-Auto-oscillations-des-instruments-de-musique/VDP/carto.txt", "w")
+file.write(f"{'P_matrice'} ")
+file.write("\n")
+file.write(f"{P_matrice} ")
+file.write("\n")
+file.write(f"{'periodic'} ")
+file.write("\n")
+file.write(f"{clf_new_is_periodic,X_new_is_periodic, y_new_is_periodic} ")
+file.write("\n")
+file.write(f"{'rugueux'} ")
+file.write("\n")
+file.write(f"{clf_new_est_rugueux,X_new_est_rugueux, y_new_est_rugueux } ")
+file.write("\n")
+file.write(f"{'sound'} ")
+file.write("\n")
+file.write(f"{clf_new_is_sound_pression,X_new_is_sound_pression, y_new_is_sound_pression } ")
+file.write("\n")
+file.write(f"{'juste'} ")
+file.write("\n")
+file.write(f"{clf_new_est_just_pression,X_new_est_just_pression, y_new_est_just_pression } ")
+
+file.close()
 #%%%%
 
 def new_classification (X, y):
     # Train the SVC
-    kernel = "poly"
-    clf = svm.SVC(kernel=kernel,gamma=convolve2d0,probability=True).fit(X, y) #,probability=True
+    #kernel = "poly"
+    clf = svm.SVC(gamma=10,probability=True).fit(X, y) #,probability=True
     
     # Settings for plotting
-    _, ax = plt.subplots(figsize=(7, 7))
+    fig, ax = plt.subplots(figsize=(7, 7))
     x_min, x_max, y_min, y_max = 0, 2, 0, 2
     ax.set(xlim=(x_min, x_max), ylim=(y_min, y_max))
-    
+    ax.set_title("présence de son")
+    ax.set_xlabel('Gamma')
+    ax.set_ylabel('Zeta')
     # Plot decision boundary and margins
-    common_params = {"estimator": clf, "X": X, "ax": ax}
+    common_params = {"estimator": clf, "X": X, "ax": ax, }
     DecisionBoundaryDisplay.from_estimator(
         **common_params,
         grid_resolution=1000,
         response_method="predict",
-        plot_method="pcolormesh",
+        plot_method= "contourf",#"pcolormesh",
         alpha=0.3,
+        levels=[-1,0, 1],
+        
     )
     
-    DecisionBoundaryDisplay.from_estimator(
-        **common_params,
-        response_method="decision_function",
-        plot_method="contour",
-        levels=[-1, 0, 1],
-        colors=["k", "k", "k"],
-        linestyles=["--", "-", "--"],
-    )
     
+    #proxy = [plt.Rectangle((1, 1), 2, 2] fc=pc.get_facecolor()[0]) for pc in
+             #cs.collections
+    #plt.legend(plot,  ["C1", "C2", "C3"],title="Classes")
+    
+    #scatter = ax.scatter(X[:, 0], X[:, 1], c=y, s=50, edgecolors="k") #, label=y
+    #ax.legend(*scatter.legend_elements(), loc="upper right", title="Classes")
+    
+    """
     # Plot bigger circles around samples that serve as support vectors
     ax.scatter(
         clf.support_vectors_[:, 0],
@@ -520,22 +739,34 @@ def new_classification (X, y):
         edgecolors="k",
     )
     # Plot samples by color and add legend
-    scatter = ax.scatter(X[:, 0], X[:, 1], c=y, s=50, label=y, edgecolors="k")
+    #scatter = ax.scatter(X[:, 0], X[:, 1], c=y, s=50, label=y, edgecolors="k")
     ax.legend(*scatter.legend_elements(), loc="upper right", title="Classes")
-    ax.set_title(f" Decision boundaries in SVC")
+    ax.set_title(f" Présence de son")
+    
+    DecisionBoundaryDisplay.from_estimator(
+        **common_params,
+        response_method="decision_function",
+        plot_method="contour",
+        levels=[-1, 0, 1],
+        colors=["k", "k", "k"],
+        linestyles=["", "-", ""],
+    )"""
+    
+    
     
     _ = plt.show()
+    plt.show()
+    plt.savefig('son_carto.png')
+    
+    
     return clf
 
-new_classification(X_new, y_new)
+#new_classification(X, y)
 
 #%%%%
-mat = clf.predict(X_objectif).reshape((100,100))
-mat.shape
-Out[104]: (100, 100)
+mat = clf_est_rugueux.predict(X_objectif).reshape((100,100))
 
 plt.imshow(mat)
-Out[105]: <matplotlib.image.AxesImage at 0x10e14482d40>
 
 from matplotlib.image import imsave
 imsave("carto_just_test.png", mat)

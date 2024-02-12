@@ -277,7 +277,7 @@ def is_sound_pression(P,f_attendu,tolerence):
 #ajouter calcul de f_attendu en fonction de la longueur du resonnateur? 
 
 def est_just_pression(P , f_attendu,tolerence): #f0 est la frequences fondamentale de jeu attendu
-    if is_sound_pression(P,f_attendu,tolerence) : 
+    if is_sound_pression(P,f_attendu,0.1) : 
         f0 = detect_pich_pression(P,Fs)
         return is_close(f0, f_attendu, tolerence)
     else : return False
