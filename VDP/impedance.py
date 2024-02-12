@@ -77,7 +77,7 @@ def import_Z(w, model_type='clarinet', model_plot = False):
     f = w/(2*np.pi)
     
     if model_type=='clarinet':
-        file = "VDP/Impedance_models/clarinet.csv"
+        file = "C:/Users/charl/Documents/PAM-Auto-oscillations-des-instruments-de-musique/VDP/Impedance_models/clarinet.csv"
     elif model_type=='saxophone':
         file = "Impedance_models/saxophone.csv"
     elif model_type=='trumpet':
