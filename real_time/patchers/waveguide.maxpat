@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 35.0, 85.0, 890.0, 930.0 ],
+		"rect" : [ 34.0, 77.0, 1852.0, 939.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -39,6 +39,26 @@
 		"subpatcher_template" : "",
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
+				"box" : 				{
+					"bgmode" : 0,
+					"border" : 0,
+					"clickthrough" : 0,
+					"enablehscroll" : 0,
+					"enablevscroll" : 0,
+					"id" : "obj-35",
+					"lockeddragscroll" : 0,
+					"lockedsize" : 0,
+					"maxclass" : "bpatcher",
+					"name" : "interface_carto.maxpat",
+					"numinlets" : 0,
+					"numoutlets" : 0,
+					"offset" : [ 0.0, 0.0 ],
+					"patching_rect" : [ 1424.0, 456.881339907646179, 239.0, 225.0 ],
+					"viewvisibility" : 1
+				}
+
+			}
+, 			{
 				"box" : 				{
 					"id" : "obj-70",
 					"maxclass" : "newobj",
@@ -416,8 +436,8 @@
 									"numinlets" : 6,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 50.0, 261.0, 105.0, 22.0 ],
-									"text" : "scale 0. 1. 0. 2* 1."
+									"patching_rect" : [ 50.0, 261.0, 103.0, 22.0 ],
+									"text" : "scale 0. 1. 0. 2. 1."
 								}
 
 							}
@@ -2094,8 +2114,8 @@
 					"patching_rect" : [ 1239.0, 81.0, 230.0, 183.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 120.0, 137.0, 257.0, 228.0 ],
-					"xplace" : [ 0.431906614785992 ],
-					"yplace" : [ 0.394736842105263 ]
+					"xplace" : [ 0.547826086956522 ],
+					"yplace" : [ 0.480874316939891 ]
 				}
 
 			}
@@ -2796,6 +2816,27 @@
 		}
 ,
 		"dependency_cache" : [ 			{
+				"name" : "cartographie.js",
+				"bootpath" : "~/Documents/IRCAM/PAM/PAM-Auto-oscillations-des-instruments-de-musique/real time/jitter",
+				"patcherrelativepath" : "../jitter",
+				"type" : "TEXT",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "interface_carto.maxpat",
+				"bootpath" : "~/Documents/IRCAM/PAM/PAM-Auto-oscillations-des-instruments-de-musique/real time/jitter",
+				"patcherrelativepath" : "../jitter",
+				"type" : "JSON",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "is_correct_position.gendsp",
+				"bootpath" : "~/Documents/IRCAM/PAM/PAM-Auto-oscillations-des-instruments-de-musique/real time/jitter",
+				"patcherrelativepath" : "../jitter",
+				"type" : "gDSP",
+				"implicit" : 1
+			}
+, 			{
 				"name" : "multiconvolve~.mxe64",
 				"type" : "mx64"
 			}

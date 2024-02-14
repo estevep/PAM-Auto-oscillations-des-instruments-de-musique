@@ -10,9 +10,9 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 134.0, 134.0, 851.0, 939.0 ],
+		"rect" : [ 34.0, 77.0, 1324.0, 939.0 ],
 		"bglocked" : 0,
-		"openinpresentation" : 0,
+		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
 		"default_fontface" : 0,
 		"default_fontname" : "Arial",
@@ -40,6 +40,18 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
+					"id" : "obj-2",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "bang" ],
+					"patching_rect" : [ 1093.0, 62.0, 58.0, 22.0 ],
+					"text" : "loadbang"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"bgcolor" : [ 0.2, 0.2, 0.2, 0.13 ],
 					"id" : "obj-6",
 					"maxclass" : "nodes",
@@ -51,9 +63,9 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 15.0, 15.0, 256.779649078845978, 249.999988377094269 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 332.530099868774414, 26.801197439432144, 257.0, 248.198802560567856 ],
-					"xplace" : [ 0.394824514129282 ],
-					"yplace" : [ 0.528603688684402 ]
+					"presentation_rect" : [ 16.0, 15.0, 257.0, 248.198802560567856 ],
+					"xplace" : [ 0.436171637440043 ],
+					"yplace" : [ 0.300000013947488 ]
 				}
 
 			}
@@ -72,13 +84,12 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-52",
-					"linecount" : 2,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 508.474552631378174, 590.677938640117645, 135.864403903484344, 35.0 ],
-					"text" : "0.394825 0.528604 0.39 0.52"
+					"patching_rect" : [ 508.474552631378174, 590.677938640117645, 135.864403903484344, 22.0 ],
+					"text" : "0.436172 0.3 0.39 0.52"
 				}
 
 			}
@@ -247,7 +258,7 @@
 					"patching_rect" : [ 554.901978313922882, 73.856211483478546, 256.779649078845978, 249.999988377094269 ],
 					"pointcolor" : [ 1.0, 0.317647058823529, 0.317647058823529, 1.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 332.530099868774414, 25.30120325088501, 256.779649078845978, 249.999988377094269 ],
+					"presentation_rect" : [ 16.0, 13.0, 256.779649078845978, 249.999988377094269 ],
 					"xplace" : [ 0.39 ],
 					"yplace" : [ 0.52 ]
 				}
@@ -280,13 +291,12 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-96",
-					"linecount" : 2,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 273.779649078845978, 143.50000786781311, 155.500001311302185, 35.0 ],
-					"text" : "mouseidle 0.036848 0.456081 0 1 0 0 1 1"
+					"patching_rect" : [ 273.779649078845978, 143.50000786781311, 155.500001311302185, 22.0 ],
+					"text" : "mouse 0.5 0.5 0 1 0 0 0 1"
 				}
 
 			}
@@ -661,7 +671,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1082.499946534633636, 82.0, 233.0, 22.0 ],
+					"patching_rect" : [ 1085.0, 100.0, 233.0, 22.0 ],
 					"text" : "importmovie contrainte_curseur.png, bang"
 				}
 
@@ -723,7 +733,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 272.033885657787323, 733.050813376903534, 50.0, 35.0 ],
-					"text" : "getcell 39 52"
+					"text" : "getcell 43 30"
 				}
 
 			}
@@ -736,7 +746,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 30.0, 325.620708465576172, 102.0, 35.0 ],
-					"text" : "node 1 0.394825 0.528604 0.05 1"
+					"text" : "node 1 0.436172 0.3 0.05 1"
 				}
 
 			}
@@ -748,7 +758,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 225.423718333244324, 777.966065526008606, 180.0, 22.0 ],
-					"text" : "cell 39 52 val 255 255 255 255"
+					"text" : "cell 43 30 val 0 0 0 0"
 				}
 
 			}
@@ -937,7 +947,7 @@
 					"outlettype" : [ "jit_matrix", "" ],
 					"patching_rect" : [ 554.901978313922882, 73.856211483478546, 256.779649078845978, 249.999988377094269 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 332.530099868774414, 25.30120325088501, 256.779649078845978, 249.999988377094269 ],
+					"presentation_rect" : [ 16.0, 13.0, 256.779649078845978, 249.999988377094269 ],
 					"sync" : 1
 				}
 
@@ -1089,6 +1099,13 @@
 					"destination" : [ "obj-41", 0 ],
 					"order" : 1,
 					"source" : [ "obj-19", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-40", 0 ],
+					"source" : [ "obj-2", 0 ]
 				}
 
 			}
@@ -1401,23 +1418,7 @@
 				}
 
 			}
- ],
-		"dependency_cache" : [ 			{
-				"name" : "cartographie.js",
-				"bootpath" : "~/Documents/IRCAM/PAM/PAM-Auto-oscillations-des-instruments-de-musique/real time/jitter",
-				"patcherrelativepath" : ".",
-				"type" : "TEXT",
-				"implicit" : 1
-			}
-, 			{
-				"name" : "is_correct_position.gendsp",
-				"bootpath" : "~/Documents/IRCAM/PAM/PAM-Auto-oscillations-des-instruments-de-musique/real time/jitter",
-				"patcherrelativepath" : ".",
-				"type" : "gDSP",
-				"implicit" : 1
-			}
- ],
-		"autosave" : 0
+ ]
 	}
 
 }
