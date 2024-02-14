@@ -1,9 +1,8 @@
-%% LyX 2.3.3 created this file.  For more info, see http://www.lyx.org/.
-%% Do not edit unless you really know what you are doing.
 \documentclass[french, twocolumn]{article}
 \usepackage[T1]{fontenc}
 % \usepackage[latin9]{inputenc}
 \RequirePackage[utf8]{inputenc}
+\usepackage{csquotes}
 \usepackage[a4paper]{geometry}
 \geometry{verbose,tmargin=2cm,bmargin=2cm,lmargin=2cm,rmargin=2cm}
 \setlength{\parindent}{0bp}
@@ -11,6 +10,7 @@
 \usepackage{textcomp}
 \usepackage{amsmath}
 \usepackage{float}
+\usepackage{siunitx}
 \usepackage{biblatex}[
     backend=biber,        % compilateur par défaut pour biblatex
     sorting=nyt,          % trier par nom, année, titre
@@ -21,6 +21,19 @@
  {hyperref}
 \addbibresource{biblio.bib}
 \usepackage{fancyhdr}
+% \fancyfoot[L]{Page n°\thepage}
+% \fancyfoot[c]{\@author}
+% \fancyfoot[R]{\@serie}
+
+% \fancyhead[R]{
+%   \ifthenelse {\isundefined{\@titleheader}} {
+%       \ifthenelse {\isundefined{\@title}} {~} {\@title}
+%   }
+%   {\@titleheader}
+% }
+
+
+
 \usepackage{comment}
 \usepackage{caption}
 \usepackage{subcaption}
@@ -36,9 +49,17 @@
 
 \@ifundefined{date}{}{\date{}}
 \makeatother
+\setlength{\parindent}{1.5em}
+\setlength{\parskip}{.5\baselineskip}
+
+\fancyhead[R]{Auto-oscillations des instruments de musique : modèles, simulations, descripteurs et cartographies}
+% \fancyhead[L]{\includegraphics[scale=0.04]{Images/logo_phelma.png}}%Images/
+\fancyhead[L]{\includegraphics[height=1.1cm]{images/su.png}}%Images/
 
 \begin{document}
-\title{Instruction for authors - Latex template}
+% \fancypagestyle{normal}{normal}
+
+\title{Auto-oscillations des instruments de musique :\\ modèles, simulations, descripteurs et cartographies}
 \author{
 C. Fernandez, P. Jardin, V. Piton, H. Audas, P. Estève, B. Quiédeville}
 \maketitle
@@ -50,35 +71,52 @@ C. Fernandez, P. Jardin, V. Piton, H. Audas, P. Estève, B. Quiédeville}
 
 % \lyxaddress{$^{*}$ Corresponding author, scotti@lma.cnrs-mrs.fr}
 \begin{abstract}
-    Ceci est notre abstract
+
+Cette étude porte sur la modélisation des auto-oscillations d'instruments de musique et leurs caractérisations dans le but de proposer des méthodes de contrôle de l'instrument virtuel en temps réel. Deux modèles physiques liés aux instruments à vent à anche simple sont implémentés et étudiés et servent de base pour le reste du travail. La compréhension de ces modèles passe par l'élaboration de descripteurs tels que la présence ou non de son, la rugosité et la justesse. Ces descripteurs parmi d'autres, une fois cartographiés dans l'espace des paramètres (donc l'espace de jeu), permettent de prévoir le comportement des modèles en situation de jeu et ouvrent alors des possibilités de contrôle musical. Pour terminer, les modèles sont implémentés en temps réel afin de jouer de la clarinette virtuelle en tenant compte de la cartographie établie\footnote{L'ensemble du code et des sons produits est accessible sur \href{https://github.com/estevep/PAM-Auto-oscillations-des-instruments-de-musique}{notre GitHub}. Les fichiers audios sont accessibles sur \href{https://drive.google.com/drive/folders/189lTTHx_M80OPUk3jBsUVSBXIAPBLjux?usp=sharing}{une boîte de dépôt Google Drive}.}.
+
 \end{abstract}
+
+
 
 % Default content with instructions
 % \input{default}
 
-\tableofcontents
+%\tableofcontents
 \section{Introduction}
 
 \subsection{Synthèse sonore}
-%On s'intéresse à créer des instrument auto-oscillants... virtuels. Avec de fortes non linéarité ... 
+%On s'intéresse à créer des instrument auto-oscillants... virtuels. Avec de fortes non-linéarités ... 
 %But du projet : créer des instruments virtuels jouables et définir des cartographies et des descripteurs. 
 
 % La synthèse de sons inspirés par les instruments de musique classique présente des intérêts à la fois pour les compositeurs, les instrumentistes, les industriels et les chercheurs qui souhaitent expliquer la physique de ces instruments. Un très grand nombre  d'entreprises développent en effet aujourd'hui des instruments virtuels très réalistes basés sur la modélisation physique des instruments. 
 
-Depuis les années 1970, plusieurs méthodes permettent de synthétiser des sons musicaux. La synthèse additive permet par exemple de générer des sons par addition de formes d'ondes et la synthèse soustractive génère des sons par filtrage de signaux aux riches composantes harmoniques. La synthèse additive et soustractive ne permettent cependant pas tout le temps de générer des sons réalistes en conservant une faible complexité. La synthèse par table d'ondes permet quand à elle de générer des sons réalistes mais issus d'enregistrement réels immuables. 
+Depuis les années 1970, plusieurs méthodes permettent de synthétiser des sons musicaux. La synthèse additive permet par exemple de générer des sons par addition de formes d'ondes et la synthèse soustractive génère des sons par filtrage de signaux aux riches composantes harmoniques. Les synthèses additive et soustractive ne permettent pas constamment de générer des sons réalistes en conservant une faible complexité. La synthèse par table d'ondes permet quand à elle de générer des sons réalistes mais issus d'enregistrements réels immuables. 
 
-Même si ces techniques sont utiles musicalement, elles ne permettent pas d'apprécier la physique des instruments de musique classique d'un point de vue scientifique. C'est ici que les techniques de synthèse par modélisation physique présentent un intérêt puisqu'elles permettent de maîtriser, les mécanismes qui régissent l'émission des sons par ces instruments, depuis les paramètres de contrôles des musiciens, jusqu'à l'évolution des variables acoustiques dans les instrument ainsi que l'influence de leur géométrie et de leurs matériaux sur la qualité du son qu'ils produisent. Ces connaissances sont également utiles aux facteurs d'instruments dans le but d'une maîtrise aboutie de leur savoir-faire mais également pour guider la conception de nouveaux instruments.
+Même si ces techniques sont utiles musicalement, elles ne permettent pas d'apprécier la physique des instruments de musique classique d'un point de vue scientifique. C'est ici que les techniques de synthèse par modélisation physique présentent un intérêt puisqu'elles permettent de maîtriser les mécanismes régissant l'émission des sons par ces instruments depuis les paramètres de contrôles des musiciens, jusqu'à l'évolution des variables acoustiques dans les instruments ainsi que l'influence de leur géométrie et de leurs matériaux sur les qualités du son produit. Ces connaissances sont également utiles aux facteurs d'instruments dans le but d'une maîtrise aboutie de leur savoir-faire mais également pour guider la conception de nouveaux instruments. 
+
+% Par ailleurs, l'utilisation de descripteurs permet de classifier les sons synthétisés. Par exemple, le son peut être décrit comme rugueux, harmonique, juste, etc. A chacun de ces qualificatifs correspond un traitement approprié du signal synthétisé permettant sa quantification.
+
+% Enfin, l'implémentation de ces modèles dans des systèmes informatiques en temps réel permettent à l'utilisateur un contrôle de l'instrument numérique plus proche du contrôle réel de l'instrument, auquel peuvent s'ajouter des cartographies des différents descripteurs dans l'espace des paramètres de contrôle.
 
 % Un des enjeux de la synthèse par modélisation physique cependant est de formuler mathématiquement l'ensemble de ces interactions complexes.
 
 \subsection{Présentation du projet}
 
-Dans cette étude, nous proposons donc de synthétiser un instrument auto-oscillant par modélisation physique. 
-Les instruments auto-oscillants sont des systèmes intrinsèquement non linéaires et complexes qui font toujours l'objet d'étude par les acousticiens. On se concentre ici sur le cas d'instruments à vent à anche simple : la clarinette et le saxophone.
+Dans cette étude, nous proposons de synthétiser un instrument auto-oscillant par modélisation physique. 
+Les instruments auto-oscillants sont des systèmes intrinsèquement non linéaires et complexes qui font toujours l'objet d'étude par les acousticiens. On se concentre ici sur le cas d'instruments à vent à anche simple : la clarinette et le saxophone. 
 
-Le modèle physique étudié est implémenté dans un environnement temps réel afin de pouvoir être joué à l'aide d'un contrôleur midi.
+Deux modèles physiques sont utilisés en parallèle pour le résonateur : 
+\begin{enumerate}
+    \item le modèle à base de guide d'onde ;
+    \item le modèle par approche modale.
+\end{enumerate} Le premier est ensuite discrétisé par résolution graphique, tandis que le second l'est par la méthode Runge-Kutta d'ordre 4. Ces modèles sont analysés dans l'espace de contrôle $(\gamma, \zeta)$, représentant la pression dans la bouche du musicien et la raideur de l'anche. Quatre descripteurs sont cartographiés dans cet espace : existence du son, justesse, périodicité et rugosité. Des cartographies similaires pour les trois premiers descripteurs sont trouvables dans la littérature scientifique\cite{doc2014minimal}\cite{missoum_explicit_2014}, tandis que la rugosité est, à notre connaissance, un apport de ce projet. 
 
-Pour pouvoir ajuster les caractéristiques du son et pas simplement les paramètres du modèle physique, il est nécessaire d'étudier des descripteurs sonores. Le but de ceux-ci est de permettre ensuite la création d'une interface de contrôle : le musicien indique quel type de son il souhaite créer (intensité sonore, timbre) et les paramètres du modèle s'ajustent pour y correspondre.
+L'implémentation de ces modèles en temps réel est faite sur le logiciel Max/MSP. Elle permet le contrôle des doigtés de la clarinette (par un contrôleur MIDI) ainsi que les paramètres $(\gamma, \zeta)$. Les cartographies sont elles aussi intégrées à l'interface.
+
+% Ce modèle physique étudié est implémenté dans un environnement temps réel afin de pouvoir être joué à l'aide d'un contrôleur MIDI.
+
+% Pour pouvoir ajuster les caractéristiques du son et pas simplement les paramètres du modèle physique, il est nécessaire d'étudier des descripteurs sonores. Le but de ceux-ci est de permettre ensuite la création d'une interface de contrôle : le musicien indique quel type de son il souhaite créer (intensité sonore, timbre) et les paramètres du modèle s'ajustent pour y correspondre.
+
 
 % Avec cette modélisation nous proposons également d'explorer l'espace de contrôle du musicien et de caractériser par des descripteurs bien choisis le type de sons produits. 
 
@@ -108,15 +146,7 @@ Pour pouvoir ajuster les caractéristiques du son et pas simplement les paramèt
 \section{Modèle physique}
 \input{final report/sections/modele_physique}
 
-\section{Implémentation des modèles physiques en temps réel}
-
-\subsection{État de l'art}
-
-
-
-% \href{Max MSP}{https://cycling74.com/products/max}
-
-
+%\section{Implémentation des modèles physiques}
 
 
 % \subsection{modélisation et résolution}
@@ -126,83 +156,177 @@ Pour pouvoir ajuster les caractéristiques du son et pas simplement les paramèt
 
 
 
-\section{Descripteurs}
+\section{Études des modes de jeux du modèle physique proposé}\label{sec:descripteurs}%Etude des differents modes de jeu de l'instrument numérique implémenté
+Le modèle d'instruments auto-oscillant numérique présenté dans les sections précédentes, du fait de ses non-linéarités, possède des modes de jeu et de régimes sonores divers \cite{missoum_explicit_2014}\cite{doc2014minimal}. On souhaite dans cette partie étudier et classifier les différents types de jeu disponibles pour cet instrument en fonction des paramètres de contrôles de l'instrument numérique : $\zeta$ et $\gamma$. 
 
-La clarinette possède des modes de jeu et de régimes sonores divers. Comme pour l'instrument réel, on souhaite étudier et classifier les différents types de jeu disponible grâce à notre instrument numérique. Pour cela, il est nécessaire de définir des descripteurs permettant ensuite de classifier les différents types de jeu en fonction des paramètres d'entrée du modèle $\zeta$ et $\gamma$. 
+Nous limitons notre étude dans cette partie à l'instrument virtuel type clarinette modélisé selon l'approche modale présentée précédemment. Nous prenons en compte deux modes. 
 
 \subsection{État de l'art}
-% \subsubsection{Descripteur/ méthode de classification : cartographie}
-\paragraph{Descripteurs : Présence de son}
-%Description des bifurcation et donc de l'apparition possible de branches de solutions périodiques par étude de la solution linéarisée \cite{chaigne2008acoustique}. 
-On définit la présence de son comme \cite{missoum_explicit_2014}: 
+
+L'étude des régimes de jeux des instruments oscillants repose sur l'établissement de descripteurs permettant de décrire certains comportements de l'instrument. Nous identifions plusieurs descripteurs présentés dans la littérature dédiée. Un premier est la présence ou l'absence de son dont une définition explicite est donnée dans \cite{missoum_explicit_2014}. Un autre descripteur est la nature du régimes d'oscillation atteint dans le cas où un son est produit, par exemple, Doc, Vergez et Missoum \cite{doc2014minimal} proposent une méthode de classification et un critère d'identification des régimes quasi-périodique pour les instruments auto-oscillants.
+On peut également étudier la justesse de l'instrument numérique par rapport aux fréquences propres du résonateur \cite{missoum_explicit_2014}. 
+La relation entre ces trois descripteurs et les sons produits par des instruments numériques tels que la clarinette ont fait l'objet d'articles. 
+Cependant, de nombreux autres descripteurs permettant d'évaluer la sonorité d'instruments de musique existent tels que la clarté ou encore la rugosité qui est définie par rapport aux amplitudes des différentes composantes fréquentielles d'un son \cite{pressnitzer1998perception}. 
+%\paragraph{Espace de phase}
+Gibiat \cite{gibiat_phase_1988} propose d'utiliser la représentation en espace des phases accompagnée d'une analyse de Fourier pour détecter le comportement multiphonique d'une clarinette. Cette représentation est obtenue en traçant l'évolution des degrés de liberté du système ou dans le cas d'une réduction à un degré de liberté principal, la représentation du degré de liberté aux instants $t$ et $t + \tau$. 
+
+Pour certains descripteurs (comme la présence de son), il est possible d'obtenir une solution analytique de la frontière entre les deux régimes. Il est également possible de prédire la nature des régimes d'oscillations de façon analytique \cite{chaigne2008acoustique}. Cependant, cette méthode permet seulement d'identifier des régimes statiques ou périodiques. Ainsi les méthodes analytiques sont limitées et ne permettent pas de décrire la diversité sonore et celle des régimes des instruments auto-oscillants. Plus récemment, l'utilisation de machines à vecteurs de support (SVM pour \textit{Support Vector Machine}) ont permis de cartographier une plus grande diversité de régimes. De plus, une méthode d'échantillonage adaptatif de l'espace des paramètres est particulièrement efficace d'un point de vue computationel et apporte des résultats beaucoup plus précis qu'un échantillonnage régulier \cite{missoum_explicit_2014}.
+
+
+
+\subsection{Méthode}
+Afin d'étudier la diversité des modes de jeu de l'instrument numérique proposé, nous présentons des descripteurs pertinents pour l'analyse des son produits par la clarinette, puis dans un second temps, nous présentons la méthode de carthographie utilisée pour étudier ces descripteurs dans l'espace $\gamma$, $\zeta$. 
+
+\paragraph{Descripteurs utilisés}
+Certains descripteurs tels que la présence de son, la périodicité et la justesse ont fait l'objet d'études ayant proposé des cartographies de ces descripteurs dans l'espace $\gamma$, $\zeta$, pour la clarinette, à partir de modèles numériques \cite{missoum_explicit_2014}, \cite{doc2014minimal}. 
+
+La présence de son est définie comme \cite{missoum_explicit_2014}: 
 
 \begin{equation*}
-    \frac{1}{N}\sum_{N}p(t_i)>\epsilon  
+    \frac{1}{N}\sum_{N}p(t_i)>\epsilon \quad \text{Présence de son,}  
 \end{equation*}
-
-%\begin{equation*}
-%    \frac{1}{N}\sum_{N}p(t_i)< \epsilon
-%\end{equation*}
-Avec $\epsilon$ un seuil choisis.
-
-\paragraph{Descripteur : Justesse}
-On peut définir l'intervalle entre deux notes en cent comme : 
 \begin{equation*}
-    i = 1200 \log_2 \left( \frac{f_1}{f_2}\right)
+    \frac{1}{N}\sum_{N}p(t_i)<\epsilon  \quad \text{Absence de son.}  
 \end{equation*}
-On peut alors un descripteur de justesse qui caractérise si l'écart entre la fréquence jouée par le modèle est proche, selon un intervalle définit, de la fréquence correspondant au premier mode propre du résonateur. 
 
-On choisis $i=5$ comme limite de proximité entre deux fréquences \cite{missoum_explicit_2014}. 
+Le paramètre $\epsilon$ est un seuil choisi arbitrairement. L'expression théorique de la frontière entre présence et absence de son nous a permis de fixer ce seuil $\epsilon = 0.1$. 
 
-On peut suivre la même approche pour déterminer la présence de second registre en étudiant la proximité de la présence jouée à la fréquence du second mode du résonateur.
-
-\paragraph{Descripteur : son périodique}
-Pour étudier la périodicité du signal, on utilise le signal d'enveloppe du signal de pression. Et définir un critère entre régimes périodiques et pseudo-périodiques comme \cite{doc2014minimal}: 
+Pour étudier la justesse, on définit l'intervalle entre deux notes en \textit{cent} comme : 
 \begin{equation*}
-    \epsilon = \frac{Var(pe)}{\langle pe \rangle}
+    i = 1200 \log_2 \left( \frac{f_1}{f_2}\right).
+\end{equation*}
+Nous avons défini un descripteur qui caractérise si l'écart entre la fréquence jouée par le modèle est proche, selon un intervalle défini $\epsilon$ en cent, de la fréquence correspondant au premier mode propre du résonateur. Le seuil de justesse choisi est $\epsilon = 5 cents$ \cite{missoum_explicit_2014}. 
+
+Pour étudier la périodicité du signal, nous avons utilisé un descripteur défini en fonction de l'enveloppe du signal de pression $pe$ \cite{doc2014minimal}: 
+\begin{equation*}
+    \epsilon = \log_{10}\left(\frac{Var(pe)}{\langle pe \rangle}\right)
 \end{equation*}
 
+Finalement, nous avons étudié la rugosité du son produit. Aucune définition n'a été donnée pour ce paramètre dans la littérature pour un cas d'application proche du notre. Nous avons choisi de définir la rugosité en fonction des fréquences et des amplitudes des composantes des sons ($f_i$, $a_i$) comme \cite{pressnitzer1998perception}: 
+\begin{equation}
+    \epsilon = \frac{\sum_{i,j =1}^{N}a_ia_jr_{i,j}}{\sum_{i=1}^{N}a_{i}^{2}}, 
+\end{equation}
+avec 
+\begin{equation*} 
+\begin{cases}
+    r_{i,j} = (2,7183 \times \delta f_{norme} \times e^{-\delta f_{norme}})^2\\
+    \delta f_{norme} = \frac{f_i-f_j}{cb_{i,j \times 0.25}}\\
+    cb_{i,j} = 1.72 \times (\frac{f_i+f_j}{2})^{0.65} 
+\end{cases}.
+\end{equation*}
 
-\paragraph{Descripteur : rugosité}
-On peut caracteriser la rugosité du son produit par la clarinette. 
-La rugosité est définie comme : 
+Le seuil a été fixé suite à l'estimation des valeurs que prend la rugosité sur l'espace des paramètres de contrôle dont les résultats seront présentés ci-dessous. 
 
-\paragraph{Espace de phase}
-Gibiat \cite{gibiat_phase_1988} propose d'utiliser la représentation en espace des phases accompagnée d'une analyse de Fourier pour détecter le comportement multiphonique d'une clarinette. Cette représentation est obtenue en traçant l'évolution des degrés de liberté du système ou dans le cas d'une réduction à un degré de liberté principal, la représentation du degré de liberté à un instant $t$ et $t + \tau$. 
+\paragraph{L'espace de phase}\label{par:espace de phase}
 
-En effet, la représentation dans l'espace des phases propose une lecture graphique intéressante des phénonomènes vibratoires de la clarinette. Une première tentative à été d'essayer de construire un descripteur pour identifier le registre utilisé sur des enregistrements réels où cette information nous est connue. 
+La représentation dans l'espace des phases propose une lecture graphique intéressante des phénomènes vibratoires de la clarinette. La figure \ref{fig:phase-reg-1}, présente la représentation dans l'espace de phase d'un Ré premier registré joué à la clarinette, la figure \ref{fig:phase-reg-2}, celle d'un La deuxième registre. On observe que les deux formes sont de complexités très différentes, il semble alors intéressant d'essayer de construire un descripteur permettant d'analyser la complexité des son produits par le modèle grâce à la représentation dans l'espace de phase. 
+Une première tentative à été d'essayer de construire un descripteur pour identifier le registre utilisé sur des enregistrements réels où cette information nous est connue. 
+Malheureusement, même si deux registres se distinguent bien graphiquement, il a été difficile de construire un algorithme simple pour distinguer les registres les uns des autres. Deux tentatives ont été menées : la première consistait à compter le nombre de points à vitesse lente (en dessous d'un seuil), mais cette méthode était trop sensible à de faibles variations de timbre. La deuxième consistait à colorier une image avec la courbe obtenue en considérant le nombre de pixels coloriés (plus cette valeur est grande, plus la trajectoire est irrégulière). Malheureusement, cette information n'était pas suffisante pour extraire des informations fiables.
 
-Malheureusement, même si deux registres se distinguent bien graphiquement, il a été difficile de construire un algorithme simple pour distinguer les registres les uns des autres. Deux tentatives ont été menées : la première, assez bancale, consistait à compter le nombre de points à vitesse lente (en dessous d'un seuil), mais cette méthode était trop sensible à de faibles variations de timbre. La deuxième consistait à colorier une image avec la courbe obtenue en considérant le nombre de pixels coloriés (plus cette valeur est grande, plus la trajectoire est irrégulière). Malheureusement, cette information n'était pas suffisante pour extraire des informations fiables.
+Bien qu'intéressant, nous n'avons pas étudié l'influence des paramètre de contrôle sur la représentation dans l'espace de phase des signaux. 
 
-\begin{figure}
+\begin{figure}[h!]
     \centering
-    \includegraphics[width=\columnwidth]{Descripteurs/images/espace_des_phases_premier_registre.pdf}
-    \caption{Portait de phase de la note Ré (premier registre)}
-    \label{phase-reg-1}
+    \begin{subfigure}[b]{0.9\linewidth}
+        \includegraphics[width=\columnwidth]{Descripteurs/images/espace_des_phases_premier_registre.pdf}
+        \caption{Note Ré (premier registre)}
+        \label{fig:phase-reg-1}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.9\linewidth}
+        \centering
+        \includegraphics[width=\columnwidth]{Descripteurs/images/espace_des_phases_second_registre.pdf}
+        \caption{Note La (deuxième registre)}
+        \label{fig:phase-reg-2}
+    \end{subfigure}
+    \caption{\emph{Portraits de phases}.}
 \end{figure}
 
-\begin{figure}
+\vspace{3cm}
+
+\paragraph{Méthode de cartographie de l'espace des paramètres en fonction des descripteurs : SVM à échantillonnage adaptatif de l'espace des paramètres.}
+
+Bien souvent, les descripteurs sont longs à évaluer pour des raisons de temps de calcul. Ainsi, un grand nombre d'évaluations n'est pas possible pour cartographier l'espace des paramètres. Une manière d'interpoler les descripteurs sur l'espace des paramètres échantillonné grossièrement est de d'utiliser une SVM (\textit{support vector machine}). Cette dernière fait apparaître une frontière de décision continue permettant d'interpoler les descripteurs sur l'espace des paramètres. %qui est meilleure que d'utiliser la valeur du voisin le plus proche.  
+On définit la frontière entre deux classes : $y = \pm1$, pour un nombre $N$ d'échantillons $\mathbf{x_i}$ comme : 
+\begin{equation}
+    s(\mathbf{x}) = b + \sum_{i=1}^{N}\lambda_iy_iK(\mathbf{x_i},\mathbf{x}) = 0. 
+\end{equation}
+On note $b$, le biais, $\lambda_i$ le multiplicateur de Lagrange. 
+$K$, la fonction noyau est définie comme : 
+\begin{equation*}
+    K(\mathbf{x_i},\mathbf{x_j}) = \exp\left(-\frac{||\mathbf{x_i}-\mathbf{x_j}||^2}{2\sigma}\right).
+\end{equation*}
+Nous avons ensuite utilisé la bibliothèque \href{https://scikit-learn.org/}{scikit-learn} de python pour implémenter la SVM. 
+
+En général, une cartographie peut être réalisée en quadrillant l'espace des paramètres et en évaluant les descripteurs en un point de chaque cellule. Cependant, pour éviter d'avoir recours à un quadrillage trop fin, une méthode d'échantillonnage adaptatif est employée \cite{missoum_explicit_2014}\cite{basudhar2008adaptive}. Cette méthode consiste à choisir un point $\mathbf{x}$ sur la frontière tel que son plus proche voisin est le plus loin. Cela revient à optimiser la minimiser l'expression suivante : 
+\begin{equation*}
+     \max_{\mathbf{x}} || \mathbf{x}-\mathbf{x_p}||, \quad
+      \text{t. q.} ~~~s(\mathbf{x}) = 0 . 
+\end{equation*}
+
+\subsection{Résultats}
+Nous avons effectué des cartographies par SVM à échantillonnage adaptatif pour les descripteurs de présence de son, de justesse et d'harmonicité \ref{fig:cartographies}. 
+L'étude de la présence de son en fonction des paramètres de contrôle $\zeta$ et $\gamma$ \ref{subfig:son} montre qu'il est possible de produire du son avec l'instrument numérique à partir de $\gamma=0.33$. Plus les valeurs de $\zeta$ proches de zéro, plus la valeur seuil de $\gamma$ pour obtenir du son augmente. Ce résultat correspond à la littérature et à l'expression théorique de la frontière son/pas de son \cite{missoum_explicit_2014}. Ce premier résultat permet de confirmer à la fois la validité du modèle théorique, de notre implémentation, de la résolution numérique et du seuil choisi de $\epsilon = 0.1$ pour la cartographie. 
+
+L'étude de la périodicité en fonction des paramètres de contrôle montre que la zone de périodicité concorde avec la zone de présence de son, sauf pour les valeurs extrêmes $\gamma \to 1$, $\zeta \to 0$ et $\gamma \to 1$, $\zeta \to 1$, c'est-à-dire des conditions de contrôles extrêmes \ref{subfig:periodicité}. Cependant, il est important de noter que nous n'avons pas retrouvé de présence de régime quasi-périodique, telles qu'identifiés dans \cite{doc2014minimal}. Cela peut être à cause d'une différence d'implémentation ou bien à une différence de seuil dans le descripteur. 
+
+L'étude de la justesse \ref{fig:Justesse} permet d'identifier une zone dans laquelle l'instrument joue à 5 cents près de la fréquence de résonance du premier mode du résonateur de l'instrument. Ce résultat est cohérent avec la littérature \cite{missoum_explicit_2014}. On note cependant que la zone de justesse s'étant jusqu'à des valeurs de $\zeta = 0.5$ et non $\zeta = 1$. 
+
+\begin{figure}[h!]
     \centering
-    \includegraphics[width=\columnwidth]{Descripteurs/images/espace_des_phases_second_registre.pdf}
-    \caption{Portait de phase de la note La (deuxième registre)}
-    \label{phase-reg-2}
+    \begin{subfigure}[b]{.49\linewidth}
+        \includegraphics[width=\linewidth]{img/sonV2.png}
+        \caption{Présence de son, $\epsilon = 0.1$}
+        \label{subfig:son}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{.49\linewidth}
+        \includegraphics[width=\linewidth]{img/justeV2.png}
+        \caption{Justesse, $\epsilon = 5 \, cents$}
+        \label{fig:Justesse}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{.49\linewidth}
+        \includegraphics[width=\linewidth]{img/periodicV2.png}
+        \caption{Périodicité, $\epsilon = -2 $}
+        \label{subfig:periodicité}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{.49\linewidth}
+        \includegraphics[width=\linewidth]{img/carto_tot_sauf_rugo.png}
+        \caption{Son, périodicité, justesse}
+        \label{subfig:tot1}
+    \end{subfigure}
+    \caption{\emph{Cartographies : présence de son, justesse et périodicité en fonction de $\gamma$ et $\zeta$ (SVM sur 25 échantillons initiaux puis ajout de 30 échantillons adaptatifs)}}
+    \label{fig:cartographies}
 \end{figure}
 
-\paragraph{SVM}
+Nous avons ensuite étudié l'influence des paramètres de contrôle du modèle sur la rugosité des sons produits. Aucune étude n'aillant à notre connaissance encore étudié ce descripteur dans ce cadre, nous avons dans un premier temps établie une cartographie sommaire de la valeurs de la rugosité telle que nous l'avons définie en fonction des paramètres $\zeta$ et $\gamma$ \ref{subfig:Rugosité}. À partir de cette cartographie, nous avons identifié une valeur seuil : $\epsilon = 4.10$. Nous avons ensuite fait une cartographie par SVM adaptatif de ce paramètre de rugosité et nous avons comparé ce résultat aux cartographies de la justesse de la présence de son et de la périodicité \ref{fig:rugo_cartoto}. La zone de rugosité se situe aux niveau des valeurs porches de 1 de $\zeta$ et $\gamma$.  
 
-Bien souvent, les descripteurs sont longs à évaluer pour des raison de temps de calcul. Ainsi, un grand nombre d'évaluations n'est pas possible pour cartographier l'espace des paramètres. Une manière d'interpoler les descripteurs sur l'espace des paramètres échantillonné grossièrement est de d'utiliser une SVM (\textit{state vector machine}). Cette dernière fait apparaître une frontière de décision continue permettant d'interpoler les descripteur sur l'espace des paramètres qui est meilleure que d'utiliser la valeur du voisin le plus proche.
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}[b]{.49\linewidth}
+        \includegraphics[width=\linewidth]{img/rugo_colormap.png}
+        \caption{Évolution de la rugosité du son en fonction de $\zeta$ et $\gamma$}
+        \label{subfig:Rugosité}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{.49\linewidth}       
+        \includegraphics[width=\linewidth]{img/carto_tot.png}
+        \caption{Rugosité comparée aux cartographies \ref{subfig:tot1}}
+        \label{fig:rugo_cartoto}
+    \end{subfigure}
+    
+    \caption{\emph{Cartographie de la rugosité du son en fonction de $\gamma$ et $\zeta$}}
+    \label{fig:cartographies}
+\end{figure}
 
-En général, une cartographie peut être réalisée en quadrillant l'espace des paramètres et en évaluant les descripteurs en un point de chaque cellule. Cependant, pour éviter d'avoir recours à un quadrillage trop fin, une méthode d'échantillonnage adaptatif est employée. Cette méthode consiste à évaluer les points de la frontière qui présentent le plus d'incertitude (ceux qui sont loin des points déjà évalués).
-
-\subsection{Méthodes et résultats}
-
+Les cartographie obtenues dans cette partie permettent de définir, en fonction des paramètres de contrôle de l'instrument, différents types de son produits. Au delà d'informer sur le fonctionnement de l'instrument numérique implémenté, elles ont vocation à servir de support l'interface en temps réelle, délimitant des zones de navigation contraintes par les frontières définies par les cartographies. 
 
 
 \section{Contrôle}
-\subsection{État de l'art}
 
-\subsection{Implémentation et interface temps réel : max}
-
+\input{final report/sections/temps_reel}
 
 
 
@@ -214,9 +338,10 @@ En général, une cartographie peut être réalisée en quadrillant l'espace des
 
 % \subsubsection{Méthode d'évaluation du dispositif}
 
-\subsubsection{cartographie}
-\section{Évaluation du dispositif}
-apprécier en situation de jeu/intérêt de l'intérêt : évaluation de l'instrument créé. (réalisme, jouabilité, compréhension de la physique : outil didactique)  %
+%\subsubsection{cartographie}
+% \section{Évaluation du dispositif}
+% apprécier en situation de jeu/intérêt de l'intérêt : évaluation de l'instrument créé. (réalisme, jouabilité, compréhension de la physique : outil didactique)  
+\newpage
 
 \section{Conclusion et perspectives}
 
@@ -224,9 +349,34 @@ apprécier en situation de jeu/intérêt de l'intérêt : évaluation de l'instr
     axe d'approche "type PAM"
         aborder les éléments appris pendant le projet en plus des contributions.
 \end{comment}
+Durant ce projet, nous avons :
+\begin{enumerate}
+    \item étudié différentes modélisations d'instruments auto-oscillants ;
+    \item proposé un modèle d'instruments numérique ;
+    \item contrôlé en temps réel sous Max/MSP ;
+    \item étudié les différents régimes de jeu de cet instrument numérique.
+\end{enumerate}
 
-Perspectives : rappel de l'état de l'art pour adapter notre travail à un instrument à cordes frottées -> perspective logique pour appliquer le travail à d'autres instruments (à voir si on peut utiliser l'approche modale ou si l'analogie est vraie qu'en guide d'ondes).
-% \newpage
+
+Nous nous sommes intéressés dans ce projet aux modèles d'instruments auto-oscillants à anche simple type clarinette ou saxophone. Nous avons modélisé ces instruments selon deux approches : par méthode de guide d'ondes et par approche modale. Nous avons proposé une implémentation en temps réel de ces deux approches. 
+
+L'approche par guide d'ondes nous a permis d'identifier des régimes tels que le doublement de périodes et le quadruplement de périodes. Un inconvénient de ce modèle est la forme d'onde rectangulaire de ses solutions, produisant un son synthétisé qualitativement peu réaliste.  D'un autre côté, l'approche modale donne un rendu sonore qualitativement plus réaliste que l'approche par guides d'onde.
+%Mentionner : - approche modale -> timbre pas mal
+%- approche carte itérée : apparition de davantage de régimes intéresse
+
+
+Nous avons également proposé d'étudier l'influence des paramètres de contrôle $\zeta$ et $\gamma$ sur la production de son, la justesse, la rugosité et la périodicité des son produits par l'instrument numérique, basé sur le modèle physique par approche modale. Si notre travail a permis de retrouver les résultats de la littérature quant aux conditions de production de son du modèle, il nous a également permis de proposer une cartographie de la rugosité en fonction des paramètres de contrôle. 
+
+
+Nous avons ensuite utilisé ces cartographies pour informer l'utilisation de l'implémentation en temps réelle du modèle. Ainsi, l'utilisateur de l'instrument numérique via l'interface sous Max/MSP peut naviguer dans l'espace des paramètres de contrôle par rapport aux informations proposées via les cartographies. 
+
+L'implémentation sur Max/MSP des deux algorithmes de synthèse résulte en deux applications intuitives à utiliser avec deux interfaces identiques. L'utilisateur peut contrôler les paramètres de jeux à l'aide d'une tablette graphique et d'un clavier MIDI et générer des sons similaires à ceux générés par les méthodes en temps différé.
+
+La perspective principale de ce projet serait d'élargir notre travail à d'autres instruments auto-oscillants tels que le violon ou le saxophone, à la fois en étudiant les différents régimes de jeux de ces instruments et en proposant des implémentions en temps réel de ces derniers. L'utilisation de modèles d'instruments plus complexes, notamment par la prise en compte de la dynamique de l'anche, est également envisageable. Il serait également intéressant de proposer aux utilisateurs un contrôle plus direct des caractéristiques sonores produites. 
+%Perspectives : rappel de l'état de l'art pour adapter notre travail à un instrument à cordes frottées -> perspective logique pour appliquer le travail à d'autres instruments (à voir si on peut utiliser l'approche modale ou si l'analogie est vraie qu'en guide d'ondes).
+
+%- contrôle plus direct des descripteurs (volume à fréquence constante par exemple), mais nécessite une autre approche que celle utilisée ici. 
+
 
 \fancypagestyle{plain}{plain}
  {\hypersetup{hidelinks} \printbibliography }

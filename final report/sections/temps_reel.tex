@@ -1,0 +1,28 @@
+\subsection{État de l'art}
+
+Plusieurs outils de programmation d'applications musicales interactives sont disponibles et ont été utilisés avec succès pour de précédents travaux. 
+Nous pourrons citer 
+\href{https://cycling74.com/products/max}{Max},
+\href{https://faust.grame.fr/}{Faust}
+et 
+\href{https://puredata.info}{Pure Data}
+comme principaux choix pour réduire la complexité des implémentations et permettant de travailler uniquement sur les algorithmes de traitement et les interfaces utilisateur. 
+Pour un embarquement dans un microcontroleur et gagner l'autonomie de l'instruments, plusieurs solutions existent offrant la possibilité de travailler avec les outils susnommés comme le projet \href{https://electro-smith.com/}{Daisy}.
+
+
+\subsection{Implémentation et interface temps réel}
+
+Pour cette étude a été choisi de réaliser l'application à l'aide de Max-MSP, offrant un environnement de programmation visuelle orienté vers les traitements numériques audio en temps réel et l'intéractivité avec l'utilisateur. 
+Pour implémenter la méthode de Runge-Kutta \ref{sec:result_modal} à l'ordre quatre, il est nécessaire de traiter chaque échantillon du signal indépendemment.
+Pour cela, Max propose l'environnement Gen qui, en plus de répondre à cette contrainte, offre une interface textuelle simplifiant l'implémentation.
+Enfin, pour l'interface, l'intégration de Javascript dans le \textit{patch} étend les possibilités d'interaction avec l'utilisateur.
+Il sera utilisé pour contraindre les paramètres de jeu dans les intervalles de validité de certains critères en fonction des choix de l'utilisateur.
+Deux applications on été réalisées basées sur les deux modèles de synthèse abordés dans cette étude.
+
+
+% @TODO Mettre éventuellement un lien vers un drive avec des sons ou des vidéos
+
+
+\begin{comment}
+    brouillon d'abstract
+\end{comment}
