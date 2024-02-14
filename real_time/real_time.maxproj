@@ -2,8 +2,8 @@
 	"name" : "real_time",
 	"version" : 1,
 	"creationdate" : 3790758662,
-	"modificationdate" : 3790758751,
-	"viewrect" : [ 25.0, 107.0, 388.0, 645.0 ],
+	"modificationdate" : 3790777260,
+	"viewrect" : [ 80.0, 122.0, 505.0, 754.0 ],
 	"autoorganize" : 1,
 	"hideprojectwindow" : 0,
 	"showdependencies" : 1,
@@ -86,7 +86,7 @@
 				"local" : 1
 			}
 ,
-			"is_correct_position.gendsp" : 			{
+			"engine.gendsp" : 			{
 				"kind" : "gendsp",
 				"local" : 1
 			}
@@ -96,12 +96,12 @@
 				"local" : 1
 			}
 ,
-			"engine.gendsp" : 			{
+			"non_linearite.gendsp" : 			{
 				"kind" : "gendsp",
 				"local" : 1
 			}
 ,
-			"non_linearite.gendsp" : 			{
+			"is_correct_position.gendsp" : 			{
 				"kind" : "gendsp",
 				"local" : 1
 			}
@@ -110,10 +110,19 @@
 				"kind" : "gendsp",
 				"local" : 1
 			}
+,
+			"reflexion_processing.gendsp" : 			{
+				"kind" : "gendsp",
+				"local" : 1
+			}
 
 		}
 ,
 		"data" : 		{
+			"Rnbo-Tuner.amxd.maxsnap" : 			{
+				"kind" : "maxsnapshot"
+			}
+,
 			"params.txt" : 			{
 				"kind" : "textfile",
 				"local" : 1

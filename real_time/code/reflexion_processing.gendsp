@@ -1,0 +1,98 @@
+{
+	"patcher" : 	{
+		"fileversion" : 1,
+		"appversion" : 		{
+			"major" : 8,
+			"minor" : 6,
+			"revision" : 0,
+			"architecture" : "x64",
+			"modernui" : 1
+		}
+,
+		"classnamespace" : "dsp.gen",
+		"rect" : [ 34.0, 77.0, 1852.0, 939.0 ],
+		"bglocked" : 0,
+		"openinpresentation" : 0,
+		"default_fontsize" : 12.0,
+		"default_fontface" : 0,
+		"default_fontname" : "Arial",
+		"gridonopen" : 1,
+		"gridsize" : [ 15.0, 15.0 ],
+		"gridsnaponopen" : 1,
+		"objectsnaponopen" : 1,
+		"statusbarvisible" : 2,
+		"toolbarvisible" : 1,
+		"lefttoolbarpinned" : 0,
+		"toptoolbarpinned" : 0,
+		"righttoolbarpinned" : 0,
+		"bottomtoolbarpinned" : 0,
+		"toolbars_unpinned_last_save" : 0,
+		"tallnewobj" : 0,
+		"boxanimatetime" : 200,
+		"enablehscroll" : 1,
+		"enablevscroll" : 1,
+		"devicewidth" : 0.0,
+		"description" : "",
+		"digest" : "",
+		"tags" : "",
+		"style" : "",
+		"subpatcher_template" : "",
+		"assistshowspatchername" : 0,
+		"boxes" : [ 			{
+				"box" : 				{
+					"id" : "obj-9",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 96.0, 499.999983608722687, 35.0, 22.0 ],
+					"text" : "out 1"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-1",
+					"maxclass" : "newobj",
+					"numinlets" : 0,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 96.0, 80.740738093852997, 162.222216904163361, 22.0 ],
+					"text" : "in 1 @comment delay_time"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"code" : "Buffer reflexion(\"reflexion\");\r\nHistory b(0.1);\r\nParam a(0.1, min = 0, max = 1);\r\nParam percent(0.3, min = 0.05, max = 0.4);\r\n\r\nbuffer_size = dim(reflexion);\r\n\r\nT = 2 * in1 * 0.001;\r\n\r\n// T = 1/0.3 * 2 * 1/sqrt(b) * log(2)^1/2\r\n// width = 0.3 * T;\r\n\r\nsqrt_inv_b = T * percent /(2 * sqrt(log(2)));\r\nnew_b = 1/pow(sqrt_inv_b, 2);\r\n\r\n\r\nfor (i = 0; i < buffer_size; i +=1) {\r\n\treflexion.poke(a * exp(-new_b* pow(i/samplerate, 2)), i, 0);\r\n}\r\n\r\n\r\nb = new_b;\r\n\r\nout1 = b;",
+					"fontface" : 0,
+					"fontname" : "<Monospaced>",
+					"fontsize" : 12.0,
+					"id" : "obj-3",
+					"maxclass" : "codebox",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 96.0, 125.185181081295013, 638.518497586250305, 346.666655302047729 ]
+				}
+
+			}
+ ],
+		"lines" : [ 			{
+				"patchline" : 				{
+					"destination" : [ "obj-3", 0 ],
+					"source" : [ "obj-1", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-9", 0 ],
+					"source" : [ "obj-3", 0 ]
+				}
+
+			}
+ ],
+		"autosave" : 0
+	}
+
+}
