@@ -40,6 +40,50 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
+					"fontsize" : 16.0,
+					"id" : "obj-70",
+					"items" : [ "Carto", "vierge", ",", "Carto", "test" ],
+					"maxclass" : "umenu",
+					"numinlets" : 1,
+					"numoutlets" : 3,
+					"outlettype" : [ "int", "", "" ],
+					"parameter_enable" : 0,
+					"patching_rect" : [ 1166.0, 181.0, 100.0, 26.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 713.0, 267.0, 135.0, 26.0 ]
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"fontsize" : 14.0,
+					"id" : "obj-65",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 598.0, 235.0, 170.0, 22.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 631.0, 273.0, 58.0, 22.0 ],
+					"text" : "zeta"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"fontsize" : 14.0,
+					"id" : "obj-47",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 842.0, 763.0, 169.0, 22.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 1071.0, 715.0, 58.0, 22.0 ],
+					"text" : "gamma"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-27",
 					"maxclass" : "newobj",
 					"numinlets" : 1,
@@ -287,7 +331,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 2220.0, 735.0, 101.0, 90.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 735.0, 37.0, 101.0, 90.0 ],
+					"presentation_rect" : [ 718.0, 38.0, 101.0, 90.0 ],
 					"text" : "Inactif",
 					"texton" : "Actif"
 				}
@@ -353,13 +397,13 @@
 					"lockedsize" : 0,
 					"maxclass" : "bpatcher",
 					"name" : "interface_carto.maxpat",
-					"numinlets" : 2,
+					"numinlets" : 3,
 					"numoutlets" : 2,
 					"offset" : [ 0.0, 0.0 ],
 					"outlettype" : [ "float", "float" ],
 					"patching_rect" : [ 633.25642140706384, 195.0, 445.743578592936046, 441.908657073974609 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 600.0, 255.0, 438.0, 454.0 ],
+					"presentation_rect" : [ 631.0, 295.0, 438.0, 442.0 ],
 					"viewvisibility" : 1
 				}
 
@@ -395,7 +439,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 2,
 					"outlettype" : [ "signal", "bang" ],
-					"patching_rect" : [ 836.0, 758.769233703613281, 34.0, 22.0 ],
+					"patching_rect" : [ 804.079729696114896, 762.0, 34.0, 22.0 ],
 					"text" : "line~"
 				}
 
@@ -407,7 +451,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 634.25642140706384, 730.923086166381836, 39.0, 22.0 ],
+					"patching_rect" : [ 716.079729696114896, 732.0, 39.0, 22.0 ],
 					"text" : "$1 50"
 				}
 
@@ -419,7 +463,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 2,
 					"outlettype" : [ "signal", "bang" ],
-					"patching_rect" : [ 634.25642140706384, 758.615396499633789, 34.0, 22.0 ],
+					"patching_rect" : [ 716.079729696114896, 760.0, 34.0, 22.0 ],
 					"text" : "line~"
 				}
 
@@ -767,7 +811,7 @@
  ]
 					}
 ,
-					"patching_rect" : [ 634.25642140706384, 690.0, 220.74357859293616, 22.0 ],
+					"patching_rect" : [ 716.079729696114896, 691.0, 107.22503576676047, 22.0 ],
 					"saved_object_attributes" : 					{
 						"description" : "",
 						"digest" : "",
@@ -1051,7 +1095,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 255.0, 450.0, 50.0, 35.0 ],
+					"patching_rect" : [ 169.0, 426.0, 50.0, 35.0 ],
 					"text" : "1.911096"
 				}
 
@@ -1171,7 +1215,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 836.0, 728.769233703613281, 39.0, 22.0 ],
+					"patching_rect" : [ 804.079729696114896, 732.0, 39.0, 22.0 ],
 					"text" : "$1 50"
 				}
 
@@ -1212,7 +1256,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 2098.0, 779.692316055297852, 60.0, 60.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 735.0, 150.0, 60.0, 60.0 ]
+					"presentation_rect" : [ 718.0, 151.0, 60.0, 60.0 ]
 				}
 
 			}
@@ -1861,7 +1905,7 @@
 					"parameter_enable" : 1,
 					"patching_rect" : [ 1020.25642140706384, 87.091342926025391, 61.0, 57.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 540.0, 255.0, 61.0, 57.0 ],
+					"presentation_rect" : [ 571.0, 302.0, 61.0, 57.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
 							"parameter_longname" : "live.dial[3]",
@@ -1888,7 +1932,7 @@
 					"parameter_enable" : 1,
 					"patching_rect" : [ 633.25642140706384, 83.091342926025391, 61.0, 57.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 540.0, 314.574467658996582, 61.0, 57.0 ],
+					"presentation_rect" : [ 571.0, 367.0, 61.0, 57.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
 							"parameter_longname" : "live.dial[2]",
@@ -1921,7 +1965,7 @@
 				"box" : 				{
 					"bgcolor" : [ 0.094118, 0.113725, 0.137255, 1.0 ],
 					"bufsize" : 38,
-					"calccount" : 4,
+					"calccount" : 10,
 					"fgcolor" : [ 0.0, 1.0, 0.0, 1.0 ],
 					"gridcolor" : [ 0.301961, 0.337255, 0.403922, 0.25098 ],
 					"id" : "obj-16",
@@ -2800,6 +2844,13 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-35", 2 ],
+					"source" : [ "obj-70", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-87", 0 ],
 					"source" : [ "obj-71", 0 ]
 				}
@@ -3012,28 +3063,28 @@
 ,
 		"dependency_cache" : [ 			{
 				"name" : "cartographie.js",
-				"bootpath" : "~/Documents/IRCAM/PAM/PAM-Auto-oscillations-des-instruments-de-musique/real_time/code",
+				"bootpath" : "D:/Documents/IRCAM/PAM/PAM-Auto-oscillations-des-instruments-de-musique/real_time/code",
 				"patcherrelativepath" : "../code",
 				"type" : "TEXT",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "interface_carto.maxpat",
-				"bootpath" : "~/Documents/IRCAM/PAM/PAM-Auto-oscillations-des-instruments-de-musique/real_time/patchers",
+				"bootpath" : "D:/Documents/IRCAM/PAM/PAM-Auto-oscillations-des-instruments-de-musique/real_time/patchers",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "non_linearite.gendsp",
-				"bootpath" : "~/Documents/IRCAM/PAM/PAM-Auto-oscillations-des-instruments-de-musique/real_time/code",
+				"bootpath" : "D:/Documents/IRCAM/PAM/PAM-Auto-oscillations-des-instruments-de-musique/real_time/code",
 				"patcherrelativepath" : "../code",
 				"type" : "gDSP",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "reflexion_processing.gendsp",
-				"bootpath" : "~/Documents/IRCAM/PAM/PAM-Auto-oscillations-des-instruments-de-musique/real_time/code",
+				"bootpath" : "D:/Documents/IRCAM/PAM/PAM-Auto-oscillations-des-instruments-de-musique/real_time/code",
 				"patcherrelativepath" : "../code",
 				"type" : "gDSP",
 				"implicit" : 1
