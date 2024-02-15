@@ -2,7 +2,7 @@
 	"name" : "real_time",
 	"version" : 1,
 	"creationdate" : 3790758662,
-	"modificationdate" : 3790777260,
+	"modificationdate" : 3790850386,
 	"viewrect" : [ 80.0, 122.0, 505.0, 754.0 ],
 	"autoorganize" : 1,
 	"hideprojectwindow" : 0,
@@ -34,10 +34,45 @@
 				"kind" : "patcher",
 				"local" : 1
 			}
+,
+			"sons.maxpat" : 			{
+				"kind" : "patcher",
+				"local" : 1
+			}
 
 		}
 ,
 		"media" : 		{
+			"iterated_map-0.44_zeta-0.8-quadruplement-periode.wav" : 			{
+				"kind" : "audiofile",
+				"local" : 1
+			}
+,
+			"0.6-0.2-N2.wav" : 			{
+				"kind" : "audiofile",
+				"local" : 1
+			}
+,
+			"0.6-0.2-N4.wav" : 			{
+				"kind" : "audiofile",
+				"local" : 1
+			}
+,
+			"0.6-0.6-N2.wav" : 			{
+				"kind" : "audiofile",
+				"local" : 1
+			}
+,
+			"0.6-0.45-N2.wav" : 			{
+				"kind" : "audiofile",
+				"local" : 1
+			}
+,
+			"0.8-0.8-N2.wav" : 			{
+				"kind" : "audiofile",
+				"local" : 1
+			}
+,
 			"carto_charlotte.jpg" : 			{
 				"kind" : "imagefile",
 				"local" : 1
@@ -101,17 +136,17 @@
 				"local" : 1
 			}
 ,
+			"reflexion_processing.gendsp" : 			{
+				"kind" : "gendsp",
+				"local" : 1
+			}
+,
 			"is_correct_position.gendsp" : 			{
 				"kind" : "gendsp",
 				"local" : 1
 			}
 ,
 			"waveguide_engine.gendsp" : 			{
-				"kind" : "gendsp",
-				"local" : 1
-			}
-,
-			"reflexion_processing.gendsp" : 			{
 				"kind" : "gendsp",
 				"local" : 1
 			}

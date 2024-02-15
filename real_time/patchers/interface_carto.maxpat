@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 34.0, 77.0, 1852.0, 939.0 ],
+		"rect" : [ 34.0, 77.0, 1324.0, 939.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -198,7 +198,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 525.0, 669.0, 165.0, 22.0 ],
-					"text" : "0.509033 0.571787 0.5 0.57"
+					"text" : "0.460773 0.548068 0.46 0.54"
 				}
 
 			}
@@ -217,19 +217,21 @@
 , 			{
 				"box" : 				{
 					"bgcolor" : [ 0.2, 0.2, 0.2, 0.13 ],
+					"fontsize" : 16.0,
 					"id" : "obj-6",
 					"maxclass" : "nodes",
-					"nodesnames" : [ "1" ],
+					"nodesnames" : [ "." ],
 					"nsize" : [ 0.0 ],
 					"numinlets" : 1,
 					"numoutlets" : 3,
 					"outlettype" : [ "", "", "" ],
 					"parameter_enable" : 0,
 					"patching_rect" : [ 93.162394106388092, 249.572652101516724, 256.779649078845978, 249.999988377094269 ],
+					"pointcolor" : [ 0.164705882352941, 0.466666666666667, 0.850980392156863, 1.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 28.387095928192139, 9.032257795333862, 405.0, 405.0 ],
-					"xplace" : [ 0.509033001499412 ],
-					"yplace" : [ 0.571787185139126 ]
+					"xplace" : [ 0.460772602646439 ],
+					"yplace" : [ 0.548068499270781 ]
 				}
 
 			}
@@ -248,12 +250,13 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-50",
+					"linecount" : 2,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1105.0, 759.0, 107.62711364030838, 22.0 ],
-					"text" : "setnode 1 0.5 0.57"
+					"patching_rect" : [ 1105.0, 759.0, 108.0, 35.0 ],
+					"text" : "setnode 1 0.46 0.54"
 				}
 
 			}
@@ -360,11 +363,12 @@
 , 			{
 				"box" : 				{
 					"bgcolor" : [ 0.2, 0.2, 0.2, 0.18 ],
+					"fontsize" : 16.0,
 					"id" : "obj-104",
 					"ignoreclick" : 1,
 					"maxclass" : "nodes",
 					"nodecolor" : [ 0.925490196078431, 0.211764705882353, 0.211764705882353, 1.0 ],
-					"nodesnames" : [ "1" ],
+					"nodesnames" : [ "." ],
 					"nsize" : [ 0.0 ],
 					"numinlets" : 1,
 					"numoutlets" : 3,
@@ -374,8 +378,8 @@
 					"pointcolor" : [ 1.0, 0.317647058823529, 0.317647058823529, 1.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 29.032257199287415, 9.677419066429138, 405.0, 405.0 ],
-					"xplace" : [ 0.5 ],
-					"yplace" : [ 0.57 ]
+					"xplace" : [ 0.46 ],
+					"yplace" : [ 0.54 ]
 				}
 
 			}

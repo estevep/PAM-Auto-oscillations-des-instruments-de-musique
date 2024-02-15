@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "dsp.gen",
-		"rect" : [ 34.0, 77.0, 1852.0, 939.0 ],
+		"rect" : [ 321.0, 250.0, 949.0, 559.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -63,7 +63,7 @@
 			}
 , 			{
 				"box" : 				{
-					"code" : "Buffer reflexion(\"reflexion\");\r\nHistory b(0.1);\r\nParam a(0.1, min = 0, max = 1);\r\nParam percent(0.3, min = 0.05, max = 0.4);\r\n\r\nbuffer_size = dim(reflexion);\r\n\r\nT = 2 * in1 * 0.001;\r\n\r\n// T = 1/0.3 * 2 * 1/sqrt(b) * log(2)^1/2\r\n// width = 0.3 * T;\r\n\r\nsqrt_inv_b = T * percent /(2 * sqrt(log(2)));\r\nnew_b = 1/pow(sqrt_inv_b, 2);\r\n\r\n\r\nfor (i = 0; i < buffer_size; i +=1) {\r\n\treflexion.poke(a * exp(-new_b* pow(i/samplerate, 2)), i, 0);\r\n}\r\n\r\n\r\nb = new_b;\r\n\r\nout1 = b;",
+					"code" : "Buffer reflexion(\"reflexion\");\r\nHistory b(0.1);\r\nParam a(0.1, min = 0.1, max = 1);\r\nParam percent(0.3, min = 0.05, max = 0.4);\r\n\r\nbuffer_size = dim(reflexion);\r\n\r\nT = 2 * in1 * 0.001;\r\n\r\n// T = 1/0.3 * 2 * 1/sqrt(b) * log(2)^1/2\r\n// width = 0.3 * T;\r\n\r\nsqrt_inv_b = T * percent /(2 * sqrt(log(2)));\r\nnew_b = 1/pow(sqrt_inv_b, 2);\r\n\r\n\r\nfor (i = 0; i < buffer_size; i +=1) {\r\n\treflexion.poke(a * exp(-new_b* pow(i/samplerate, 2)), i, 0);\r\n}\r\n\r\n\r\nb = new_b;\r\n\r\nout1 = b;",
 					"fontface" : 0,
 					"fontname" : "<Monospaced>",
 					"fontsize" : 12.0,
@@ -91,8 +91,7 @@
 				}
 
 			}
- ],
-		"autosave" : 0
+ ]
 	}
 
 }
